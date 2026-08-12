@@ -1,0 +1,8 @@
+* text=auto eol=lf
+
+*.png binary
+*.webp binary
+*.zip binary
+*.xcuserstate binary
+
+RulePacks/Tarnhelm-GPL-3.0/tarnhelm-complete.nothung.json linguist-generated=true

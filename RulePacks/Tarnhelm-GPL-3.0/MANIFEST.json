@@ -1,0 +1,20 @@
+{
+  "name": "Tarnhelm complete rules for Nothung",
+  "license": "GPL-3.0-only",
+  "upstream": "https://github.com/lz233/TarnhelmDocument",
+  "upstreamCommit": "cdf1fee3e6d47db4c8ec0aa64726ef51b8247422",
+  "sourceFile": "SOURCE-rules.md",
+  "generatedFile": "tarnhelm-complete.nothung.json",
+  "generatedSHA256": "1ae23c53b9904c356f9a9798cb526201eadd3f739d9fee3d149f4c28ef54c256",
+  "counts": {
+    "parameterRules": 31,
+    "regexRules": 29,
+    "regexSteps": 48,
+    "redirectRules": 5
+  },
+  "conversionWarnings": [
+    "link 46 (QQ 空间分享链接) was labelled parameter but converted by its regex payload",
+    "link 60 (知乎关怀版) had 1 missing replacement line(s); converted them to empty replacements",
+    "link 60 (知乎关怀版) was labelled redirect but converted by its regex payload"
+  ]
+}

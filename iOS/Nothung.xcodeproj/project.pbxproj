@@ -1,0 +1,748 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A00000000000000000000100 /* NothungApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000010 /* NothungApp.swift */; };
+		A00000000000000000000101 /* CleanerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000011 /* CleanerViewModel.swift */; };
+		A00000000000000000000102 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000012 /* ContentView.swift */; };
+		A00000000000000000000103 /* NothungTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000030 /* NothungTheme.swift */; };
+		A00000000000000000000104 /* NothungMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000031 /* NothungMark.swift */; };
+		A00000000000000000000105 /* NothungCleaning.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000032 /* NothungCleaning.swift */; };
+		A00000000000000000000106 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000015 /* Assets.xcassets */; };
+		A00000000000000000000107 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000016 /* PrivacyInfo.xcprivacy */; };
+		A00000000000000000000108 /* CleanURLIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000017 /* CleanURLIntent.swift */; };
+		A00000000000000000000109 /* RedirectResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000018 /* RedirectResolver.swift */; };
+		A0000000000000000000010A /* RuleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000019 /* RuleSettingsView.swift */; };
+		A0000000000000000000010B /* RedirectResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000018 /* RedirectResolver.swift */; };
+		A00000000000000000000110 /* ActionExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000020 /* ActionExtensionViewModel.swift */; };
+		A00000000000000000000111 /* ActionRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000021 /* ActionRootView.swift */; };
+		A00000000000000000000112 /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000022 /* ActionViewController.swift */; };
+		A00000000000000000000113 /* NothungTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000030 /* NothungTheme.swift */; };
+		A00000000000000000000114 /* NothungMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000031 /* NothungMark.swift */; };
+		A00000000000000000000115 /* NothungCleaning.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000032 /* NothungCleaning.swift */; };
+		A00000000000000000000116 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000025 /* Assets.xcassets */; };
+		A00000000000000000000117 /* RuleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000033 /* RuleConfiguration.swift */; };
+		A00000000000000000000118 /* RuleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000033 /* RuleConfiguration.swift */; };
+		A00000000000000000000119 /* ExtensionInputLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000034 /* ExtensionInputLoader.swift */; };
+		A0000000000000000000011A /* ExtensionInputLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000034 /* ExtensionInputLoader.swift */; };
+		A0000000000000000000011B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000026 /* PrivacyInfo.xcprivacy */; };
+		A00000000000000000000120 /* NothungCore in Frameworks */ = {isa = PBXBuildFile; productRef = A00000000000000000000231 /* NothungCore */; };
+		A00000000000000000000121 /* NothungCore in Frameworks */ = {isa = PBXBuildFile; productRef = A00000000000000000000232 /* NothungCore */; };
+		A00000000000000000000122 /* NothungAction.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A00000000000000000000005 /* NothungAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A00000000000000000000123 /* NothungCore in Frameworks */ = {isa = PBXBuildFile; productRef = A00000000000000000000233 /* NothungCore */; };
+		A00000000000000000000130 /* CleanURLIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000040 /* CleanURLIntentTests.swift */; };
+		A00000000000000000000131 /* NothungCleaningServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000042 /* NothungCleaningServiceTests.swift */; };
+		A00000000000000000000132 /* RedirectResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000043 /* RedirectResolverTests.swift */; };
+		A00000000000000000000133 /* CleanerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000044 /* CleanerViewModelTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A00000000000000000000221 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A00000000000000000000003;
+			remoteInfo = NothungAction;
+		};
+		A00000000000000000000222 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A00000000000000000000002;
+			remoteInfo = Nothung;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A00000000000000000000203 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A00000000000000000000122 /* NothungAction.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A00000000000000000000004 /* Nothung.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nothung.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000005 /* NothungAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NothungAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000010 /* NothungApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungApp.swift; sourceTree = "<group>"; };
+		A00000000000000000000011 /* CleanerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanerViewModel.swift; sourceTree = "<group>"; };
+		A00000000000000000000012 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A00000000000000000000013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A00000000000000000000014 /* Nothung.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Nothung.entitlements; sourceTree = "<group>"; };
+		A00000000000000000000015 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A00000000000000000000016 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A00000000000000000000017 /* CleanURLIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanURLIntent.swift; sourceTree = "<group>"; };
+		A00000000000000000000018 /* RedirectResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectResolver.swift; sourceTree = "<group>"; };
+		A00000000000000000000019 /* RuleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleSettingsView.swift; sourceTree = "<group>"; };
+		A00000000000000000000020 /* ActionExtensionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionExtensionViewModel.swift; sourceTree = "<group>"; };
+		A00000000000000000000021 /* ActionRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRootView.swift; sourceTree = "<group>"; };
+		A00000000000000000000022 /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
+		A00000000000000000000023 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A00000000000000000000024 /* NothungAction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NothungAction.entitlements; sourceTree = "<group>"; };
+		A00000000000000000000025 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A00000000000000000000026 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A00000000000000000000030 /* NothungTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungTheme.swift; sourceTree = "<group>"; };
+		A00000000000000000000031 /* NothungMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungMark.swift; sourceTree = "<group>"; };
+		A00000000000000000000032 /* NothungCleaning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungCleaning.swift; sourceTree = "<group>"; };
+		A00000000000000000000033 /* RuleConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleConfiguration.swift; sourceTree = "<group>"; };
+		A00000000000000000000034 /* ExtensionInputLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionInputLoader.swift; sourceTree = "<group>"; };
+		A00000000000000000000040 /* CleanURLIntentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanURLIntentTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000041 /* NothungTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NothungTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000042 /* NothungCleaningServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungCleaningServiceTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000043 /* RedirectResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectResolverTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000044 /* CleanerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanerViewModelTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A00000000000000000000201 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000120 /* NothungCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000211 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000121 /* NothungCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000241 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000123 /* NothungCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A00000000000000000000006 = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000007 /* NothungApp */,
+				A00000000000000000000008 /* NothungAction */,
+				A00000000000000000000009 /* Shared */,
+				A0000000000000000000000B /* NothungTests */,
+				A0000000000000000000000A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A00000000000000000000007 /* NothungApp */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000010 /* NothungApp.swift */,
+				A00000000000000000000011 /* CleanerViewModel.swift */,
+				A00000000000000000000012 /* ContentView.swift */,
+				A00000000000000000000017 /* CleanURLIntent.swift */,
+				A00000000000000000000018 /* RedirectResolver.swift */,
+				A00000000000000000000019 /* RuleSettingsView.swift */,
+				A00000000000000000000015 /* Assets.xcassets */,
+				A00000000000000000000016 /* PrivacyInfo.xcprivacy */,
+				A00000000000000000000013 /* Info.plist */,
+				A00000000000000000000014 /* Nothung.entitlements */,
+			);
+			path = NothungApp;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000008 /* NothungAction */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000020 /* ActionExtensionViewModel.swift */,
+				A00000000000000000000021 /* ActionRootView.swift */,
+				A00000000000000000000022 /* ActionViewController.swift */,
+				A00000000000000000000025 /* Assets.xcassets */,
+				A00000000000000000000026 /* PrivacyInfo.xcprivacy */,
+				A00000000000000000000023 /* Info.plist */,
+				A00000000000000000000024 /* NothungAction.entitlements */,
+			);
+			path = NothungAction;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000009 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000030 /* NothungTheme.swift */,
+				A00000000000000000000031 /* NothungMark.swift */,
+				A00000000000000000000032 /* NothungCleaning.swift */,
+				A00000000000000000000033 /* RuleConfiguration.swift */,
+				A00000000000000000000034 /* ExtensionInputLoader.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		A0000000000000000000000A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000004 /* Nothung.app */,
+				A00000000000000000000005 /* NothungAction.appex */,
+				A00000000000000000000041 /* NothungTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A0000000000000000000000B /* NothungTests */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000040 /* CleanURLIntentTests.swift */,
+				A00000000000000000000042 /* NothungCleaningServiceTests.swift */,
+				A00000000000000000000043 /* RedirectResolverTests.swift */,
+				A00000000000000000000044 /* CleanerViewModelTests.swift */,
+			);
+			path = NothungTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A00000000000000000000002 /* Nothung */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000331 /* Build configuration list for PBXNativeTarget "Nothung" */;
+			buildPhases = (
+				A00000000000000000000200 /* Sources */,
+				A00000000000000000000201 /* Frameworks */,
+				A00000000000000000000202 /* Resources */,
+				A00000000000000000000203 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A00000000000000000000220 /* PBXTargetDependency */,
+			);
+			name = Nothung;
+			packageProductDependencies = (
+				A00000000000000000000231 /* NothungCore */,
+			);
+			productName = Nothung;
+			productReference = A00000000000000000000004 /* Nothung.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A00000000000000000000003 /* NothungAction */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000332 /* Build configuration list for PBXNativeTarget "NothungAction" */;
+			buildPhases = (
+				A00000000000000000000210 /* Sources */,
+				A00000000000000000000211 /* Frameworks */,
+				A00000000000000000000212 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NothungAction;
+			packageProductDependencies = (
+				A00000000000000000000232 /* NothungCore */,
+			);
+			productName = NothungAction;
+			productReference = A00000000000000000000005 /* NothungAction.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		A0000000000000000000000C /* NothungTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000333 /* Build configuration list for PBXNativeTarget "NothungTests" */;
+			buildPhases = (
+				A00000000000000000000240 /* Sources */,
+				A00000000000000000000241 /* Frameworks */,
+				A00000000000000000000242 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A00000000000000000000223 /* PBXTargetDependency */,
+			);
+			name = NothungTests;
+			packageProductDependencies = (
+				A00000000000000000000233 /* NothungCore */,
+			);
+			productName = NothungTests;
+			productReference = A00000000000000000000041 /* NothungTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A00000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					A00000000000000000000002 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					A00000000000000000000003 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					A0000000000000000000000C = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = A00000000000000000000002;
+					};
+				};
+			};
+			buildConfigurationList = A00000000000000000000330 /* Build configuration list for PBXProject "Nothung" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = A00000000000000000000006;
+			packageReferences = (
+				A00000000000000000000230 /* XCLocalSwiftPackageReference "../Packages/NothungCore" */,
+			);
+			productRefGroup = A0000000000000000000000A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A00000000000000000000002 /* Nothung */,
+				A00000000000000000000003 /* NothungAction */,
+				A0000000000000000000000C /* NothungTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A00000000000000000000202 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000106 /* Assets.xcassets in Resources */,
+				A00000000000000000000107 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000212 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000116 /* Assets.xcassets in Resources */,
+				A0000000000000000000011B /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000242 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A00000000000000000000200 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000100 /* NothungApp.swift in Sources */,
+				A00000000000000000000101 /* CleanerViewModel.swift in Sources */,
+				A00000000000000000000102 /* ContentView.swift in Sources */,
+				A00000000000000000000103 /* NothungTheme.swift in Sources */,
+				A00000000000000000000104 /* NothungMark.swift in Sources */,
+				A00000000000000000000105 /* NothungCleaning.swift in Sources */,
+				A00000000000000000000108 /* CleanURLIntent.swift in Sources */,
+				A00000000000000000000109 /* RedirectResolver.swift in Sources */,
+				A0000000000000000000010A /* RuleSettingsView.swift in Sources */,
+				A00000000000000000000117 /* RuleConfiguration.swift in Sources */,
+				A00000000000000000000119 /* ExtensionInputLoader.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000210 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000110 /* ActionExtensionViewModel.swift in Sources */,
+				A00000000000000000000111 /* ActionRootView.swift in Sources */,
+				A00000000000000000000112 /* ActionViewController.swift in Sources */,
+				A00000000000000000000113 /* NothungTheme.swift in Sources */,
+				A00000000000000000000114 /* NothungMark.swift in Sources */,
+				A00000000000000000000115 /* NothungCleaning.swift in Sources */,
+				A00000000000000000000118 /* RuleConfiguration.swift in Sources */,
+				A0000000000000000000011A /* ExtensionInputLoader.swift in Sources */,
+				A0000000000000000000010B /* RedirectResolver.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000240 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000130 /* CleanURLIntentTests.swift in Sources */,
+				A00000000000000000000131 /* NothungCleaningServiceTests.swift in Sources */,
+				A00000000000000000000132 /* RedirectResolverTests.swift in Sources */,
+				A00000000000000000000133 /* CleanerViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A00000000000000000000220 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A00000000000000000000003 /* NothungAction */;
+			targetProxy = A00000000000000000000221 /* PBXContainerItemProxy */;
+		};
+		A00000000000000000000223 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A00000000000000000000002 /* Nothung */;
+			targetProxy = A00000000000000000000222 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A00000000000000000000300 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A00000000000000000000301 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A00000000000000000000310 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NothungApp/Nothung.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NothungApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.nothung.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A00000000000000000000311 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NothungApp/Nothung.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NothungApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.nothung.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A00000000000000000000320 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = ActionIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NothungAction/NothungAction.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NothungAction/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.nothung.app.action;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A00000000000000000000321 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = ActionIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NothungAction/NothungAction.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NothungAction/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.nothung.app.action;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A00000000000000000000340 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.nothung.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Nothung.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Nothung";
+				TEST_TARGET_NAME = Nothung;
+			};
+			name = Debug;
+		};
+		A00000000000000000000341 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.nothung.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Nothung.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Nothung";
+				TEST_TARGET_NAME = Nothung;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A00000000000000000000330 /* Build configuration list for PBXProject "Nothung" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000300 /* Debug */,
+				A00000000000000000000301 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A00000000000000000000331 /* Build configuration list for PBXNativeTarget "Nothung" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000310 /* Debug */,
+				A00000000000000000000311 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A00000000000000000000332 /* Build configuration list for PBXNativeTarget "NothungAction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000320 /* Debug */,
+				A00000000000000000000321 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A00000000000000000000333 /* Build configuration list for PBXNativeTarget "NothungTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000340 /* Debug */,
+				A00000000000000000000341 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A00000000000000000000230 /* XCLocalSwiftPackageReference "../Packages/NothungCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../Packages/NothungCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A00000000000000000000231 /* NothungCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A00000000000000000000230 /* XCLocalSwiftPackageReference "../Packages/NothungCore" */;
+			productName = NothungCore;
+		};
+		A00000000000000000000232 /* NothungCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A00000000000000000000230 /* XCLocalSwiftPackageReference "../Packages/NothungCore" */;
+			productName = NothungCore;
+		};
+		A00000000000000000000233 /* NothungCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A00000000000000000000230 /* XCLocalSwiftPackageReference "../Packages/NothungCore" */;
+			productName = NothungCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = A00000000000000000000001 /* Project object */;
+}

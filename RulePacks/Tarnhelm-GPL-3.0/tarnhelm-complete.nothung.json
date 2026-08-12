@@ -1,0 +1,847 @@
+{
+  "schemaVersion": 1,
+  "useBuiltInTrackingRules": true,
+  "cleanImmediatelyAfterPaste": false,
+  "copyAfterCleaning": false,
+  "restrictRedirectExpansionToRules": false,
+  "parameterRules": [
+    {
+      "id": "E3E74FF7-22F9-50F8-B35E-35910F57D555",
+      "title": "Apple Music",
+      "host": "music.apple.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：mitian233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "E3BFC90D-6075-5EC5-B3E0-4F38314B7DB5",
+      "title": "百度贴吧",
+      "host": "tieba.baidu.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "2321B310-ED12-51A2-90D9-9353E0123B34",
+      "title": "哔哩哔哩动态分享",
+      "host": "t.bilibili.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "3B2ECB28-6D18-5E91-BDE8-FEA4EF0B81F0",
+      "title": "会员购分享",
+      "host": "mall.bilibili.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+        "noTitleBar",
+        "itemsId"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "A1DAFC37-BB1D-5EB4-ACB3-D15B9C66105D",
+      "title": "个人界面分享",
+      "host": "space.bilibili.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "D3FEE658-CA37-54BE-B418-71519BAEF3A8",
+      "title": "直播预约分享",
+      "host": "www.bilibili.com",
+      "includesSubdomains": false,
+      "mode": "blockList",
+      "parameterNames": [
+        "i_transfer_match"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "2D4E9EA3-30A1-5CDA-BCC4-2C68F0A4B760",
+      "title": "哔哩哔哩直播间",
+      "host": "live.bilibili.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "18A89FAB-5D3D-57E5-BFA1-777D1B63472E",
+      "title": "Disney+",
+      "host": "www.disneyplus.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：mitian233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "E5713EE8-A20F-589D-8BA7-BF845898F39F",
+      "title": "DLsite",
+      "host": "www.dlsite.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：MateChan · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "5083D1FD-13FB-53D8-8CAD-89BA70FE34D4",
+      "title": "恩山无线论坛",
+      "host": "www.right.com.cn",
+      "includesSubdomains": false,
+      "mode": "blockList",
+      "parameterNames": [
+        "authorid",
+        "extra"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：ous50 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "34221068-CF87-59D4-951E-FEAF793A2610",
+      "title": "Google Search",
+      "host": "www.google.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+        "q"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：MateChan · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "0047D674-DE23-5F29-8940-172B9DCFF390",
+      "title": "即刻动态",
+      "host": "m.okjike.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：TCOTC · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "2B080082-C5B1-5AF5-97CF-1324C3D55C37",
+      "title": "Netflix",
+      "host": "www.netflix.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：mitian233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "BB049F00-855E-5572-BDF0-0ECAF5E345AC",
+      "title": "h5 QQ 空间",
+      "host": "h5.qzone.qq.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+        "sharetag",
+        "appid"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：PRO-2684 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "FD047653-CA91-5787-A976-8307F1325840",
+      "title": "QQ 频道",
+      "host": "qun.qq.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+        "inviteCode"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "BE5B8A3F-4DE6-5AEB-87AA-0F3A81FB945C",
+      "title": "全民k歌",
+      "host": "static-play.kg.qq.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+        "s"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "37FEAA37-6155-5C03-956C-E014A1217C9A",
+      "title": "Reddit",
+      "host": "www.reddit.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：Dreista · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "135D399D-4646-5423-9F4F-5EB32658C3A7",
+      "title": "Spotify",
+      "host": "open.spotify.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "1856AA19-917C-529D-8473-808C71276C60",
+      "title": "淘宝/闲鱼",
+      "host": "m.tb.cn",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "B561F1AF-DD2D-5BBE-99CD-13F830361FD8",
+      "title": "腾讯视频",
+      "host": "m.v.qq.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+        "vid"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：returnL、青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "939C1DDD-3342-5FA9-8494-50AC3D5FDD22",
+      "title": "Tiktok",
+      "host": "www.tiktok.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：Mattis · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "53377D6F-A979-56F3-B439-90BB1F99DE4E",
+      "title": "微信读书",
+      "host": "weread.qq.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+        "v"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "C24D2739-5B86-5974-8971-CC9850C63C10",
+      "title": "微信公众号文章",
+      "host": "mp.weixin.qq.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+        "__biz",
+        "mid",
+        "idx",
+        "sn"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：PRO-2684 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "5BBD3AD8-D727-59E6-8D3F-303F99284839",
+      "title": "微店",
+      "host": "k.youshop10.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：kirito · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "1570AFB9-7B40-5FD3-A718-5C4A89B55FA4",
+      "title": "小红书",
+      "host": "www.xiaohongshu.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：RtYkk · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "9F3F11EC-367E-5435-8066-473B8F9C14DE",
+      "title": "YouTube一般链接",
+      "host": "www.youtube.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+        "v"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：Mosney · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "13A64472-4711-5A29-8363-18E8967313E2",
+      "title": "YouTube分享短链",
+      "host": "youtu.be",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：Monsey · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "07E64DA2-2FD5-5BE5-B8F3-D25C28EE97A4",
+      "title": "知乎",
+      "host": "www.zhihu.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "0EF7EA1A-A9BA-5329-9B1B-DFF8CD5A1553",
+      "title": "知乎文章",
+      "host": "zhuanlan.zhihu.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：TCOTC · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "C1588EDC-08F4-5347-BD4C-0E9EF0B8038A",
+      "title": "作业帮",
+      "host": "plat-miniapp.zuoyebang.com",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+        "cuid",
+        "ishit"
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：omg-xtao · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "BC4CBE0C-A189-571F-99E7-FA3F7075EF24",
+      "title": "飞客",
+      "host": "www.flyert.com.cn",
+      "includesSubdomains": false,
+      "mode": "allowList",
+      "parameterNames": [
+
+      ],
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：pplulee · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    }
+  ],
+  "regexRules": [
+    {
+      "id": "98C68C01-BB0B-5C6E-9960-CA2196E5A0E3",
+      "title": "Amazon Japan",
+      "patterns": [
+        "amazon\\.co\\.jp/.*/dp",
+        "ref=.*"
+      ],
+      "replacements": [
+        "amazon.co.jp/dp",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：MateChan · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "E9A39931-5BD2-5946-8C70-F5E80C554504",
+      "title": "哔哩哔哩视频分享",
+      "patterns": [
+        "(http|https)://(m|www)*.?bilibili.com/video",
+        "\\?.*"
+      ],
+      "replacements": [
+        "https://www.bilibili.com/video",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "9326595E-0460-5BF7-A8A6-BC81BD5043A5",
+      "title": "哔哩哔哩手机版动态分享",
+      "patterns": [
+        "m.bilibili.com/dynamic"
+      ],
+      "replacements": [
+        "t.bilibili.com"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：FTReey · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "51BF1FB6-71F8-54AA-90BE-2307235ED7CC",
+      "title": "豆瓣",
+      "patterns": [
+        "_spm_id=.*"
+      ],
+      "replacements": [
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "08FC6197-BB50-5A35-B25E-493DF66B0589",
+      "title": "E绅士表站全局（仅适用于捐赠用户）",
+      "patterns": [
+        "exhentai.org"
+      ],
+      "replacements": [
+        "e-hentai.org"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：ous50 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "303E3782-3E31-5D2B-A995-AD21EA334085",
+      "title": "fanbox",
+      "patterns": [
+        ".fanbox.cc",
+        "\\?.*"
+      ],
+      "replacements": [
+        ".fanbox.cc",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：omg-xtao · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "24CD4C86-C440-5320-B7B7-A678685C757A",
+      "title": "华为应用市场详情页转下载链接",
+      "patterns": [
+        "appgallery.huawei.com/app",
+        "\\?.*"
+      ],
+      "replacements": [
+        "appgallery.cloud.huawei.com/appdl",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：PianCat · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "5BEDFDDF-079C-5404-A02D-0F60C6DA2AD1",
+      "title": "Instagram/Threads",
+      "patterns": [
+        "\\?igsh=.*",
+        "\\?igshid=.*"
+      ],
+      "replacements": [
+        "",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：Zois, faizul726 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "919364FF-E76E-5918-95B0-8B99172ED745",
+      "title": "京东",
+      "patterns": [
+        "item.m.jd.com",
+        "\\?.*",
+        "product/"
+      ],
+      "replacements": [
+        "item.jd.com",
+        "",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "794AA106-86A9-5320-9EF6-8EF57808D446",
+      "title": "酷安",
+      "patterns": [
+        "coolapk.com",
+        "\\?.*"
+      ],
+      "replacements": [
+        "coolapk1s.com",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "6947E2F6-96D2-51F3-AEEF-3D7328896B99",
+      "title": "拼多多多人团",
+      "patterns": [
+        "yangkeduo\\.com/pincard_ask.html\\?__rp_name=brand_amazing_price_group",
+        "https?://.+\\.yangkeduo\\.com/login\\.html\\?from=(https?://.+\\.yangkeduo\\.com/.+html\\?)",
+        "\\?.*?(.+?id=.+?)&(.+?=.+)*"
+      ],
+      "replacements": [
+        "yangkeduo.com/pincard_ask.html?__rp_name=brand_amazing_price_group",
+        "$1",
+        "?$1"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：Mosney · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "B60D72A3-1356-5144-864C-8E98C29C7217",
+      "title": "Pixiv",
+      "patterns": [
+        "(www.)?pixiv.net/artworks/",
+        "$",
+        "#"
+      ],
+      "replacements": [
+        "pixiv.re/",
+        ".png",
+        "-"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "EC046447-274C-5562-8FC9-7E0AD776AF3C",
+      "title": "Pixiv长链接缩短",
+      "patterns": [
+        "member_illust.php\\?mode=medium&illust_id="
+      ],
+      "replacements": [
+        "artworks/"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：FTReey · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "FBB1D6A4-83AB-5A6C-8806-AF8C55092AF3",
+      "title": "Pixiv跳转到其他网站",
+      "patterns": [
+        "(https?://)(www\\.)?pixiv.net/jump.php\\?url="
+      ],
+      "replacements": [
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：FTReey · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "49577CD3-9106-577D-8476-1C368B818DF0",
+      "title": "QQ 空间分享链接",
+      "patterns": [
+        "https?:\\/\\/www\\.urlshare\\.cn\\/(.*&)?url=([^&]+).*"
+      ],
+      "replacements": [
+        "$2"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：PRO · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "36068FAC-29E1-5835-BC34-53BC38F65E17",
+      "title": "什么值得买",
+      "patterns": [
+        "(https://test.smzdm.com/p/\\d+)(\\?.*)|(https://.*\\.smzdm\\.com/.*/)(.*)"
+      ],
+      "replacements": [
+        "$1$3"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：HinataKato · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "71B974A8-BF5A-5798-B6D2-BA645174286B",
+      "title": "Twitter",
+      "patterns": [
+        "https?://(twitter|x).com",
+        "\\?.*"
+      ],
+      "replacements": [
+        "https://fxtwitter.com",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：qrqr · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "198320CE-55EF-5A0C-AEB7-31E1E31230C0",
+      "title": "Twitter",
+      "patterns": [
+        "https?://(twitter|x).com",
+        "\\?.*"
+      ],
+      "replacements": [
+        "https://fixupx.com",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "DC3DE2F9-0A8A-591B-8D89-3DE7C1C4B3A6",
+      "title": "Twitter UID链接优化",
+      "patterns": [
+        "twitter.com/i/user/"
+      ],
+      "replacements": [
+        "twitter.com/intent/user?user_id="
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：FTReey · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "7262FDD5-324E-5A4B-945F-77EE859768A7",
+      "title": "Twitter 去跟踪",
+      "patterns": [
+        "(http|https)://(www.)?twitter.com",
+        "\\?.*"
+      ],
+      "replacements": [
+        "https://twitter.com",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：FTReey · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "25FE675F-1C84-521D-8980-8576518776DB",
+      "title": "微博轻享版分享链接转换",
+      "patterns": [
+        "share.api.weibo.cn",
+        "share/[^%]*(weibo_id=)"
+      ],
+      "replacements": [
+        "m.weibo.cn",
+        "status/"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：三泽 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "5D223FCB-903C-5EF8-9E02-D278D741076D",
+      "title": "移动端微博用户页分享链接",
+      "patterns": [
+        "m.weibo.cn/profile"
+      ],
+      "replacements": [
+        "weibo.com/u"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：FTReey · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "AE4A258A-5446-5330-9234-4CAD87BF7079",
+      "title": "移动端微博链接去跟踪",
+      "patterns": [
+        "http(s)?://m.weibo.cn",
+        "\\?.*"
+      ],
+      "replacements": [
+        "https://m.weibo.cn",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "277E1639-F077-5063-BC37-0218E103468A",
+      "title": "Netease Cloud Music",
+      "patterns": [
+        "https?://.*\\.?music\\.163\\.com.*(id=(\\d+)).*"
+      ],
+      "replacements": [
+        "https://music.163.com/song?id=$2"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "03FEB155-C71D-5A29-BFB5-0344F1271EE6",
+      "title": "小红书",
+      "patterns": [
+        "(http|https)(://xhslink.com\\w*)",
+        "(/.*)"
+      ],
+      "replacements": [
+        "https$2",
+        "$1 "
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "BA1BC138-762E-5A42-8C08-781B64EC77B3",
+      "title": "YouTube Mobile",
+      "patterns": [
+        "(http|https)://youtu.be/"
+      ],
+      "replacements": [
+        "https://youtube.com/watch\\?v="
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：ous50 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "9CAEFABC-7D1D-584B-BB40-80BCA5FD6E7B",
+      "title": "YouTube NormalLink",
+      "patterns": [
+        "(https?://)(www\\.)?(youtube\\.com)(/watch\\?v=[a-zA-Z0-9_-]+)(\\?si=[A-Za-z0-9_-]+)"
+      ],
+      "replacements": [
+        "$1$2$3$4"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：HinataKato · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "0E8D8DF6-70EB-5DFC-B96A-A02DF9C695E0",
+      "title": "YouTube ShortLink",
+      "patterns": [
+        "(https?://)(www\\.)?(youtu\\.be)(/[A-Za-z0-9_-]+)(\\?si=[A-Za-z0-9_-]+)"
+      ],
+      "replacements": [
+        "$1$2$3$4"
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：HinataKato · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "B3B2EF02-5F46-5C4A-874E-A580C793667A",
+      "title": "知乎关怀版",
+      "patterns": [
+        "www.zhihu.com/question",
+        "\\?.*"
+      ],
+      "replacements": [
+        "www.zhihu.com/aria/question",
+        ""
+      ],
+      "caseInsensitive": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：BingoKingo · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    }
+  ],
+  "redirectRules": [
+    {
+      "id": "289B15E7-A06D-57B2-AF0A-ED356C82E744",
+      "title": "哔哩哔哩",
+      "host": "b23.tv",
+      "includesSubdomains": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "8ABBDFC0-A200-5953-8706-6A5E2DDEA89F",
+      "title": "哔哩哔哩",
+      "host": "bili2233.cn",
+      "includesSubdomains": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：Zorroblanco · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "D113D150-E4ED-53B6-A695-2F239DE4AA79",
+      "title": "Reddit",
+      "host": "www.reddit.com",
+      "includesSubdomains": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：Dreista · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "897DB2B0-77E4-565A-984C-1B4A0F32C096",
+      "title": "TikTok",
+      "host": "vm.tiktok.com",
+      "includesSubdomains": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：Mattis · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    },
+    {
+      "id": "DFC92E1A-702C-5FB4-B379-7386B9C86458",
+      "title": "Netease Cloud Music",
+      "host": "163cn.tv",
+      "includesSubdomains": false,
+      "isEnabled": true,
+      "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
+    }
+  ]
+}

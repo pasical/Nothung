@@ -1,0 +1,23 @@
+# Xcode user state
+**/xcuserdata/
+*.xcuserstate
+
+# Xcode and Swift build products
+DerivedData/
+.build/
+build/
+*.ipa
+*.dSYM
+*.dSYM.zip
+*.xcarchive
+*.xcresult
+
+# Local signing and secrets
+*.mobileprovision
+*.p12
+*.cer
+*.key
+*.env
+
+# macOS
+.DS_Store

@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Test NothungCore
+        working-directory: Packages/NothungCore
+        run: swift test
+
+      - name: Verify rule-pack conversion
+        run: |
+          ruby Tools/convert_tarnhelm_rules.rb \
+            RulePacks/Tarnhelm-GPL-3.0/SOURCE-rules.md \
+            "$RUNNER_TEMP/tarnhelm-complete.nothung.json" \
+            "$RUNNER_TEMP/manifest.json" \
+            cdf1fee3e6d47db4c8ec0aa64726ef51b8247422
+          cmp "$RUNNER_TEMP/tarnhelm-complete.nothung.json" \
+            RulePacks/Tarnhelm-GPL-3.0/tarnhelm-complete.nothung.json
+
+      - name: Validate Apple metadata
+        run: |
+          plutil -lint \
+            iOS/NothungApp/Info.plist \
+            iOS/NothungAction/Info.plist \
+            iOS/NothungApp/PrivacyInfo.xcprivacy \
+            iOS/NothungAction/PrivacyInfo.xcprivacy
