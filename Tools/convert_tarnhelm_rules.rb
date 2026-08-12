@@ -34,6 +34,13 @@ def source_note(rule, commit)
   parts.join(" · ")
 end
 
+def pretty_json(value)
+  # Ruby's bundled JSON versions disagree on whether an empty array should be
+  # rendered as `[]` or as a multi-line array. Normalize it so generated files
+  # are reproducible on local macOS and GitHub Actions runners.
+  JSON.pretty_generate(value).gsub(/\[\s*\]/, "[]") + "\n"
+end
+
 parameter_rules = []
 regex_rules = []
 redirect_rules = []
@@ -111,7 +118,7 @@ configuration = {
   "redirectRules" => redirect_rules
 }
 
-json = JSON.pretty_generate(configuration) + "\n"
+json = pretty_json(configuration)
 File.write(output_path, json)
 
 manifest = {
@@ -130,4 +137,4 @@ manifest = {
   },
   "conversionWarnings" => warnings
 }
-File.write(manifest_path, JSON.pretty_generate(manifest) + "\n")
+File.write(manifest_path, pretty_json(manifest))

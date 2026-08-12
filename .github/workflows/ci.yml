@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Test NothungCore
         working-directory: Packages/NothungCore
@@ -27,6 +27,8 @@ jobs:
             cdf1fee3e6d47db4c8ec0aa64726ef51b8247422
           cmp "$RUNNER_TEMP/tarnhelm-complete.nothung.json" \
             RulePacks/Tarnhelm-GPL-3.0/tarnhelm-complete.nothung.json
+          cmp "$RUNNER_TEMP/manifest.json" \
+            RulePacks/Tarnhelm-GPL-3.0/MANIFEST.json
 
       - name: Validate Apple metadata
         run: |

@@ -11,9 +11,7 @@
       "host": "music.apple.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：mitian233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -23,9 +21,7 @@
       "host": "tieba.baidu.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -35,9 +31,7 @@
       "host": "t.bilibili.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -60,9 +54,7 @@
       "host": "space.bilibili.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -84,9 +76,7 @@
       "host": "live.bilibili.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：青墨 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -96,9 +86,7 @@
       "host": "www.disneyplus.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：mitian233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -108,9 +96,7 @@
       "host": "www.dlsite.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：MateChan · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -145,9 +131,7 @@
       "host": "m.okjike.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：TCOTC · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -157,9 +141,7 @@
       "host": "www.netflix.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：mitian233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -206,9 +188,7 @@
       "host": "www.reddit.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：Dreista · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -218,9 +198,7 @@
       "host": "open.spotify.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -230,9 +208,7 @@
       "host": "m.tb.cn",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -254,9 +230,7 @@
       "host": "www.tiktok.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：Mattis · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -293,9 +267,7 @@
       "host": "k.youshop10.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：kirito · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -305,9 +277,7 @@
       "host": "www.xiaohongshu.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：RtYkk · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -329,9 +299,7 @@
       "host": "youtu.be",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：Monsey · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -341,9 +309,7 @@
       "host": "www.zhihu.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：lz233 · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -353,9 +319,7 @@
       "host": "zhuanlan.zhihu.com",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：TCOTC · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     },
@@ -378,9 +342,7 @@
       "host": "www.flyert.com.cn",
       "includesSubdomains": false,
       "mode": "allowList",
-      "parameterNames": [
-
-      ],
+      "parameterNames": [],
       "isEnabled": true,
       "source": "TarnhelmDocument · 作者：pplulee · GPL-3.0-only · commit cdf1fee3e6d47db4c8ec0aa64726ef51b8247422"
     }
