@@ -151,9 +151,12 @@ core_object="$objects_dir/NothungCore.o"
   -emit-executable \
   "$project_root/iOS/Shared/NothungTheme.swift" \
   "$project_root/iOS/Shared/NothungMark.swift" \
+  "$project_root/iOS/Shared/RuleConfiguration.swift" \
   "$project_root/iOS/Shared/NothungCleaning.swift" \
+  "$project_root/iOS/Shared/NothungClipboardHistory.swift" \
   "$project_root/iOS/NothungApp/RedirectResolver.swift" \
   "$project_root/iOS/NothungApp/CleanerViewModel.swift" \
+  "$project_root/iOS/NothungApp/RuleSettingsView.swift" \
   "$project_root/iOS/NothungApp/ContentView.swift" \
   "$project_root/iOS/NothungApp/NothungApp.swift" \
   "$core_object" \

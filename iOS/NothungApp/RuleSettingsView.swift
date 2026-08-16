@@ -20,6 +20,7 @@ struct RuleSettingsView: View {
     var body: some View {
         Form {
             behaviorSection
+            keyboardSection
             ruleCategoriesSection
             transferSection
         }
@@ -64,6 +65,21 @@ struct RuleSettingsView: View {
             Button("好", role: .cancel) {}
         } message: {
             Text(errorMessage ?? statusMessage ?? "")
+        }
+    }
+
+    private var keyboardSection: some View {
+        Section("输入方式") {
+            NavigationLink {
+                KeyboardSettingsView()
+            } label: {
+                RuleCategoryLabel(
+                    icon: "keyboard",
+                    title: "Nothung 输入法",
+                    explanation: "自动捕捉新剪贴板，清理后保存，并可从最近记录直接插入。",
+                    count: NothungClipboardHistoryStorage.load().count
+                )
+            }
         }
     }
 
@@ -183,6 +199,110 @@ struct RuleSettingsView: View {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+}
+
+private struct KeyboardSettingsView: View {
+    @State private var entries: [NothungClipboardEntry] = []
+    @State private var errorMessage: String?
+
+    var body: some View {
+        Form {
+            Section {
+                instruction("1", "打开 iPhone 设置 → 通用 → 键盘 → 键盘。")
+                instruction("2", "选择“添加新键盘”，然后添加 Nothung。")
+                instruction("3", "点进 Nothung，开启“允许完全访问”，才能在键盘内读取当前剪贴板、写入共享记录，并按重定向规则联网展开短链。")
+
+                Button {
+                    guard let url = URL(string: UIApplication.openSettingsURLString) else {
+                        return
+                    }
+                    UIApplication.shared.open(url)
+                } label: {
+                    Label("打开 Nothung 系统设置", systemImage: "gear")
+                }
+            } header: {
+                Text("启用输入法")
+            } footer: {
+                Text("完全访问后，Nothung 只在键盘可见期间检查并自动清理新的剪贴板；收起或切换键盘后立即停止。查看和插入已有记录不依赖网络。")
+            }
+
+            Section {
+                if entries.isEmpty {
+                    Text("还没有记录。在主 App 粘贴后清理、使用分享扩展，或开启 Nothung 键盘让它自动捕捉新的剪贴板即可加入。")
+                        .foregroundStyle(.secondary)
+                } else {
+                    ForEach(entries.prefix(5)) { entry in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(entry.cleaned)
+                                .font(.system(.caption, design: .monospaced))
+                                .lineLimit(2)
+                            Text(entry.capturedAt, style: .relative)
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+
+                    Button(role: .destructive) {
+                        do {
+                            try NothungClipboardHistoryStorage.clear()
+                            reload()
+                        } catch {
+                            errorMessage = error.localizedDescription
+                        }
+                    } label: {
+                        Label("清空全部记录", systemImage: "trash")
+                    }
+                }
+            } header: {
+                Text("剪贴板集合 · \(entries.count)")
+            } footer: {
+                Text("最多保存 20 条原文和清理结果，只保存在设备上；相同内容会自动去重。长按键盘中的条目可显示原文或删除单条。")
+            }
+
+            Section("系统限制") {
+                Text("密码框、电话号码键盘，以及主动禁用第三方键盘的 App 不会显示 Nothung。这是 iOS 的系统限制。")
+                    .foregroundStyle(.secondary)
+                if !NothungClipboardHistoryStorage.usesSharedContainer {
+                    Label(
+                        "当前签名没有可用的 App Group；主 App 与输入法会分别保存记录，不能互相同步。请在 Xcode 中为三个 target 配置同一个 App Group。",
+                        systemImage: "exclamationmark.triangle"
+                    )
+                    .foregroundStyle(.orange)
+                }
+            }
+        }
+        .navigationTitle("Nothung 输入法")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear(perform: reload)
+        .refreshable { reload() }
+        .alert(
+            "无法更新剪贴板集合",
+            isPresented: Binding(
+                get: { errorMessage != nil },
+                set: { if !$0 { errorMessage = nil } }
+            )
+        ) {
+            Button("好", role: .cancel) {}
+        } message: {
+            Text(errorMessage ?? "")
+        }
+    }
+
+    private func instruction(_ number: String, _ text: String) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text(number)
+                .font(.caption.monospacedDigit().weight(.bold))
+                .foregroundStyle(.white)
+                .frame(width: 24, height: 24)
+                .background(NothungPalette.accent, in: Circle())
+            Text(text)
+        }
+        .padding(.vertical, 2)
+    }
+
+    private func reload() {
+        entries = NothungClipboardHistoryStorage.load()
     }
 }
 
@@ -355,7 +475,7 @@ private struct RedirectRulesView: View {
     var body: some View {
         List(selection: $selection) {
             Section {
-                Text("重定向规则是联网许可列表。命中后，主 App 与“使用 Nothung 复制”会跟随最多五次 HTTPS 跳转，再清理最终链接。")
+                Text("重定向规则是联网许可列表。命中后，主 App、“使用 Nothung 复制”和键盘可见期间的自动捕捉流程会跟随最多五次 HTTPS 跳转，再清理最终链接。")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }

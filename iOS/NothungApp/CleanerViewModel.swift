@@ -16,6 +16,7 @@ final class CleanerViewModel: ObservableObject {
     private var activeRedirectRequestID: UUID?
     private var redirectTask: Task<RedirectResolution, Error>?
     private let redirectResolver: any RedirectResolving
+    private var historySourceInput: String?
 
     init(redirectResolver: any RedirectResolving = RedirectResolver()) {
         self.redirectResolver = redirectResolver
@@ -38,11 +39,19 @@ final class CleanerViewModel: ObservableObject {
 
     func acceptPaste(_ values: [String]) {
         guard let first = values.first else { return }
+        historySourceInput = first
         input = first
         invalidateOutput()
         if NothungRuleStorage.load().cleanImmediatelyAfterPaste {
             clean()
         }
+    }
+
+    func inputDidChange() {
+        if input != historySourceInput {
+            historySourceInput = nil
+        }
+        invalidateOutput()
     }
 
     func clean() {
@@ -56,6 +65,7 @@ final class CleanerViewModel: ObservableObject {
         do {
             output = try NothungCleaningService.clean(input)
             errorMessage = nil
+            if let output { recordInHistory(output) }
             let configuration = NothungRuleStorage.load()
             let shouldAutomaticallyExpand = output
                 .flatMap(NothungCleaningService.singleWebURL(in:))
@@ -83,12 +93,14 @@ final class CleanerViewModel: ObservableObject {
 
     func clear() {
         input = ""
+        historySourceInput = nil
         invalidateOutput()
     }
 
     func copyOutput() {
         guard let output else { return }
         UIPasteboard.general.string = output.cleaned
+        recordInHistory(output, force: true)
         copied = true
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) { [weak self] in
@@ -166,6 +178,7 @@ final class CleanerViewModel: ObservableObject {
                 detectedURLCount: finalOutput.detectedURLCount,
                 inputKind: finalOutput.inputKind
             )
+            if let output { recordInHistory(output) }
             redirectMessage = "已展开 \(resolution.hops.count) 次重定向，并再次清理最终地址。"
             if copyWhenFinished { copyOutput() }
         } catch is CancellationError {
@@ -186,5 +199,16 @@ final class CleanerViewModel: ObservableObject {
         redirectHops = []
         redirectMessage = nil
         redirectErrorMessage = nil
+    }
+
+    private func recordInHistory(
+        _ output: NothungCleaningOutput,
+        force: Bool = false
+    ) {
+        guard force || historySourceInput == input else { return }
+        _ = try? NothungClipboardHistoryStorage.record(
+            original: historySourceInput ?? input,
+            cleaned: output.cleaned
+        )
     }
 }

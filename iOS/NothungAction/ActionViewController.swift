@@ -51,6 +51,10 @@ final class ActionViewController: UIViewController {
 
                 model.updateProgress("正在写入剪贴板…")
                 try await writeClipboard(output.cleaned)
+                _ = try? NothungClipboardHistoryStorage.record(
+                    original: input,
+                    cleaned: output.cleaned
+                )
                 copiedValue = output.cleaned
                 model.markCopied()
             } catch {

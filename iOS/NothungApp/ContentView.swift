@@ -41,7 +41,7 @@ struct ContentView: View {
                             model.invalidateOutput()
                         }
                     } label: {
-                        Label("清理规则", systemImage: "slider.horizontal.3")
+                        Label("设置", systemImage: "slider.horizontal.3")
                     }
                 }
                 ToolbarItemGroup(placement: .keyboard) {
@@ -138,7 +138,7 @@ struct ContentView: View {
                     .frame(minHeight: 116)
                     .focused($inputIsFocused)
                     .onChange(of: model.input) { _, _ in
-                        model.invalidateOutput()
+                        model.inputDidChange()
                     }
                     .accessibilityLabel("待清理的链接或文本")
             }
@@ -403,7 +403,7 @@ struct ContentView: View {
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(NothungPalette.ink)
 
-                    Text("参数与正则清理在本地完成。命中你启用的重定向规则时会自动访问目标网站；其他链接只有在你点击“展开短链或重定向”并确认后才联网。Nothung 不会自动读取剪贴板。")
+                    Text("参数与正则清理在本地完成。Nothung 不在后台读取剪贴板；开启完全访问后，键盘只在可见期间自动捕捉新文本，收起后立即停止。命中重定向规则时才会访问目标网站。")
                         .font(.footnote)
                         .foregroundStyle(NothungPalette.muted)
                         .fixedSize(horizontal: false, vertical: true)
@@ -431,29 +431,29 @@ private struct PrivacyStatementView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     VStack(alignment: .leading, spacing: 8) {
-                        NothungPhaseLabel(text: "生效日期 2026-08-11")
+                        NothungPhaseLabel(text: "生效日期 2026-08-16")
                         Text("Nothung 隐私说明")
                             .font(.system(.largeTitle, design: .serif, weight: .semibold))
                             .foregroundStyle(NothungPalette.ink)
-                        Text("Nothung 在设备上执行参数与正则清理，不会把内容发送给开发者。命中你启用的重定向规则时，主 App 与分享扩展会把该完整 URL 发送给链接目标；其他链接仅在你于主 App 中明确确认后联网。快捷指令保持本地处理。")
+                        Text("Nothung 在设备上执行参数与正则清理，不会把内容发送给开发者。主 App 和分享扩展在你明确操作时取得内容；获完全访问的 Nothung 键盘在可见期间自动捕捉新剪贴板。命中重定向规则时，完整 URL 会发送给链接目标。快捷指令保持本地处理。")
                             .foregroundStyle(NothungPalette.muted)
                     }
 
                     privacySection(
                         title: "数据收集",
-                        body: "GitHub 仓库中的 Nothung 版本不收集、存储、出售或共享个人数据。它不包含账户、广告、分析、遥测或第三方 SDK，也不会保留已清理链接的历史记录。修改后的派生构建应根据实际行为提供自己的说明。"
+                        body: "GitHub 仓库中的 Nothung 版本不会把个人数据发送给开发者，也不会出售或向第三方共享数据。它不包含账户、广告、分析、遥测或第三方 SDK。仅会在设备上保存最多 20 条由你明确操作产生的原文与清理结果。修改后的派生构建应根据实际行为提供自己的说明。"
                     )
                     privacySection(
                         title: "网络访问",
-                        body: "参数过滤和正则替换完全在本地进行。命中你启用的重定向规则时，主 App 与分享扩展会自动通过 HTTPS 访问当前 URL 和最多五个重定向目标；其他链接仅在主 App 逐次确认后展开。因此相关网站会收到你的 IP 地址、完整 URL 和常规网络元数据。解析使用临时会话，不附带 Cookie、Authorization 或登录凭据，收到响应头后立即停止读取响应体。Nothung 不会自动打开最终链接。"
+                        body: "参数过滤和正则替换完全在本地进行。命中你启用的重定向规则时，主 App、分享扩展，以及键盘可见期间的自动捕捉流程会通过 HTTPS 访问当前 URL 和最多五个重定向目标；其他链接仅在主 App 逐次确认后展开。因此相关网站会收到你的 IP 地址、完整 URL 和常规网络元数据。解析使用临时会话，不附带 Cookie、Authorization 或登录凭据，收到响应头后立即停止读取响应体。Nothung 不会自动打开最终链接。"
                     )
                     privacySection(
                         title: "剪贴板",
-                        body: "Nothung 只会在你明确使用系统“粘贴”控件后读取剪贴板内容。你从其他 App 的系统分享菜单选择“使用 Nothung 复制”时，扩展会接收该 App 提供的内容，清理后写入剪贴板。成功页的“分享”仅把清理结果交给你选择的系统分享目标。它不会先读取或保存原剪贴板，也不会在后台监控剪贴板。"
+                        body: "Nothung 不在后台监控剪贴板。开启“允许完全访问”后，键盘只在屏幕上可见期间检查剪贴板变化，自动读取、清理并保存新文本；键盘收起或切换后即停止。主 App 仍只通过可见的系统“粘贴”控件读取你明确选择的内容，分享扩展只接收宿主 App 提供的内容。Nothung 会在本机保存最近 20 条原文和清理结果，供键盘再次插入；可在设置中随时全部清空。"
                     )
                     privacySection(
                         title: "规则设置",
-                        body: "自定义规则和处理开关仅保存在设备上的 Nothung App Group 中，用于在主 App、Action Extension 与快捷指令之间共享配置。Nothung 不会上传这些设置；导入或复制配置只会在你明确操作时发生。"
+                        body: "自定义规则、处理开关和有限的剪贴板集合仅保存在设备上的 Nothung App Group 中，用于主 App、Action Extension、键盘与快捷指令。Nothung 不会上传这些数据；导入、导出或清空只会在你明确操作时发生。"
                     )
                     privacySection(
                         title: "变更与联系",

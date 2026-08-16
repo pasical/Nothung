@@ -33,7 +33,24 @@ jobs:
       - name: Validate Apple metadata
         run: |
           plutil -lint \
+            iOS/Nothung.xcodeproj/project.pbxproj \
             iOS/NothungApp/Info.plist \
             iOS/NothungAction/Info.plist \
+            iOS/NothungKeyboard/Info.plist \
             iOS/NothungApp/PrivacyInfo.xcprivacy \
-            iOS/NothungAction/PrivacyInfo.xcprivacy
+            iOS/NothungAction/PrivacyInfo.xcprivacy \
+            iOS/NothungKeyboard/PrivacyInfo.xcprivacy \
+            iOS/NothungApp/Nothung.entitlements \
+            iOS/NothungAction/NothungAction.entitlements \
+            iOS/NothungKeyboard/NothungKeyboard.entitlements
+
+      - name: Build iOS app and extensions
+        run: |
+          xcodebuild \
+            -project iOS/Nothung.xcodeproj \
+            -scheme Nothung \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/NothungDerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            build

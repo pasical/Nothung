@@ -1,5 +1,6 @@
 name: Nothung
 options:
+  minimumXcodeGenVersion: 2.46.0
   bundleIdPrefix: dev.nothung
   deploymentTarget:
     iOS: "17.0"
@@ -34,8 +35,28 @@ targets:
       - path: NothungApp/PrivacyInfo.xcprivacy
     info:
       path: NothungApp/Info.plist
+      properties:
+        CFBundleDisplayName: Nothung
+        CFBundleLocalizations: [zh-Hans]
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
+        LSApplicationCategoryType: public.app-category.utilities
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
     entitlements:
       path: NothungApp/Nothung.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.dev.nothung.shared
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: dev.nothung.app
@@ -44,6 +65,8 @@ targets:
     dependencies:
       - package: NothungCore
       - target: NothungAction
+        embed: true
+      - target: NothungKeyboard
         embed: true
 
   NothungAction:
@@ -63,8 +86,26 @@ targets:
       - path: NothungAction/PrivacyInfo.xcprivacy
     info:
       path: NothungAction/Info.plist
+      properties:
+        CFBundleDisplayName: 使用 Nothung 复制
+        CFBundleLocalizations: [zh-Hans]
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionActionWantsFullScreenPresentation: false
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationDictionaryVersion: 2
+              NSExtensionActivationSupportsText: true
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+              NSExtensionActivationUsesStrictMatching: true
+          NSExtensionPointIdentifier: com.apple.ui-services
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ActionViewController
     entitlements:
       path: NothungAction/NothungAction.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.dev.nothung.shared
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: dev.nothung.app.action
@@ -72,6 +113,47 @@ targets:
         SKIP_INSTALL: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: ActionIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    dependencies:
+      - package: NothungCore
+
+  NothungKeyboard:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: NothungKeyboard
+        excludes:
+          - Info.plist
+          - NothungKeyboard.entitlements
+          - PrivacyInfo.xcprivacy
+      - path: Shared
+      - path: NothungApp/RedirectResolver.swift
+    resources:
+      - path: NothungKeyboard/PrivacyInfo.xcprivacy
+    info:
+      path: NothungKeyboard/Info.plist
+      properties:
+        CFBundleDisplayName: Nothung
+        CFBundleLocalizations: [zh-Hans]
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionAttributes:
+            IsASCIICapable: true
+            PrefersRightToLeft: false
+            PrimaryLanguage: zh-Hans
+            RequestsOpenAccess: true
+          NSExtensionPointIdentifier: com.apple.keyboard-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).KeyboardViewController
+    entitlements:
+      path: NothungKeyboard/NothungKeyboard.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.dev.nothung.shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.nothung.app.keyboard
+        APPLICATION_EXTENSION_API_ONLY: YES
+        SKIP_INSTALL: YES
     dependencies:
       - package: NothungCore
 
@@ -87,3 +169,25 @@ targets:
     dependencies:
       - target: Nothung
       - package: NothungCore
+
+schemes:
+  Nothung:
+    build:
+      targets:
+        Nothung: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - name: NothungTests
+          parallelizable: false
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+      revealArchiveInOrganizer: true
+    management:
+      shared: true
