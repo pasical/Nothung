@@ -73,11 +73,10 @@ struct RuleSettingsView: View {
             NavigationLink {
                 KeyboardSettingsView()
             } label: {
-                RuleCategoryLabel(
+                SettingsDestinationLabel(
                     icon: "keyboard",
                     title: "Nothung 输入法",
-                    explanation: "自动捕捉新剪贴板，清理后保存，并可从最近记录直接插入。",
-                    count: NothungClipboardHistoryStorage.load().count
+                    explanation: "启用输入法、完全访问与最近记录"
                 )
             }
         }
@@ -85,7 +84,7 @@ struct RuleSettingsView: View {
 
     private var behaviorSection: some View {
         Section {
-            Toggle("启用 Nothung 通用追踪参数", isOn: $configuration.useBuiltInTrackingRules)
+            Toggle("启用通用追踪参数", isOn: $configuration.useBuiltInTrackingRules)
             Toggle("粘贴后立即清理", isOn: $configuration.cleanImmediatelyAfterPaste)
             Toggle("清理后自动复制", isOn: $configuration.copyAfterCleaning)
             Toggle(
@@ -95,7 +94,7 @@ struct RuleSettingsView: View {
         } header: {
             Text("处理方式")
         } footer: {
-            Text("参数规则先执行，然后依列表顺序执行正则规则。“使用 Nothung 复制”始终会清理并写入剪贴板。")
+            Text("参数规则先执行，再依列表顺序执行正则规则。")
         }
     }
 
@@ -104,50 +103,41 @@ struct RuleSettingsView: View {
             NavigationLink {
                 ParameterRulesView(rules: $configuration.parameterRules)
             } label: {
-                RuleCategoryLabel(
+                SettingsDestinationLabel(
                     icon: "line.3.horizontal.decrease.circle",
                     title: "参数规则",
-                    explanation: "按域名保留或移除 URL 问号后的查询参数。",
-                    count: configuration.parameterRules.count
+                    explanation: "按域名保留或移除查询参数"
                 )
             }
 
             NavigationLink {
                 RegexRulesView(rules: $configuration.regexRules)
             } label: {
-                RuleCategoryLabel(
+                SettingsDestinationLabel(
                     icon: "text.badge.star",
                     title: "正则规则",
-                    explanation: "依次替换域名、路径或参数，用于复杂链接整形。",
-                    count: configuration.regexRules.count
+                    explanation: "依次替换域名、路径或参数"
                 )
             }
 
             NavigationLink {
                 RedirectRulesView(rules: $configuration.redirectRules)
             } label: {
-                RuleCategoryLabel(
+                SettingsDestinationLabel(
                     icon: "arrow.triangle.branch",
                     title: "重定向规则",
-                    explanation: "命中短链域名时允许联网跟随跳转，再清理最终地址。",
-                    count: configuration.redirectRules.count
+                    explanation: "指定允许联网展开的短链域名"
                 )
             }
         } header: {
             Text("清理规则")
         } footer: {
-            Text("点进类别后可新增、排序、启停或左滑删除单条规则。")
+            Text("可在各类别中新增、排序、启停或删除规则。")
         }
     }
 
     private var transferSection: some View {
-        Section("导入与导出") {
-            Button {
-                isImportingFile = true
-            } label: {
-                Label("从文件导入规则包", systemImage: "doc.badge.plus")
-            }
-
+        Section {
             PasteButton(payloadType: String.self) { values in
                 guard let document = values.first else { return }
                 do {
@@ -157,6 +147,12 @@ struct RuleSettingsView: View {
                 }
             }
             .labelStyle(.titleAndIcon)
+
+            Button {
+                isImportingFile = true
+            } label: {
+                Label("从文件导入规则包", systemImage: "doc.badge.plus")
+            }
 
             Button {
                 do {
@@ -176,10 +172,10 @@ struct RuleSettingsView: View {
             } label: {
                 Label("恢复默认规则", systemImage: "arrow.counterclockwise")
             }
-
-            Text("支持 Nothung 配置 JSON 和用户主动粘贴的兼容 Base64 规则。导入完整配置会替换当前草稿。")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+        } header: {
+            Text("导入与导出")
+        } footer: {
+            Text("支持 Nothung 配置 JSON 和兼容的 Base64 规则。导入完整配置会替换当前草稿。")
         }
     }
 
@@ -209,9 +205,8 @@ private struct KeyboardSettingsView: View {
     var body: some View {
         Form {
             Section {
-                instruction("1", "打开 iPhone 设置 → 通用 → 键盘 → 键盘。")
-                instruction("2", "选择“添加新键盘”，然后添加 Nothung。")
-                instruction("3", "点进 Nothung，开启“允许完全访问”，才能在键盘内读取当前剪贴板、写入共享记录，并按重定向规则联网展开短链。")
+                Text("前往“设置”→“通用”→“键盘”→“键盘”，选择“添加新键盘”并添加 Nothung。")
+                Text("打开 Nothung，开启“允许完全访问”，即可自动清理剪贴板并按规则展开短链。")
 
                 Button {
                     guard let url = URL(string: UIApplication.openSettingsURLString) else {
@@ -219,7 +214,7 @@ private struct KeyboardSettingsView: View {
                     }
                     UIApplication.shared.open(url)
                 } label: {
-                    Label("打开 Nothung 系统设置", systemImage: "gear")
+                    Label("打开系统设置", systemImage: "gear")
                 }
             } header: {
                 Text("启用输入法")
@@ -229,7 +224,7 @@ private struct KeyboardSettingsView: View {
 
             Section {
                 if entries.isEmpty {
-                    Text("还没有记录。在主 App 粘贴后清理、使用分享扩展，或开启 Nothung 键盘让它自动捕捉新的剪贴板即可加入。")
+                    Text("还没有最近记录。使用主 App、分享扩展或 Nothung 输入法清理内容后，会显示在这里。")
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(entries.prefix(5)) { entry in
@@ -255,7 +250,7 @@ private struct KeyboardSettingsView: View {
                     }
                 }
             } header: {
-                Text("剪贴板集合 · \(entries.count)")
+                Text("最近记录")
             } footer: {
                 Text("最多保存 20 条原文和清理结果，只保存在设备上；相同内容会自动去重。长按键盘中的条目可显示原文或删除单条。")
             }
@@ -265,14 +260,14 @@ private struct KeyboardSettingsView: View {
                     .foregroundStyle(.secondary)
                 if !NothungClipboardHistoryStorage.usesSharedContainer {
                     Label(
-                        "当前签名没有可用的 App Group；主 App 与输入法会分别保存记录，不能互相同步。请在 Xcode 中为三个 target 配置同一个 App Group。",
+                        "当前版本中，主 App 与输入法的最近记录不会同步。",
                         systemImage: "exclamationmark.triangle"
                     )
                     .foregroundStyle(.orange)
                 }
             }
         }
-        .navigationTitle("Nothung 输入法")
+        .navigationTitle("输入法")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: reload)
         .refreshable { reload() }
@@ -289,53 +284,31 @@ private struct KeyboardSettingsView: View {
         }
     }
 
-    private func instruction(_ number: String, _ text: String) -> some View {
-        HStack(alignment: .top, spacing: 12) {
-            Text(number)
-                .font(.caption.monospacedDigit().weight(.bold))
-                .foregroundStyle(.white)
-                .frame(width: 24, height: 24)
-                .background(NothungPalette.accent, in: Circle())
-            Text(text)
-        }
-        .padding(.vertical, 2)
-    }
-
     private func reload() {
         entries = NothungClipboardHistoryStorage.load()
     }
 }
 
-private struct RuleCategoryLabel: View {
+private struct SettingsDestinationLabel: View {
     let icon: String
     let title: String
     let explanation: String
-    let count: Int
 
     var body: some View {
-        HStack(spacing: 13) {
+        HStack(spacing: 12) {
             Image(systemName: icon)
-                .font(.title3.weight(.semibold))
+                .font(.body.weight(.medium))
                 .foregroundStyle(NothungPalette.accent)
-                .frame(width: 34, height: 34)
-                .background(NothungPalette.accentWash, in: RoundedRectangle(cornerRadius: 10))
+                .frame(width: 24)
 
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(title)
-                        .font(.body.weight(.semibold))
-                    Spacer()
-                    Text("\(count)")
-                        .font(.caption.monospacedDigit())
-                        .foregroundStyle(.secondary)
-                }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
                 Text(explanation)
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .padding(.vertical, 5)
+        .padding(.vertical, 3)
     }
 }
 
@@ -352,7 +325,7 @@ private struct ParameterRulesView: View {
                     .foregroundStyle(.secondary)
             }
 
-            Section("规则 · \(rules.count)") {
+            Section("规则") {
                 ForEach(rules) { rule in
                     NavigationLink {
                         if let index = rules.firstIndex(where: { $0.id == rule.id }) {
@@ -418,7 +391,7 @@ private struct RegexRulesView: View {
                     .foregroundStyle(.secondary)
             }
 
-            Section("规则 · \(rules.count)") {
+            Section("规则") {
                 ForEach(rules) { rule in
                     NavigationLink {
                         if let index = rules.firstIndex(where: { $0.id == rule.id }) {
@@ -480,7 +453,7 @@ private struct RedirectRulesView: View {
                     .foregroundStyle(.secondary)
             }
 
-            Section("规则 · \(rules.count)") {
+            Section("规则") {
                 ForEach(rules) { rule in
                     NavigationLink {
                         if let index = rules.firstIndex(where: { $0.id == rule.id }) {
@@ -553,9 +526,9 @@ private struct ParameterRuleEditor: View {
                     .font(.system(.body, design: .monospaced))
                     .frame(minHeight: 150)
             } header: {
-                Text("参数名称 · 每行一个")
+                Text("参数名称")
             } footer: {
-                Text("留空会移除该域名的全部参数。")
+                Text("每行一个。留空会移除该域名的全部参数。")
             }
 
             RuleSourceSection(source: rule.source)
@@ -581,9 +554,9 @@ private struct RegexRuleEditor: View {
                     .font(.system(.body, design: .monospaced))
                     .frame(minHeight: 150)
             } header: {
-                Text("正则 · 每行一步")
+                Text("正则")
             } footer: {
-                Text("首行匹配不到时跳过整条规则。")
+                Text("每行一步。首行匹配不到时跳过整条规则。")
             }
 
             Section {
@@ -591,9 +564,9 @@ private struct RegexRuleEditor: View {
                     .font(.system(.body, design: .monospaced))
                     .frame(minHeight: 150)
             } header: {
-                Text("替换内容 · 与正则逐行对应")
+                Text("替换内容")
             } footer: {
-                Text("可保留空行表示删除匹配内容。每一步结果都必须仍是 HTTP(S) URL。")
+                Text("与正则逐行对应；空行表示删除匹配内容。每一步结果都必须仍是 HTTP(S) URL。")
             }
 
             RuleSourceSection(source: rule.source)
