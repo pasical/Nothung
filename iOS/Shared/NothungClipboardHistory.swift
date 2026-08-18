@@ -29,9 +29,9 @@ enum NothungClipboardHistoryStorage {
         var errorDescription: String? {
             switch self {
             case .directoryUnavailable:
-                return "无法访问 Nothung 的本地剪贴板集合。"
+                return String(localized: "无法访问 Nothung 的本地剪贴板集合。")
             case .invalidEntry:
-                return "这条内容为空或过长，不能加入剪贴板集合。"
+                return String(localized: "这条内容为空或过长，不能加入剪贴板集合。")
             }
         }
     }

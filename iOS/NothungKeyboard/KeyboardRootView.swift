@@ -40,7 +40,11 @@ struct KeyboardRootView: View {
             NothungMark(size: 27)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(model.isEditorPresented ? "手动添加" : "NOTHUNG")
+                Text(
+                    model.isEditorPresented
+                        ? String(localized: "手动添加")
+                        : "NOTHUNG"
+                )
                     .font(.system(size: 11, weight: .bold, design: .rounded))
                     .tracking(model.isEditorPresented ? 0.2 : 1.5)
                     .foregroundStyle(NothungPalette.ink)
@@ -124,9 +128,11 @@ struct KeyboardRootView: View {
             return statusMessage
         }
         if model.isEditorPresented {
-            return "输入后清理并加入"
+            return String(localized: "输入后清理并加入")
         }
-        return model.hasFullAccess ? "自动捕捉剪贴板" : "开启完全访问以自动捕捉"
+        return model.hasFullAccess
+            ? String(localized: "自动捕捉剪贴板")
+            : String(localized: "开启完全访问以自动捕捉")
     }
 
     @ViewBuilder
@@ -172,14 +178,18 @@ struct KeyboardRootView: View {
                 .font(.system(size: 28, weight: .medium))
                 .foregroundStyle(NothungPalette.accent)
 
-            Text(model.hasFullAccess ? "等待新的剪贴板" : "需要完全访问")
+            Text(
+                model.hasFullAccess
+                    ? String(localized: "等待新的剪贴板")
+                    : String(localized: "需要完全访问")
+            )
                 .font(.system(size: 13, weight: .semibold, design: .rounded))
                 .foregroundStyle(NothungPalette.ink)
 
             Text(
                 model.hasFullAccess
-                    ? "复制文本后切回这里，会自动清理并加入。"
-                    : "开启完全访问后，复制的文本会自动清理并加入。"
+                    ? String(localized: "复制文本后切回这里，会自动清理并加入。")
+                    : String(localized: "开启完全访问后，复制的文本会自动清理并加入。")
             )
             .font(.system(size: 10.5, weight: .medium))
             .foregroundStyle(NothungPalette.muted)
@@ -449,7 +459,15 @@ struct KeyboardRootView: View {
                     onInterfaceAction()
                     Task { await model.submitManualEntry() }
                 } label: {
-                    Label(model.isProcessing ? "处理中" : "添加", systemImage: "plus")
+                    Label {
+                        Text(
+                            model.isProcessing
+                                ? String(localized: "处理中")
+                                : String(localized: "添加")
+                        )
+                    } icon: {
+                        Image(systemName: "plus")
+                    }
                         .font(.system(size: 11, weight: .bold))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
@@ -466,7 +484,7 @@ struct KeyboardRootView: View {
     }
 
     private func headerButton<Label: View>(
-        accessibilityLabel: String,
+        accessibilityLabel: LocalizedStringKey,
         action: @escaping () -> Void,
         @ViewBuilder label: () -> Label
     ) -> some View {
@@ -667,7 +685,7 @@ private enum KeyRepeatProfile {
 
 private struct RepeatingKeyboardKey: View {
     let systemName: String
-    let accessibilityLabel: String
+    let accessibilityLabel: LocalizedStringKey
     let width: CGFloat
     let profile: KeyRepeatProfile
     let action: () -> Void

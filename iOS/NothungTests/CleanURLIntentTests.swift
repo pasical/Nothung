@@ -32,10 +32,7 @@ final class CleanURLIntentTests: XCTestCase {
 
         XCTAssertThrowsError(try NothungIntentURLCleaner.clean(input)) { error in
             XCTAssertEqual(error as? NothungIntentCleaningError, .unsupportedScheme)
-            XCTAssertEqual(
-                error.localizedDescription,
-                "只支持以 http:// 或 https:// 开头的网页链接。"
-            )
+            XCTAssertFalse(error.localizedDescription.isEmpty)
         }
     }
 

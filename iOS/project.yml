@@ -13,6 +13,7 @@ packages:
 settings:
   base:
     SWIFT_VERSION: "5.0"
+    SWIFT_EMIT_LOC_STRINGS: YES
     IPHONEOS_DEPLOYMENT_TARGET: "17.0"
     TARGETED_DEVICE_FAMILY: "1,2"
     MARKETING_VERSION: "0.1.0"
@@ -33,11 +34,12 @@ targets:
     resources:
       - path: NothungApp/Assets.xcassets
       - path: NothungApp/PrivacyInfo.xcprivacy
+      - path: NothungApp/AppShortcuts.xcstrings
     info:
       path: NothungApp/Info.plist
       properties:
         CFBundleDisplayName: Nothung
-        CFBundleLocalizations: [zh-Hans]
+        CFBundleLocalizations: [en, zh-Hans]
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
@@ -84,11 +86,12 @@ targets:
     resources:
       - path: NothungAction/Assets.xcassets
       - path: NothungAction/PrivacyInfo.xcprivacy
+      - path: NothungAction/InfoPlist.xcstrings
     info:
       path: NothungAction/Info.plist
       properties:
-        CFBundleDisplayName: 使用 Nothung 复制
-        CFBundleLocalizations: [zh-Hans]
+        CFBundleDisplayName: Copy with Nothung
+        CFBundleLocalizations: [en, zh-Hans]
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
@@ -133,7 +136,7 @@ targets:
       path: NothungKeyboard/Info.plist
       properties:
         CFBundleDisplayName: Nothung
-        CFBundleLocalizations: [zh-Hans]
+        CFBundleLocalizations: [en, zh-Hans]
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:

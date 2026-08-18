@@ -34,13 +34,13 @@ enum NothungCleaningService {
         var errorDescription: String? {
             switch self {
             case .noWebURL:
-                return "没有找到以 http:// 或 https:// 开头的链接。"
+                return String(localized: "没有找到以 http:// 或 https:// 开头的链接。")
             case .tooLong:
-                return "内容超过 100,000 个字符，请缩短后再试。"
+                return String(localized: "内容超过 100,000 个字符，请缩短后再试。")
             case .embeddedCredentials:
-                return "链接包含用户名或密码。为避免误分享凭据，Nothung 不会处理这类链接。"
+                return String(localized: "链接包含用户名或密码。为避免误分享凭据，Nothung 不会处理这类链接。")
             case .invalidWebURL:
-                return "这个网页链接无法安全解析，请检查地址后重试。"
+                return String(localized: "这个网页链接无法安全解析，请检查地址后重试。")
             }
         }
     }

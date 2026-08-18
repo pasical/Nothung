@@ -161,8 +161,8 @@ struct NothungParameterRule: Identifiable, Codable, Equatable, Sendable {
 
         var title: String {
             switch self {
-            case .allowList: return "白名单"
-            case .blockList: return "黑名单"
+            case .allowList: return String(localized: "白名单")
+            case .blockList: return String(localized: "黑名单")
             }
         }
 
@@ -175,7 +175,7 @@ struct NothungParameterRule: Identifiable, Codable, Equatable, Sendable {
     }
 
     var id = UUID()
-    var title = "新参数规则"
+    var title = String(localized: "新参数规则")
     var host = ""
     var includesSubdomains = false
     var mode: Mode = .blockList
@@ -186,7 +186,7 @@ struct NothungParameterRule: Identifiable, Codable, Equatable, Sendable {
 
 struct NothungRegexRule: Identifiable, Codable, Equatable, Sendable {
     var id = UUID()
-    var title = "新正则规则"
+    var title = String(localized: "新正则规则")
     var patterns: [String] = [""]
     var replacements: [String] = [""]
     var caseInsensitive = false
@@ -195,7 +195,7 @@ struct NothungRegexRule: Identifiable, Codable, Equatable, Sendable {
 
     static let nothungXTrackingCleanup = NothungRegexRule(
         id: UUID(uuidString: "A24C7FC2-61D6-4EE9-A8BC-9AC7911BE001")!,
-        title: "X / Twitter 去除跟踪参数",
+        title: String(localized: "X / Twitter 去除跟踪参数"),
         patterns: [
             "(http|https)://(www\\.)?(twitter|x)\\.com",
             "\\?.*",
@@ -204,12 +204,12 @@ struct NothungRegexRule: Identifiable, Codable, Equatable, Sendable {
             "https://x.com",
             "",
         ],
-        source: "Nothung · 内置规则"
+        source: String(localized: "Nothung · 内置规则")
     )
 
     static let nothungBilibiliVideoSharingCleanup = NothungRegexRule(
         id: UUID(uuidString: "A24C7FC2-61D6-4EE9-A8BC-9AC7911BE003")!,
-        title: "哔哩哔哩视频分享去参数",
+        title: String(localized: "哔哩哔哩视频分享去参数"),
         patterns: [
             "(http|https)://(m\\.|www\\.)?bilibili\\.com/video",
             "\\?[^#]*",
@@ -218,13 +218,13 @@ struct NothungRegexRule: Identifiable, Codable, Equatable, Sendable {
             "https://www.bilibili.com/video",
             "",
         ],
-        source: "Nothung · 内置规则"
+        source: String(localized: "Nothung · 内置规则")
     )
 }
 
 struct NothungRedirectRule: Identifiable, Codable, Equatable, Sendable {
     var id = UUID()
-    var title = "新重定向域名"
+    var title = String(localized: "新重定向域名")
     var host = ""
     var includesSubdomains = false
     var isEnabled = true
@@ -232,9 +232,9 @@ struct NothungRedirectRule: Identifiable, Codable, Equatable, Sendable {
 
     static let nothungBilibiliShortLink = NothungRedirectRule(
         id: UUID(uuidString: "A24C7FC2-61D6-4EE9-A8BC-9AC7911BE002")!,
-        title: "哔哩哔哩短链",
+        title: String(localized: "哔哩哔哩短链"),
         host: "b23.tv",
-        source: "Nothung · 内置规则"
+        source: String(localized: "Nothung · 内置规则")
     )
 }
 
@@ -252,23 +252,23 @@ enum NothungRuleConfigurationError: Error, LocalizedError, Equatable {
     var errorDescription: String? {
         switch self {
         case .unsupportedSchema:
-            return "规则文件版本比当前 App 更新，暂时无法读取。"
+            return String(localized: "规则文件版本比当前 App 更新，暂时无法读取。")
         case .tooManyParameterRules:
-            return "启用的参数规则不能超过 64 条。"
+            return String(localized: "启用的参数规则不能超过 64 条。")
         case .tooManyRegexSteps:
-            return "启用的正则替换步骤合计不能超过 64 行。"
+            return String(localized: "启用的正则替换步骤合计不能超过 64 行。")
         case .invalidHost(let host):
-            return "域名“\(host)”无效；只填写域名，不要包含协议或路径。"
+            return String(localized: "域名“\(host)”无效；只填写域名，不要包含协议或路径。")
         case .regexHasNoSteps(let title):
-            return "正则规则“\(title)”至少需要一行正则。"
+            return String(localized: "正则规则“\(title)”至少需要一行正则。")
         case .regexLineCountMismatch(let title):
-            return "正则规则“\(title)”的正则与替换内容行数必须一致。"
+            return String(localized: "正则规则“\(title)”的正则与替换内容行数必须一致。")
         case .emptyRegexPattern(let title):
-            return "正则规则“\(title)”包含空白正则行。"
+            return String(localized: "正则规则“\(title)”包含空白正则行。")
         case .invalidDocument:
-            return "没有识别到有效的 Nothung 配置或兼容规则。"
+            return String(localized: "没有识别到有效的 Nothung 配置或兼容规则。")
         case .unsupportedImportedRule:
-            return "这条兼容规则的字段组合暂不受支持。"
+            return String(localized: "这条兼容规则的字段组合暂不受支持。")
         }
     }
 }
@@ -283,14 +283,77 @@ enum NothungRuleStorage {
                   NothungRuleConfiguration.self,
                   from: data
               ),
-              let configuration = try? decoded.migratedToCurrentSchema() else {
+              let migrated = try? decoded.migratedToCurrentSchema() else {
             return .default
         }
+        let configuration = localizingBuiltInMetadata(in: migrated)
         if configuration != decoded,
            let migratedData = try? JSONEncoder().encode(configuration) {
             defaults.set(migratedData, forKey: configurationKey)
         }
         return configuration
+    }
+
+    /// Keeps built-in metadata aligned with the current app language while
+    /// preserving any title the user has customized.
+    private static func localizingBuiltInMetadata(
+        in configuration: NothungRuleConfiguration
+    ) -> NothungRuleConfiguration {
+        var result = configuration
+        let builtInSources: Set<String> = [
+            "Nothung · 内置规则",
+            "Nothung · Built-in rule",
+        ]
+
+        let regexTitles: [UUID: (Set<String>, NothungRegexRule)] = [
+            NothungRegexRule.nothungXTrackingCleanup.id: (
+                [
+                    "X / Twitter 去除跟踪参数",
+                    "Remove X / Twitter tracking parameters",
+                ],
+                .nothungXTrackingCleanup
+            ),
+            NothungRegexRule.nothungBilibiliVideoSharingCleanup.id: (
+                [
+                    "哔哩哔哩视频分享去参数",
+                    "Remove parameters from Bilibili video shares",
+                ],
+                .nothungBilibiliVideoSharingCleanup
+            ),
+        ]
+
+        for index in result.regexRules.indices {
+            guard let (knownTitles, localizedRule) = regexTitles[
+                result.regexRules[index].id
+            ] else { continue }
+            if knownTitles.contains(result.regexRules[index].title) {
+                result.regexRules[index].title = localizedRule.title
+            }
+            if let source = result.regexRules[index].source,
+               builtInSources.contains(source) {
+                result.regexRules[index].source = localizedRule.source
+            }
+        }
+
+        for index in result.redirectRules.indices
+        where result.redirectRules[index].id
+            == NothungRedirectRule.nothungBilibiliShortLink.id {
+            let knownTitles: Set<String> = [
+                "哔哩哔哩短链",
+                "Bilibili short link",
+            ]
+            if knownTitles.contains(result.redirectRules[index].title) {
+                result.redirectRules[index].title =
+                    NothungRedirectRule.nothungBilibiliShortLink.title
+            }
+            if let source = result.redirectRules[index].source,
+               builtInSources.contains(source) {
+                result.redirectRules[index].source =
+                    NothungRedirectRule.nothungBilibiliShortLink.source
+            }
+        }
+
+        return result
     }
 
     static func save(
@@ -331,19 +394,19 @@ enum NothungRuleStorage {
         }
 
         var result = current
-        let source = [legacy.author, "用户导入的兼容规则"]
+        let source = [legacy.author, String(localized: "用户导入的兼容规则")]
             .compactMap { $0?.nonEmpty }
             .joined(separator: " · ")
 
         if let patterns = legacy.patterns, let replacements = legacy.replacements {
             guard !patterns.isEmpty, patterns.count == replacements.count else {
                 throw NothungRuleConfigurationError.regexLineCountMismatch(
-                    legacy.title ?? "导入规则"
+                    legacy.title ?? String(localized: "导入规则")
                 )
             }
             result.regexRules.append(
                 NothungRegexRule(
-                    title: legacy.title?.nonEmpty ?? "导入的正则规则",
+                    title: legacy.title?.nonEmpty ?? String(localized: "导入的正则规则"),
                     patterns: patterns,
                     replacements: replacements,
                     source: source.nonEmpty
@@ -352,7 +415,7 @@ enum NothungRuleStorage {
         } else if let host = legacy.host, let mode = legacy.mode {
             result.parameterRules.append(
                 NothungParameterRule(
-                    title: legacy.title?.nonEmpty ?? "导入的参数规则",
+                    title: legacy.title?.nonEmpty ?? String(localized: "导入的参数规则"),
                     host: host,
                     mode: mode == 0 ? .allowList : .blockList,
                     parameterNames: legacy.parameters ?? [],
@@ -362,7 +425,7 @@ enum NothungRuleStorage {
         } else if let host = legacy.host {
             result.redirectRules.append(
                 NothungRedirectRule(
-                    title: legacy.title?.nonEmpty ?? "导入的重定向域名",
+                    title: legacy.title?.nonEmpty ?? String(localized: "导入的重定向域名"),
                     host: host,
                     source: source.nonEmpty
                 )

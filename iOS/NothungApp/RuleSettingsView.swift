@@ -51,7 +51,9 @@ struct RuleSettingsView: View {
             }
         }
         .alert(
-            errorMessage == nil ? "规则已更新" : "无法保存规则",
+            errorMessage == nil
+                ? String(localized: "规则已更新")
+                : String(localized: "无法保存规则"),
             isPresented: Binding(
                 get: { errorMessage != nil || statusMessage != nil },
                 set: { shown in
@@ -159,7 +161,7 @@ struct RuleSettingsView: View {
                     UIPasteboard.general.string = try NothungRuleStorage.exportDocument(
                         configuration
                     )
-                    statusMessage = "配置 JSON 已复制到剪贴板。"
+                    statusMessage = String(localized: "配置 JSON 已复制到剪贴板。")
                 } catch {
                     errorMessage = error.localizedDescription
                 }
@@ -184,7 +186,9 @@ struct RuleSettingsView: View {
             document,
             into: configuration
         )
-        statusMessage = "已导入 \(configuration.parameterRules.count) 条参数规则、\(configuration.regexRules.count) 条正则规则和 \(configuration.redirectRules.count) 条重定向规则；检查后请点击保存。"
+        statusMessage = String(
+            localized: "已导入 \(configuration.parameterRules.count) 条参数规则、\(configuration.regexRules.count) 条正则规则和 \(configuration.redirectRules.count) 条重定向规则；检查后请点击保存。"
+        )
     }
 
     private func save() {
@@ -291,8 +295,8 @@ private struct KeyboardSettingsView: View {
 
 private struct SettingsDestinationLabel: View {
     let icon: String
-    let title: String
-    let explanation: String
+    let title: LocalizedStringKey
+    let explanation: LocalizedStringKey
 
     var body: some View {
         HStack(spacing: 12) {
@@ -400,7 +404,7 @@ private struct RegexRulesView: View {
                     } label: {
                         RuleRowLabel(
                             title: rule.title,
-                            subtitle: "\(rule.patterns.count) 个替换步骤",
+                            subtitle: String(localized: "\(rule.patterns.count) 个替换步骤"),
                             isEnabled: rule.isEnabled
                         )
                     }
@@ -653,7 +657,7 @@ private func ruleListToolbar(
     }
 
     ToolbarItemGroup(placement: .primaryAction) {
-        Button(editMode.wrappedValue.isEditing ? "完成" : "编辑") {
+        Button {
             withAnimation {
                 if editMode.wrappedValue.isEditing {
                     selection.wrappedValue.removeAll()
@@ -662,6 +666,12 @@ private func ruleListToolbar(
                     editMode.wrappedValue = .active
                 }
             }
+        } label: {
+            Text(
+                editMode.wrappedValue.isEditing
+                    ? String(localized: "完成")
+                    : String(localized: "编辑")
+            )
         }
         if !editMode.wrappedValue.isEditing {
             Button(action: add) {
@@ -697,6 +707,6 @@ private extension String {
     }
 
     var ruleDisplayValue: String {
-        trimmedNonEmpty ?? "未填写"
+        trimmedNonEmpty ?? String(localized: "未填写")
     }
 }

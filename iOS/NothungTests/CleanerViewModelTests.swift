@@ -58,10 +58,7 @@ final class CleanerViewModelTests: XCTestCase {
             ["fbclid", "utm_source"]
         )
         XCTAssertEqual(model.redirectHops, resolution.hops)
-        XCTAssertEqual(
-            model.redirectMessage,
-            "已展开 1 次重定向，并再次清理最终地址。"
-        )
+        XCTAssertNotNil(model.redirectMessage)
         XCTAssertNil(model.redirectErrorMessage)
         XCTAssertFalse(model.isExpandingRedirects)
     }
@@ -82,10 +79,7 @@ final class CleanerViewModelTests: XCTestCase {
 
         XCTAssertEqual(model.output, localOutput)
         XCTAssertNil(model.redirectMessage)
-        XCTAssertEqual(
-            model.redirectErrorMessage,
-            "网络请求失败，未完成重定向解析。"
-        )
+        XCTAssertEqual(model.redirectErrorMessage, failure.localizedDescription)
         XCTAssertFalse(model.isExpandingRedirects)
     }
 }

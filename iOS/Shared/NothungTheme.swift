@@ -61,10 +61,10 @@ extension View {
 }
 
 struct NothungPhaseLabel: View {
-    let text: String
+    let text: LocalizedStringResource
 
     var body: some View {
-        Text(text.uppercased())
+        Text(String(localized: text).uppercased())
             .font(.system(.caption2, design: .monospaced, weight: .semibold))
             .tracking(1.5)
             .foregroundStyle(NothungPalette.accent)

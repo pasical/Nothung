@@ -38,7 +38,7 @@ final class KeyboardViewModel: ObservableObject {
 
         if await processAndRecord(
             raw,
-            message: "检测到新剪贴板，正在清理…"
+            message: String(localized: "检测到新剪贴板，正在清理…")
         ) != nil {
             lastCapturedClipboard = raw
         }
@@ -46,17 +46,17 @@ final class KeyboardViewModel: ObservableObject {
 
     func cleanSystemClipboardForInsertion() async -> String? {
         guard hasFullAccess else {
-            failPaste("请先为 Nothung 开启完全访问。")
+            failPaste(String(localized: "请先为 Nothung 开启完全访问。"))
             return nil
         }
         guard let raw = Self.systemClipboardText() else {
-            failPaste("剪贴板里没有可粘贴的文本。")
+            failPaste(String(localized: "剪贴板里没有可粘贴的文本。"))
             return nil
         }
 
         let cleaned = await processAndRecord(
             raw,
-            message: "正在清理并粘贴…"
+            message: String(localized: "正在清理并粘贴…")
         )
         if cleaned != nil {
             lastCapturedClipboard = raw
@@ -75,10 +75,10 @@ final class KeyboardViewModel: ObservableObject {
     func submitManualEntry() async {
         let raw = editorText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !raw.isEmpty else {
-            errorMessage = "请输入要手动加入 Nothung 剪贴板的内容。"
+            errorMessage = String(localized: "请输入要手动加入 Nothung 剪贴板的内容。")
             return
         }
-        if await processAndRecord(raw, message: "正在清理并加入…") != nil {
+        if await processAndRecord(raw, message: String(localized: "正在清理并加入…")) != nil {
             editorText = ""
             isEditorPresented = false
         }
@@ -92,7 +92,7 @@ final class KeyboardViewModel: ObservableObject {
     }
 
     func markInserted() {
-        statusMessage = "已插入清理后的内容。"
+        statusMessage = String(localized: "已插入清理后的内容。")
         errorMessage = nil
     }
 
@@ -117,7 +117,7 @@ final class KeyboardViewModel: ObservableObject {
         message: String
     ) async -> String? {
         guard raw.count <= NothungCleaningService.maximumInputLength else {
-            failPaste("内容超过 \(NothungCleaningService.maximumInputLength) 个字符，请缩短后再试。")
+            failPaste(String(localized: "内容超过 \(NothungCleaningService.maximumInputLength) 个字符，请缩短后再试。"))
             return nil
         }
 
@@ -131,7 +131,7 @@ final class KeyboardViewModel: ObservableObject {
             if hasFullAccess,
                let url = NothungCleaningService.singleWebURL(in: output),
                NothungRuleStorage.load().allowsRedirectExpansion(for: url) {
-                statusMessage = "命中短链规则，正在联网展开…"
+                statusMessage = String(localized: "命中短链规则，正在联网展开…")
                 do {
                     let resolution = try await RedirectResolver(
                         configuration: .init(
@@ -157,7 +157,7 @@ final class KeyboardViewModel: ObservableObject {
             )
             entries = NothungClipboardHistoryStorage.load()
             isProcessing = false
-            statusMessage = "已加入 Nothung 剪贴板。"
+            statusMessage = String(localized: "已加入 Nothung 剪贴板。")
             errorMessage = nil
             return output.cleaned
         } catch is CancellationError {

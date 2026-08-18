@@ -155,7 +155,11 @@ struct ContentView: View {
             } label: {
                 HStack(spacing: 10) {
                     Image(systemName: "wand.and.sparkles")
-                    Text(model.output == nil ? "清理链接" : "重新清理")
+                    Text(
+                        model.output == nil
+                            ? String(localized: "清理链接")
+                            : String(localized: "重新清理")
+                    )
                         .fontWeight(.semibold)
                     Spacer()
                     Image(systemName: "arrow.right")
@@ -177,10 +181,15 @@ struct ContentView: View {
             HStack(alignment: .firstTextBaseline) {
                 NothungPhaseLabel(text: "重铸结果")
                 Spacer()
-                Label(
-                    output.didChange ? "已清理" : "无需改动",
-                    systemImage: output.didChange ? "sparkles" : "checkmark.shield"
-                )
+                Label {
+                    Text(
+                        output.didChange
+                            ? String(localized: "已清理")
+                            : String(localized: "无需改动")
+                    )
+                } icon: {
+                    Image(systemName: output.didChange ? "sparkles" : "checkmark.shield")
+                }
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(output.didChange ? NothungPalette.accent : NothungPalette.muted)
             }
@@ -215,7 +224,15 @@ struct ContentView: View {
                 Button {
                     model.copyOutput()
                 } label: {
-                    Label(model.copied ? "已复制" : "复制", systemImage: model.copied ? "checkmark" : "doc.on.doc")
+                    Label {
+                        Text(
+                            model.copied
+                                ? String(localized: "已复制")
+                                : String(localized: "复制")
+                        )
+                    } icon: {
+                        Image(systemName: model.copied ? "checkmark" : "doc.on.doc")
+                    }
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
@@ -245,8 +262,8 @@ struct ContentView: View {
                         }
                         Text(
                             model.isExpandingRedirects
-                                ? "正在安全展开…"
-                                : "展开短链或重定向"
+                                ? String(localized: "正在安全展开…")
+                                : String(localized: "展开短链或重定向")
                         )
                         Spacer()
                         Text("会联网")
@@ -478,7 +495,10 @@ private struct PrivacyStatementView: View {
         .tint(NothungPalette.accent)
     }
 
-    private func privacySection(title: String, body: String) -> some View {
+    private func privacySection(
+        title: LocalizedStringResource,
+        body: LocalizedStringResource
+    ) -> some View {
         VStack(alignment: .leading, spacing: 7) {
             Text(title)
                 .font(.headline)

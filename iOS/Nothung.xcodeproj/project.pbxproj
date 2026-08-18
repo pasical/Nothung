@@ -9,12 +9,15 @@
 /* Begin PBXBuildFile section */
 		002BB14A18BB6CD7A1C8D7DC /* ActionExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7341613582A4A12C4315727F /* ActionExtensionViewModel.swift */; };
 		10A1F0CC691C067D9C868FF4 /* NothungClipboardHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21946C1EDB49A9FFAFD7ACA3 /* NothungClipboardHistoryTests.swift */; };
+		1C502CD77B28BB726D46CF20 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8967E0226A6848D0BD216BA6 /* AppShortcuts.xcstrings */; };
 		1D1CF221DFA1E42B678934F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE89667ADBE4DA9BAC3E90C8 /* ContentView.swift */; };
 		1E7593303ADD229D5ABB6503 /* NothungCore in Frameworks */ = {isa = PBXBuildFile; productRef = CF63947F90A4DD5D9FB92FFD /* NothungCore */; };
 		29D5BD820F9AC14894FF3081 /* NothungClipboardHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD11A244050944F6B4E0DF9E /* NothungClipboardHistory.swift */; };
 		2B603AF977352DCF5647E0CB /* NothungCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB7077350E00742F13E4146 /* NothungCore */; };
 		34DB4F12AACFB7E4582E1E23 /* RedirectResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45026F121EAB7D7FBB269479 /* RedirectResolver.swift */; };
+		3E31B1A9B81291630BEB232C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7C29876BCEBFB5635A7117C9 /* Localizable.xcstrings */; };
 		5A4AEFEEF2912709B7E2F90B /* CleanURLIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDC1E766C367C0909AFCE31 /* CleanURLIntentTests.swift */; };
+		5AF5BE570B8796747B325394 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7C29876BCEBFB5635A7117C9 /* Localizable.xcstrings */; };
 		683B9F4678BF959D121B57E0 /* CleanerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0F40EAF2761E4D7EF8898 /* CleanerViewModelTests.swift */; };
 		6DE44B74AA45251CCD3F7FC6 /* NothungKeyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 496AED5ED7FAD7BA11DCAF8F /* NothungKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6FEE406750A89207DB6E1D16 /* RuleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9FB7AB5F3FA4A467A21FAD /* RuleConfiguration.swift */; };
@@ -28,10 +31,12 @@
 		950416D7ED75209C00D15675 /* RuleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9FB7AB5F3FA4A467A21FAD /* RuleConfiguration.swift */; };
 		95FDA6DB143AECEA704CAF22 /* RedirectResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45026F121EAB7D7FBB269479 /* RedirectResolver.swift */; };
 		994A815486BD06A1B9AEDA78 /* KeyboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B006DD06A0A1870D7F53F518 /* KeyboardViewModel.swift */; };
+		A53A92771931B6A997201144 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 12FE5A2DB9CDDFD723A4BF16 /* InfoPlist.xcstrings */; };
 		AA3796D13B6CB5BD030A984A /* NothungMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2070B408C7C6139E4F5E8BC0 /* NothungMark.swift */; };
 		ABE1EF00DB4F908A040B9798 /* RedirectResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45026F121EAB7D7FBB269479 /* RedirectResolver.swift */; };
 		ADA25466AB2C4EE8E5C55485 /* NothungApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C361C7036A50BBA64156DA /* NothungApp.swift */; };
 		ADE7ABE4B2ED75F01C9D9769 /* ExtensionInputLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5386A27F7E40CBE444CD644 /* ExtensionInputLoader.swift */; };
+		AE952295CBFCA320E958026F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7C29876BCEBFB5635A7117C9 /* Localizable.xcstrings */; };
 		B41D09A2FE83CBC4D7FEADFF /* CleanURLIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A2C3E520733C2EAD920FB /* CleanURLIntent.swift */; };
 		BF2F0AFBEDF3E74740684167 /* NothungAction.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 138491B29BEB747438C887D2 /* NothungAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BFE1C157E102779A6D2639DF /* NothungTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D06538790E0C50099E1F1E4 /* NothungTheme.swift */; };
@@ -50,11 +55,6 @@
 		EDED2D3A9D8D7A5D7F94CBDD /* CleanerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3969AD37B06BF85EB1FF0A /* CleanerViewModel.swift */; };
 		F5ED4E7DED0768918826354A /* ExtensionInputLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5386A27F7E40CBE444CD644 /* ExtensionInputLoader.swift */; };
 		F807BC32BABFC8EB186A7E9F /* NothungCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9A361F6820EA3D453959C7B8 /* NothungCore */; };
-		A00000000000000000000B01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000A01 /* Assets.xcassets */; };
-		A00000000000000000000B02 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000A02 /* PrivacyInfo.xcprivacy */; };
-		A00000000000000000000B03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000A03 /* Assets.xcassets */; };
-		A00000000000000000000B04 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000A04 /* PrivacyInfo.xcprivacy */; };
-		A00000000000000000000B05 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000A05 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +97,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		12FE5A2DB9CDDFD723A4BF16 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		138491B29BEB747438C887D2 /* NothungAction.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = NothungAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2070B408C7C6139E4F5E8BC0 /* NothungMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungMark.swift; sourceTree = "<group>"; };
 		21946C1EDB49A9FFAFD7ACA3 /* NothungClipboardHistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungClipboardHistoryTests.swift; sourceTree = "<group>"; };
@@ -110,6 +111,8 @@
 		646D332F51F78293C39BB53D /* RuleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleSettingsView.swift; sourceTree = "<group>"; };
 		6D06538790E0C50099E1F1E4 /* NothungTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungTheme.swift; sourceTree = "<group>"; };
 		7341613582A4A12C4315727F /* ActionExtensionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionExtensionViewModel.swift; sourceTree = "<group>"; };
+		7C29876BCEBFB5635A7117C9 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		8967E0226A6848D0BD216BA6 /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
 		8E1A2C3E520733C2EAD920FB /* CleanURLIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanURLIntent.swift; sourceTree = "<group>"; };
 		9D3969AD37B06BF85EB1FF0A /* CleanerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanerViewModel.swift; sourceTree = "<group>"; };
 		AD5F090FA9647BDF3BD0899B /* RedirectResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectResolverTests.swift; sourceTree = "<group>"; };
@@ -125,11 +128,6 @@
 		E9272F7A3F4DD8E5E63B82DA /* NothungCleaning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungCleaning.swift; sourceTree = "<group>"; };
 		FF2855D0132D10775D40E732 /* NothungCleaningServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungCleaningServiceTests.swift; sourceTree = "<group>"; };
 		FFDC1E766C367C0909AFCE31 /* CleanURLIntentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanURLIntentTests.swift; sourceTree = "<group>"; };
-		A00000000000000000000A01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A00000000000000000000A02 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		A00000000000000000000A03 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A00000000000000000000A04 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		A00000000000000000000A05 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,8 +172,7 @@
 				7341613582A4A12C4315727F /* ActionExtensionViewModel.swift */,
 				3B3240515012495D8261488D /* ActionRootView.swift */,
 				D15CD8F1FAE19655D0B28430 /* ActionViewController.swift */,
-				A00000000000000000000A03 /* Assets.xcassets */,
-				A00000000000000000000A04 /* PrivacyInfo.xcprivacy */,
+				12FE5A2DB9CDDFD723A4BF16 /* InfoPlist.xcstrings */,
 			);
 			path = NothungAction;
 			sourceTree = "<group>";
@@ -208,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				C5386A27F7E40CBE444CD644 /* ExtensionInputLoader.swift */,
+				7C29876BCEBFB5635A7117C9 /* Localizable.xcstrings */,
 				E9272F7A3F4DD8E5E63B82DA /* NothungCleaning.swift */,
 				DD11A244050944F6B4E0DF9E /* NothungClipboardHistory.swift */,
 				2070B408C7C6139E4F5E8BC0 /* NothungMark.swift */,
@@ -232,14 +230,13 @@
 		7CCF1002B23E2E19EFC714B1 /* NothungApp */ = {
 			isa = PBXGroup;
 			children = (
+				8967E0226A6848D0BD216BA6 /* AppShortcuts.xcstrings */,
 				9D3969AD37B06BF85EB1FF0A /* CleanerViewModel.swift */,
 				8E1A2C3E520733C2EAD920FB /* CleanURLIntent.swift */,
 				DE89667ADBE4DA9BAC3E90C8 /* ContentView.swift */,
 				25C361C7036A50BBA64156DA /* NothungApp.swift */,
 				45026F121EAB7D7FBB269479 /* RedirectResolver.swift */,
 				646D332F51F78293C39BB53D /* RuleSettingsView.swift */,
-				A00000000000000000000A01 /* Assets.xcassets */,
-				A00000000000000000000A02 /* PrivacyInfo.xcprivacy */,
 			);
 			path = NothungApp;
 			sourceTree = "<group>";
@@ -258,7 +255,6 @@
 				41CFA134893F25EE53231914 /* KeyboardRootView.swift */,
 				CCA3D9619CA71C23CFA3D6F6 /* KeyboardViewController.swift */,
 				B006DD06A0A1870D7F53F518 /* KeyboardViewModel.swift */,
-				A00000000000000000000A05 /* PrivacyInfo.xcprivacy */,
 			);
 			path = NothungKeyboard;
 			sourceTree = "<group>";
@@ -271,8 +267,8 @@
 			buildConfigurationList = 401FA3C754B0A874FC597BC2 /* Build configuration list for PBXNativeTarget "Nothung" */;
 			buildPhases = (
 				C277B6C5D73A5AD3BE55F565 /* Sources */,
+				9A6BA72B6A90E33539A5CFD1 /* Resources */,
 				AFBE5A51492F628EB94CE717 /* Frameworks */,
-				A00000000000000000000C01 /* Resources */,
 				6FE71ED6F01B522366EFECA5 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -294,8 +290,8 @@
 			buildConfigurationList = 2019965C7B0200388D0A9573 /* Build configuration list for PBXNativeTarget "NothungAction" */;
 			buildPhases = (
 				D48B224F965AE7CCF1B91032 /* Sources */,
+				73D926F09C966FAB569067BC /* Resources */,
 				88BD1740C341539800AB42E2 /* Frameworks */,
-				A00000000000000000000C02 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -334,8 +330,8 @@
 			buildConfigurationList = 9D5AF2AEE4094A9DC81C78F9 /* Build configuration list for PBXNativeTarget "NothungKeyboard" */;
 			buildPhases = (
 				773DCC6495B61DFE9B5D5B7B /* Sources */,
+				750B7E760437AA46EDA85077 /* Resources */,
 				8A35C673463D4D2CD68000EA /* Frameworks */,
-				A00000000000000000000C03 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -358,27 +354,6 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					0B517E301713013114FA3B0D = {
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-						};
-					};
-					78121A49FA80985F5F1CECBA = {
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-						};
-					};
-					FF1F1079F88B4EAD0CFDA7A8 = {
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-						};
-					};
 				};
 			};
 			buildConfigurationList = 55AD693F5C05F17A084029F8 /* Build configuration list for PBXProject "Nothung" */;
@@ -387,6 +362,7 @@
 			knownRegions = (
 				Base,
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 5931A089808E806B3F7E04BC;
 			minimizedProjectReferenceProxies = 1;
@@ -405,6 +381,35 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		73D926F09C966FAB569067BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A53A92771931B6A997201144 /* InfoPlist.xcstrings in Resources */,
+				AE952295CBFCA320E958026F /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		750B7E760437AA46EDA85077 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E31B1A9B81291630BEB232C /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A6BA72B6A90E33539A5CFD1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C502CD77B28BB726D46CF20 /* AppShortcuts.xcstrings in Resources */,
+				5AF5BE570B8796747B325394 /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		52CED4A5826D2F39885F37B7 /* Sources */ = {
@@ -491,35 +496,6 @@
 			targetProxy = CACA3A4681CEFCCBC0A9AAA9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXResourcesBuildPhase section */
-		A00000000000000000000C01 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A00000000000000000000B01 /* Assets.xcassets in Resources */,
-				A00000000000000000000B02 /* PrivacyInfo.xcprivacy in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A00000000000000000000C02 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A00000000000000000000B03 /* Assets.xcassets in Resources */,
-				A00000000000000000000B04 /* PrivacyInfo.xcprivacy in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A00000000000000000000C03 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A00000000000000000000B05 /* PrivacyInfo.xcprivacy in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 		07EDE8B3814ADE646C8D34D9 /* Release */ = {
@@ -647,6 +623,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -731,6 +708,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

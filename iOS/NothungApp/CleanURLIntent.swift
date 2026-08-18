@@ -9,16 +9,16 @@ enum NothungIntentCleaningError: Error, LocalizedError, Equatable {
     case couldNotClean
 
     var errorDescription: String? {
-        switch self {
-        case .unsupportedScheme:
-            return "只支持以 http:// 或 https:// 开头的网页链接。"
-        case .missingHost:
-            return "链接缺少网站地址，请检查后重试。"
-        case .embeddedCredentials:
-            return "链接包含用户名或密码。为避免误分享凭据，Nothung 不会处理这类链接。"
-        case .couldNotClean:
-            return "Nothung 无法安全地清理这个链接，请检查地址后重试。"
-        }
+            switch self {
+            case .unsupportedScheme:
+            return String(localized: "只支持以 http:// 或 https:// 开头的网页链接。")
+            case .missingHost:
+            return String(localized: "链接缺少网站地址，请检查后重试。")
+            case .embeddedCredentials:
+            return String(localized: "链接包含用户名或密码。为避免误分享凭据，Nothung 不会处理这类链接。")
+            case .couldNotClean:
+            return String(localized: "Nothung 无法安全地清理这个链接，请检查地址后重试。")
+            }
     }
 }
 

@@ -65,7 +65,7 @@ cd Packages/NothungCore
 swift test
 ```
 
-The current baseline is Xcode 26.6 with the iOS 26.5 SDK. The project has 45 passing core tests plus 40 iOS integration and security tests.
+The current baseline is Xcode 26.6 with the iOS 26.5 SDK. The project has 45 passing core tests plus 41 iOS integration, localization, and security tests.
 
 ## Rules and licensing
 

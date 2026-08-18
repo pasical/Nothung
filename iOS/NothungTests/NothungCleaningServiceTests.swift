@@ -14,7 +14,10 @@ final class NothungCleaningServiceTests: XCTestCase {
         )
 
         XCTAssertEqual(output.cleaned, "https://x.com/nothung/status/42")
-        XCTAssertEqual(output.appliedRegexRuleIdentifiers, ["X / Twitter 去除跟踪参数"])
+        XCTAssertEqual(
+            output.appliedRegexRuleIdentifiers,
+            [NothungRegexRule.nothungXTrackingCleanup.title]
+        )
         let bilibiliOutput = try NothungCleaningService.clean(
             "https://m.bilibili.com/video/BV1Nothung?buvid=abc&share_source=copy_link#reply",
             cleaner: configuration.makeCleaner()
@@ -29,8 +32,15 @@ final class NothungCleaningServiceTests: XCTestCase {
             )
         )
         XCTAssertEqual(configuration.regexRules.count, 2)
-        XCTAssertTrue(configuration.regexRules.allSatisfy { $0.source == "Nothung · 内置规则" })
-        XCTAssertEqual(configuration.redirectRules.first?.source, "Nothung · 内置规则")
+        XCTAssertTrue(
+            configuration.regexRules.allSatisfy {
+                $0.source == NothungRegexRule.nothungXTrackingCleanup.source
+            }
+        )
+        XCTAssertEqual(
+            configuration.redirectRules.first?.source,
+            NothungRedirectRule.nothungBilibiliShortLink.source
+        )
     }
 
     func testVersionOneConfigurationMigratesDefaultsOnlyOnceAndAllowsDeletion() throws {
@@ -90,6 +100,41 @@ final class NothungCleaningServiceTests: XCTestCase {
         )
     }
 
+    func testStoredBuiltInMetadataFollowsCurrentAppLanguage() throws {
+        let suiteName = "NothungRuleLocalizationTests.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        var stored = NothungRuleConfiguration.default
+        stored.regexRules[0].title = "X / Twitter 去除跟踪参数"
+        stored.regexRules[0].source = "Nothung · 内置规则"
+        stored.redirectRules[0].title = "哔哩哔哩短链"
+        stored.redirectRules[0].source = "Nothung · 内置规则"
+        defaults.set(
+            try JSONEncoder().encode(stored),
+            forKey: "ruleConfiguration.v1"
+        )
+
+        let loaded = NothungRuleStorage.load(defaults: defaults)
+
+        XCTAssertEqual(
+            loaded.regexRules[0].title,
+            NothungRegexRule.nothungXTrackingCleanup.title
+        )
+        XCTAssertEqual(
+            loaded.regexRules[0].source,
+            NothungRegexRule.nothungXTrackingCleanup.source
+        )
+        XCTAssertEqual(
+            loaded.redirectRules[0].title,
+            NothungRedirectRule.nothungBilibiliShortLink.title
+        )
+        XCTAssertEqual(
+            loaded.redirectRules[0].source,
+            NothungRedirectRule.nothungBilibiliShortLink.source
+        )
+    }
+
     func testServiceUsesAllowlistAndOrderedRegexPipeline() throws {
         let policy = QueryParameterPolicy(
             blockedRules: [TrackingRule(prefix: "utm_")],
@@ -121,10 +166,10 @@ final class NothungCleaningServiceTests: XCTestCase {
 
     func testServiceReportsNoWebURL() {
         XCTAssertThrowsError(try NothungCleaningService.clean("只有普通文本")) { error in
-            XCTAssertEqual(
-                error.localizedDescription,
-                "没有找到以 http:// 或 https:// 开头的链接。"
-            )
+            guard let cleaningError = error as? NothungCleaningService.CleaningError,
+                  case .noWebURL = cleaningError else {
+                return XCTFail("Expected noWebURL, received \(error)")
+            }
         }
     }
 
@@ -135,10 +180,10 @@ final class NothungCleaningServiceTests: XCTestCase {
         )
 
         XCTAssertThrowsError(try NothungCleaningService.clean(input)) { error in
-            XCTAssertEqual(
-                error.localizedDescription,
-                "内容超过 100,000 个字符，请缩短后再试。"
-            )
+            guard let cleaningError = error as? NothungCleaningService.CleaningError,
+                  case .tooLong = cleaningError else {
+                return XCTFail("Expected tooLong, received \(error)")
+            }
         }
     }
 
@@ -315,7 +360,7 @@ final class NothungCleaningServiceTests: XCTestCase {
         XCTAssertEqual(rule.host, "video.example")
         XCTAssertEqual(rule.mode, .allowList)
         XCTAssertEqual(rule.parameterNames, ["id"])
-        XCTAssertEqual(rule.source, "tester · 用户导入的兼容规则")
+        XCTAssertTrue(rule.source?.hasPrefix("tester · ") == true)
     }
 
     func testExportedConfigurationRoundTrips() throws {

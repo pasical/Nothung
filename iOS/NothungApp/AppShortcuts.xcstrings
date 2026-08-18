@@ -1,0 +1,29 @@
+{
+  "sourceLanguage" : "zh-Hans",
+  "strings" : {
+    "用 ${applicationName} 清理链接" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Clean links with ${applicationName}",
+              "Have ${applicationName} clean a URL"
+            ]
+          }
+        },
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "用 ${applicationName} 清理链接",
+              "让 ${applicationName} 清理 URL"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

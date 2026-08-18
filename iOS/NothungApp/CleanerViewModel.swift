@@ -57,7 +57,7 @@ final class CleanerViewModel: ObservableObject {
     func clean() {
         resetRedirectState()
         guard canClean else {
-            errorMessage = "请先粘贴 URL 或输入包含链接的文本。"
+            errorMessage = String(localized: "请先粘贴 URL 或输入包含链接的文本。")
             output = nil
             return
         }
@@ -80,7 +80,7 @@ final class CleanerViewModel: ObservableObject {
             }
         } catch {
             output = nil
-            errorMessage = "无法清理这段内容：\(error.localizedDescription)"
+            errorMessage = String(localized: "无法清理这段内容：\(error.localizedDescription)")
         }
     }
 
@@ -146,7 +146,7 @@ final class CleanerViewModel: ObservableObject {
 
             redirectHops = resolution.hops
             guard resolution.didRedirect else {
-                redirectMessage = "没有发现重定向；当前链接已经是最终地址。"
+                redirectMessage = String(localized: "没有发现重定向；当前链接已经是最终地址。")
                 if copyWhenFinished { copyOutput() }
                 return
             }
@@ -179,7 +179,7 @@ final class CleanerViewModel: ObservableObject {
                 inputKind: finalOutput.inputKind
             )
             if let output { recordInHistory(output) }
-            redirectMessage = "已展开 \(resolution.hops.count) 次重定向，并再次清理最终地址。"
+            redirectMessage = String(localized: "已展开 \(resolution.hops.count) 次重定向，并再次清理最终地址。")
             if copyWhenFinished { copyOutput() }
         } catch is CancellationError {
             // Input changes invalidate the request silently; an explicit task

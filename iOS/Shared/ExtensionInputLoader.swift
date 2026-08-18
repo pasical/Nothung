@@ -10,14 +10,14 @@ enum ExtensionInputLoader {
         var errorDescription: String? {
             switch self {
             case .noInput:
-                return "宿主 App 没有提供可读取的内容。"
+                return String(localized: "宿主 App 没有提供可读取的内容。")
             case .multipleInputs:
-                return "一次只能清理一个 URL 或一段纯文本，请减少所选内容后重试。"
+                return String(localized: "一次只能清理一个 URL 或一段纯文本，请减少所选内容后重试。")
             case .unsupportedInput(let types):
                 let summary = types.isEmpty
-                    ? "宿主没有提供可识别的类型。"
-                    : "宿主提供的类型：\(types.joined(separator: ", "))"
-                return "没有从分享内容中读取到链接。\(summary)"
+                    ? String(localized: "宿主没有提供可识别的类型。")
+                    : String(localized: "宿主提供的类型：\(types.joined(separator: ", "))")
+                return String(localized: "没有从分享内容中读取到链接。\(summary)")
             }
         }
     }

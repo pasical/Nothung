@@ -317,43 +317,43 @@ extension RedirectResolverError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidConfiguration:
-            return "重定向解析器的超时设置无效。"
+            return String(localized: "重定向解析器的超时设置无效。")
         case .invalidURL:
-            return "这个链接无法解析。"
+            return String(localized: "这个链接无法解析。")
         case .unsupportedInitialScheme:
-            return "只能解析 http:// 或 https:// 链接。"
+            return String(localized: "只能解析 http:// 或 https:// 链接。")
         case let .unsupportedRedirectScheme(_, _, scheme):
-            return "重定向目标使用了不允许的 \(scheme) 协议。"
+            return String(localized: "重定向目标使用了不允许的 \(scheme) 协议。")
         case .insecureInitialURL:
-            return "为避免明文请求，重定向解析不会访问初始 http:// 链接。请使用 https:// 链接。"
+            return String(localized: "为避免明文请求，重定向解析不会访问初始 http:// 链接。请使用 https:// 链接。")
         case .insecureRedirect:
-            return "重定向尝试从 HTTPS 降级到不安全的 HTTP，已停止解析。"
+            return String(localized: "重定向尝试从 HTTPS 降级到不安全的 HTTP，已停止解析。")
         case .embeddedCredentials:
-            return "链接包含用户名或密码，已停止解析。"
+            return String(localized: "链接包含用户名或密码，已停止解析。")
         case let .missingHost(url):
-            return "链接缺少主机名：\(url.absoluteString)"
+            return String(localized: "链接缺少主机名：\(url.absoluteString)")
         case let .blockedHost(host):
-            return "出于本地网络安全考虑，不能访问主机 \(host)。"
+            return String(localized: "出于本地网络安全考虑，不能访问主机 \(host)。")
         case let .dnsResolutionFailed(host, _):
-            return "无法解析主机 \(host) 的公开网络地址。"
+            return String(localized: "无法解析主机 \(host) 的公开网络地址。")
         case let .nonPublicAddress(host, address):
-            return "主机 \(host) 指向本地、私有或保留地址 \(address)，已停止解析。"
+            return String(localized: "主机 \(host) 指向本地、私有或保留地址 \(address)，已停止解析。")
         case .nonHTTPResponse:
-            return "服务器没有返回有效的 HTTP 响应。"
+            return String(localized: "服务器没有返回有效的 HTTP 响应。")
         case let .missingRedirectLocation(_, statusCode):
-            return "服务器返回了重定向状态 \(statusCode)，但没有提供目标地址。"
+            return String(localized: "服务器返回了重定向状态 \(statusCode)，但没有提供目标地址。")
         case .invalidRedirectLocation:
-            return "服务器提供的重定向目标无效。"
+            return String(localized: "服务器提供的重定向目标无效。")
         case .redirectLoop:
-            return "检测到重定向循环，已停止解析。"
+            return String(localized: "检测到重定向循环，已停止解析。")
         case let .tooManyRedirects(maximum):
-            return "重定向超过 \(maximum) 次，已停止解析。"
+            return String(localized: "重定向超过 \(maximum) 次，已停止解析。")
         case let .requestTimeout(_, seconds):
-            return "单次请求超过 \(seconds.formatted()) 秒，已停止解析。"
+            return String(localized: "单次请求超过 \(seconds.formatted()) 秒，已停止解析。")
         case let .overallTimeout(seconds):
-            return "重定向解析超过 \(seconds.formatted()) 秒，已停止。"
+            return String(localized: "重定向解析超过 \(seconds.formatted()) 秒，已停止。")
         case .transportFailure:
-            return "网络请求失败，未完成重定向解析。"
+            return String(localized: "网络请求失败，未完成重定向解析。")
         }
     }
 }

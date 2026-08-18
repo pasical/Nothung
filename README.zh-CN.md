@@ -65,7 +65,7 @@ cd Packages/NothungCore
 swift test
 ```
 
-当前基线为 Xcode 26.6、iOS 26.5 SDK；45 项核心测试通过，另包含 40 项 iOS 集成/安全测试。
+当前基线为 Xcode 26.6、iOS 26.5 SDK；45 项核心测试通过，另包含 41 项 iOS 集成、本地化与安全测试。
 
 ## 规则与许可证
 

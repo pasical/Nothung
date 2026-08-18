@@ -34,12 +34,12 @@ final class ActionViewController: UIViewController {
             guard let self else { return }
             do {
                 let input = try await ExtensionInputLoader.firstSharedText(from: extensionContext)
-                model.updateProgress("正在本地清理…")
+                model.updateProgress(String(localized: "正在本地清理…"))
                 var output = try NothungCleanCopyWorkflow.run(input) { _ in }
 
                 if let url = NothungCleaningService.singleWebURL(in: output),
                    NothungRuleStorage.load().allowsRedirectExpansion(for: url) {
-                    model.updateProgress("已命中短链规则，正在联网展开…")
+                    model.updateProgress(String(localized: "已命中短链规则，正在联网展开…"))
                     let resolution = try await RedirectResolver().resolve(url)
                     if resolution.didRedirect {
                         output = try NothungCleaningService.replacingSingleWebURL(
@@ -49,7 +49,7 @@ final class ActionViewController: UIViewController {
                     }
                 }
 
-                model.updateProgress("正在写入剪贴板…")
+                model.updateProgress(String(localized: "正在写入剪贴板…"))
                 try await writeClipboard(output.cleaned)
                 _ = try? NothungClipboardHistoryStorage.record(
                     original: input,
@@ -124,6 +124,6 @@ private enum ClipboardWriteError: LocalizedError {
     case verificationFailed
 
     var errorDescription: String? {
-        "系统连续三次没有确认剪贴板写入；原剪贴板未被覆盖，请重试。"
+        String(localized: "系统连续三次没有确认剪贴板写入；原剪贴板未被覆盖，请重试。")
     }
 }
