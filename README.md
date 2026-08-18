@@ -1,46 +1,74 @@
 # Nothung
 
-Nothung 是一个本地优先的 iOS 分享链接清理工具，用于移除跟踪参数、按规则改写链接和展开短链。
+**English** | [简体中文](README.zh-CN.md)
 
-本项目参考了 Android 应用 [Tarnhelm](https://github.com/lz233/Tarnhelm) 的公开功能，但 Swift 代码、界面和图标均为独立实现；Nothung 不是 Tarnhelm 官方移植版，也不隶属于 Tarnhelm。
+Nothung is a local-first iOS tool for cleaning shared links. It removes tracking parameters, rewrites links with configurable rules, and expands supported short links.
 
-## 功能
+This project was inspired by the public features of the Android app [Tarnhelm](https://github.com/lz233/Tarnhelm), but its Swift code, interface, and icon are independent implementations. Nothung is not an official Tarnhelm port and is not affiliated with Tarnhelm.
 
-- 在 App 中粘贴、清理、复制或分享链接
-- 从其他 App 的分享面板使用“使用 Nothung 复制”
-- 使用 Nothung 输入法浏览最近的清理记录，轻点插入，长按查看原文
-- 自定义参数、正则和重定向规则
-- 快捷指令支持（URL 输入、URL 输出）
-- 默认清理常见追踪参数、X/Twitter 和 Bilibili 分享链接
-- 默认展开 `b23.tv`；键盘仅在可见且获完全访问时自动捕捉剪贴板变化，不在后台运行，不包含广告或分析 SDK
+## Three ways to use Nothung
 
-最低支持 iOS 17。
+### 1. Use “Copy with Nothung”
 
-## 构建
+Open the Share Sheet for a link in Safari or another app, then choose **Copy with Nothung** (`使用 Nothung 复制`). Nothung cleans the shared content and writes the result to the system clipboard. You can finish immediately or share the cleaned result again.
+
+<p align="center">
+  <img src="docs/screenshots/use-nothung-copy.png" alt="Copy with Nothung from the iOS Share Sheet" width="360">
+</p>
+
+### 2. Copy elsewhere, then paste with the Nothung keyboard
+
+Copy a link in another app, switch to the Nothung keyboard, and tap its paste key. Nothung cleans the current clipboard and inserts the result into the active text field. While the keyboard is visible and Full Access is enabled, new clipboard content is also cleaned and added to the recent list automatically.
+
+<p align="center">
+  <img src="docs/screenshots/keyboard-paste.png" alt="Clean and paste with the Nothung keyboard" width="360">
+</p>
+
+### 3. Paste into Nothung and clean
+
+Open the main app, paste a URL or text containing a link, and tap **Clean Link**. Nothung shows the content before and after cleaning, along with removed fields and applied rules when relevant. The result can then be copied or shared.
+
+<p align="center">
+  <img src="docs/screenshots/app-cleaning.png" alt="Paste and clean a link in the Nothung app" width="360">
+</p>
+
+## Other features
+
+- Custom query-parameter, regular-expression, and redirect rules
+- Shortcuts support with URL input and URL output
+- Built-in cleanup for common tracking parameters and shared links from X/Twitter and Bilibili
+- Built-in expansion for `b23.tv`
+- Recent cleaned items in the Nothung keyboard: tap to insert, or long-press to view the original content
+- Local parameter and regular-expression processing; no ads or analytics SDKs
+- Clipboard monitoring only while the Nothung keyboard is visible and Full Access is enabled, never in the background
+
+Nothung requires iOS 17 or later.
+
+## Build
 
 ```sh
 open iOS/Nothung.xcodeproj
 ```
 
-在 Xcode 中选择 `Nothung` Scheme 和自己的开发团队即可运行。其他开发者进行真机测试时，可能需要替换 `dev.nothung.*` Bundle ID 和 `group.dev.nothung.shared` App Group。
+Select the `Nothung` scheme and your own development team in Xcode. Other developers may need to replace the `dev.nothung.*` bundle identifiers and the `group.dev.nothung.shared` App Group before running on a physical device.
 
-工程文件由 XcodeGen 2.46.0 生成；修改 `iOS/project.yml` 后运行：
+The Xcode project is generated with XcodeGen 2.46.0. After editing `iOS/project.yml`, run:
 
 ```sh
 xcodegen generate --spec iOS/project.yml
 ```
 
-核心测试：
+Core tests:
 
 ```sh
 cd Packages/NothungCore
 swift test
 ```
 
-当前基线为 Xcode 26.6、iOS 26.5 SDK；45 项核心测试通过，另包含 40 项 iOS 集成/安全测试。
+The current baseline is Xcode 26.6 with the iOS 26.5 SDK. The project has 45 passing core tests plus 40 iOS integration and security tests.
 
-## 规则与许可证
+## Rules and licensing
 
-Nothung 默认不包含 Tarnhelm 的完整规则库。可选转换包位于 [`RulePacks/Tarnhelm-GPL-3.0`](RulePacks/Tarnhelm-GPL-3.0)，由 [TarnhelmDocument](https://github.com/lz233/TarnhelmDocument) 规则转换而来，按 GPL-3.0-only 单独分发并由用户手动导入。
+Nothung does not include Tarnhelm’s complete rule library by default. An optional converted rule pack is available in [`RulePacks/Tarnhelm-GPL-3.0`](RulePacks/Tarnhelm-GPL-3.0). It is converted from the [TarnhelmDocument](https://github.com/lz233/TarnhelmDocument) rules, distributed separately under GPL-3.0-only, and imported manually by the user.
 
-Nothung 自有代码目前未授予开源许可证，默认保留全部权利。详见 [许可证与来源说明](LICENSES.md) 和 [隐私政策](PRIVACY.md)。
+Nothung’s own code is currently not offered under an open-source license; all rights are reserved by default. See [License and source notices](LICENSES.md) and the [Privacy Policy](PRIVACY.md).
