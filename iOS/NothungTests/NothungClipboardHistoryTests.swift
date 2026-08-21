@@ -36,6 +36,31 @@ final class NothungClipboardHistoryTests: XCTestCase {
             [entry]
         )
         XCTAssertEqual(entry.capturedAt, date)
+        XCTAssertFalse(entry.isPinned)
+    }
+
+    func testLegacyEntryWithoutPinnedFieldDecodesAsUnpinned() throws {
+        struct LegacyEntry: Encodable {
+            let id: UUID
+            let original: String
+            let cleaned: String
+            let capturedAt: Date
+        }
+
+        let legacy = LegacyEntry(
+            id: UUID(),
+            original: "https://example.com/?utm_source=legacy",
+            cleaned: "https://example.com/",
+            capturedAt: Date(timeIntervalSince1970: 42)
+        )
+        try JSONEncoder().encode([legacy]).write(
+            to: directoryURL.appendingPathComponent("NothungClipboardHistory.json")
+        )
+
+        let entries = NothungClipboardHistoryStorage.load(directoryURL: directoryURL)
+        XCTAssertEqual(entries.count, 1)
+        XCTAssertEqual(entries.first?.id, legacy.id)
+        XCTAssertFalse(try XCTUnwrap(entries.first).isPinned)
     }
 
     func testDuplicateOriginalOrCleanedValueMovesToFront() throws {
@@ -73,6 +98,141 @@ final class NothungClipboardHistoryTests: XCTestCase {
         XCTAssertEqual(entries.count, NothungClipboardHistoryStorage.maximumEntryCount)
         XCTAssertEqual(entries.first?.cleaned, "https://example.com/23")
         XCTAssertEqual(entries.last?.cleaned, "https://example.com/4")
+    }
+
+    func testPinnedEntriesAreShownFirstAndCanBeToggled() throws {
+        let oldest = try NothungClipboardHistoryStorage.record(
+            original: "https://oldest.example/",
+            cleaned: "https://oldest.example/",
+            capturedAt: Date(timeIntervalSince1970: 1),
+            directoryURL: directoryURL
+        )
+        let newest = try NothungClipboardHistoryStorage.record(
+            original: "https://newest.example/",
+            cleaned: "https://newest.example/",
+            capturedAt: Date(timeIntervalSince1970: 2),
+            directoryURL: directoryURL
+        )
+
+        let pinned = try XCTUnwrap(
+            NothungClipboardHistoryStorage.setPinned(
+                id: oldest.id,
+                isPinned: true,
+                directoryURL: directoryURL
+            )
+        )
+        XCTAssertTrue(pinned.isPinned)
+        XCTAssertEqual(
+            NothungClipboardHistoryStorage.load(directoryURL: directoryURL).map(\.id),
+            [oldest.id, newest.id]
+        )
+
+        let unpinned = try XCTUnwrap(
+            NothungClipboardHistoryStorage.togglePinned(
+                id: oldest.id,
+                directoryURL: directoryURL
+            )
+        )
+        XCTAssertFalse(unpinned.isPinned)
+        XCTAssertEqual(
+            NothungClipboardHistoryStorage.load(directoryURL: directoryURL).map(\.id),
+            [newest.id, oldest.id]
+        )
+    }
+
+    func testDuplicateRecordingPreservesPinnedState() throws {
+        let original = try NothungClipboardHistoryStorage.record(
+            original: "https://example.com/?utm_source=first",
+            cleaned: "https://example.com/",
+            capturedAt: Date(timeIntervalSince1970: 1),
+            directoryURL: directoryURL
+        )
+        try NothungClipboardHistoryStorage.setPinned(
+            id: original.id,
+            isPinned: true,
+            directoryURL: directoryURL
+        )
+
+        let replacement = try NothungClipboardHistoryStorage.record(
+            original: "https://example.com/?utm_source=second",
+            cleaned: "https://example.com/",
+            capturedAt: Date(timeIntervalSince1970: 2),
+            directoryURL: directoryURL
+        )
+
+        let entries = NothungClipboardHistoryStorage.load(directoryURL: directoryURL)
+        XCTAssertTrue(replacement.isPinned)
+        XCTAssertEqual(entries, [replacement])
+        XCTAssertNotEqual(replacement.id, original.id)
+    }
+
+    func testLimitEvictsUnpinnedEntriesBeforePinnedEntries() throws {
+        var oldestEntry: NothungClipboardEntry?
+        for index in 0..<NothungClipboardHistoryStorage.maximumEntryCount {
+            let entry = try NothungClipboardHistoryStorage.record(
+                original: "https://example.com/\(index)?utm_source=test",
+                cleaned: "https://example.com/\(index)",
+                capturedAt: Date(timeIntervalSince1970: TimeInterval(index)),
+                directoryURL: directoryURL
+            )
+            if index == 0 { oldestEntry = entry }
+        }
+        let oldest = try XCTUnwrap(oldestEntry)
+        try NothungClipboardHistoryStorage.setPinned(
+            id: oldest.id,
+            isPinned: true,
+            directoryURL: directoryURL
+        )
+
+        for index in 20..<24 {
+            try NothungClipboardHistoryStorage.record(
+                original: "https://example.com/\(index)?utm_source=test",
+                cleaned: "https://example.com/\(index)",
+                capturedAt: Date(timeIntervalSince1970: TimeInterval(index)),
+                directoryURL: directoryURL
+            )
+        }
+
+        let entries = NothungClipboardHistoryStorage.load(directoryURL: directoryURL)
+        XCTAssertEqual(entries.count, NothungClipboardHistoryStorage.maximumEntryCount)
+        XCTAssertEqual(entries.first?.id, oldest.id)
+        XCTAssertTrue(try XCTUnwrap(entries.first).isPinned)
+        XCTAssertFalse(entries.contains { $0.cleaned == "https://example.com/1" })
+    }
+
+    func testRecordingFailsClearlyWhenAllTwentyEntriesArePinned() throws {
+        for index in 0..<NothungClipboardHistoryStorage.maximumEntryCount {
+            let entry = try NothungClipboardHistoryStorage.record(
+                original: "https://example.com/\(index)",
+                cleaned: "https://example.com/\(index)",
+                capturedAt: Date(timeIntervalSince1970: TimeInterval(index)),
+                directoryURL: directoryURL
+            )
+            try NothungClipboardHistoryStorage.setPinned(
+                id: entry.id,
+                isPinned: true,
+                directoryURL: directoryURL
+            )
+        }
+
+        XCTAssertThrowsError(
+            try NothungClipboardHistoryStorage.record(
+                original: "https://new.example/",
+                cleaned: "https://new.example/",
+                capturedAt: Date(timeIntervalSince1970: 100),
+                directoryURL: directoryURL
+            )
+        ) { error in
+            guard case NothungClipboardHistoryStorage.StorageError
+                .capacityReservedByPinnedEntries = error else {
+                return XCTFail("Unexpected error: \(error)")
+            }
+        }
+
+        let entries = NothungClipboardHistoryStorage.load(directoryURL: directoryURL)
+        XCTAssertEqual(entries.count, NothungClipboardHistoryStorage.maximumEntryCount)
+        XCTAssertTrue(entries.allSatisfy(\.isPinned))
+        XCTAssertFalse(entries.contains { $0.cleaned == "https://new.example/" })
     }
 
     func testRemoveAndClear() throws {

@@ -31,6 +31,24 @@ final class NothungCleaningServiceTests: XCTestCase {
                 for: try XCTUnwrap(URL(string: "https://b23.tv/Pj3aF4G"))
             )
         )
+        let youtubeOutput = try NothungCleaningService.clean(
+            "https://m.youtube.com/watch?v=video&t=42s&list=playlist&index=2&si=share&feature=shared&pp=tracking&app=desktop&utm_source=copy#comments",
+            cleaner: configuration.makeCleaner()
+        )
+        XCTAssertEqual(
+            youtubeOutput.cleaned,
+            "https://m.youtube.com/watch?v=video&t=42s&list=playlist&index=2#comments"
+        )
+        let youtubeShortOutput = try NothungCleaningService.clean(
+            "https://youtu.be/video?t=42&si=share&feature=shared",
+            cleaner: configuration.makeCleaner()
+        )
+        XCTAssertEqual(youtubeShortOutput.cleaned, "https://youtu.be/video?t=42")
+        XCTAssertTrue(
+            configuration.allowsRedirectExpansion(
+                for: try XCTUnwrap(URL(string: "https://youtu.be/video?t=42"))
+            )
+        )
         XCTAssertEqual(configuration.regexRules.count, 2)
         XCTAssertTrue(
             configuration.regexRules.allSatisfy {
@@ -60,7 +78,14 @@ final class NothungCleaningServiceTests: XCTestCase {
             migrated.regexRules,
             [.nothungXTrackingCleanup, .nothungBilibiliVideoSharingCleanup]
         )
-        XCTAssertEqual(migrated.redirectRules, [.nothungBilibiliShortLink])
+        XCTAssertEqual(
+            migrated.parameterRules,
+            NothungParameterRule.nothungYouTubeRules
+        )
+        XCTAssertEqual(
+            migrated.redirectRules,
+            [.nothungBilibiliShortLink, .nothungYouTubeShortLink]
+        )
 
         migrated.regexRules.removeAll()
         migrated.redirectRules.removeAll()
@@ -69,6 +94,156 @@ final class NothungCleaningServiceTests: XCTestCase {
         let reloaded = NothungRuleStorage.load(defaults: defaults)
         XCTAssertTrue(reloaded.regexRules.isEmpty)
         XCTAssertTrue(reloaded.redirectRules.isEmpty)
+    }
+
+    func testVersionThreeJSONWithoutAutomaticCaptureDecodesAndMigrates() throws {
+        let json = #"""
+        {
+          "schemaVersion": 3,
+          "useBuiltInTrackingRules": true,
+          "cleanImmediatelyAfterPaste": false,
+          "copyAfterCleaning": false,
+          "restrictRedirectExpansionToRules": false,
+          "parameterRules": [],
+          "regexRules": [],
+          "redirectRules": []
+        }
+        """#
+
+        let decoded = try JSONDecoder().decode(
+            NothungRuleConfiguration.self,
+            from: Data(json.utf8)
+        )
+        XCTAssertFalse(decoded.automaticallyCaptureClipboard)
+
+        let migrated = try decoded.migratedToCurrentSchema()
+        XCTAssertEqual(migrated.schemaVersion, NothungRuleConfiguration.currentSchemaVersion)
+        XCTAssertEqual(
+            migrated.parameterRules.map(\.id),
+            NothungParameterRule.nothungYouTubeRules.map(\.id)
+        )
+        XCTAssertEqual(
+            migrated.redirectRules.map(\.id),
+            [NothungRedirectRule.nothungYouTubeShortLink.id]
+        )
+    }
+
+    func testVersionThreeMigrationPreservesChangesToExistingDefaults() throws {
+        var versionThree = NothungRuleConfiguration.default
+        versionThree.schemaVersion = 3
+        versionThree.useBuiltInTrackingRules = false
+        versionThree.parameterRules = []
+        versionThree.redirectRules.removeAll {
+            $0.id == NothungRedirectRule.nothungYouTubeShortLink.id
+        }
+        versionThree.regexRules.removeAll {
+            $0.id == NothungRegexRule.nothungXTrackingCleanup.id
+        }
+        let bilibiliIndex = try XCTUnwrap(
+            versionThree.regexRules.firstIndex {
+                $0.id == NothungRegexRule.nothungBilibiliVideoSharingCleanup.id
+            }
+        )
+        versionThree.regexRules[bilibiliIndex].isEnabled = false
+        versionThree.redirectRules.removeAll {
+            $0.id == NothungRedirectRule.nothungBilibiliShortLink.id
+        }
+
+        let migrated = try versionThree.migratedToCurrentSchema()
+
+        XCTAssertFalse(migrated.useBuiltInTrackingRules)
+        XCTAssertFalse(
+            migrated.regexRules.contains {
+                $0.id == NothungRegexRule.nothungXTrackingCleanup.id
+            }
+        )
+        XCTAssertEqual(
+            migrated.regexRules.first {
+                $0.id == NothungRegexRule.nothungBilibiliVideoSharingCleanup.id
+            }?.isEnabled,
+            false
+        )
+        XCTAssertFalse(
+            migrated.redirectRules.contains {
+                $0.id == NothungRedirectRule.nothungBilibiliShortLink.id
+            }
+        )
+        XCTAssertEqual(
+            migrated.parameterRules.map(\.id),
+            NothungParameterRule.nothungYouTubeRules.map(\.id)
+        )
+        XCTAssertTrue(
+            migrated.redirectRules.contains {
+                $0.id == NothungRedirectRule.nothungYouTubeShortLink.id
+            }
+        )
+    }
+
+    func testCurrentSchemaDoesNotRecreateDeletedOrDisabledYouTubeDefaults() throws {
+        var current = NothungRuleConfiguration.default
+        current.parameterRules.removeAll {
+            $0.id == NothungParameterRule.nothungYouTubeParameters.id
+        }
+        let shortParameterIndex = try XCTUnwrap(
+            current.parameterRules.firstIndex {
+                $0.id == NothungParameterRule.nothungYouTubeShortLinkParameters.id
+            }
+        )
+        current.parameterRules[shortParameterIndex].isEnabled = false
+        current.redirectRules.removeAll {
+            $0.id == NothungRedirectRule.nothungYouTubeShortLink.id
+        }
+
+        let migrated = try current.migratedToCurrentSchema()
+
+        XCTAssertEqual(migrated, current)
+        XCTAssertFalse(migrated.isDefaultFeatureEnabled(.youtubeParameters))
+        XCTAssertFalse(migrated.isDefaultFeatureEnabled(.youtubeShortLinkExpansion))
+    }
+
+    func testDefaultFeatureSwitchesUseStableRulesAndRestoreDeletedRules() {
+        var configuration = NothungRuleConfiguration.default
+
+        XCTAssertEqual(
+            NothungParameterRule.nothungYouTubeParameters.id.uuidString,
+            "A24C7FC2-61D6-4EE9-A8BC-9AC7911BE004"
+        )
+        XCTAssertEqual(
+            NothungParameterRule.nothungYouTubeShortLinkParameters.id.uuidString,
+            "A24C7FC2-61D6-4EE9-A8BC-9AC7911BE005"
+        )
+        XCTAssertEqual(
+            NothungRedirectRule.nothungYouTubeShortLink.id.uuidString,
+            "A24C7FC2-61D6-4EE9-A8BC-9AC7911BE006"
+        )
+
+        for feature in NothungDefaultFeature.allCases {
+            XCTAssertFalse(feature.title.isEmpty)
+            XCTAssertFalse(feature.explanation.isEmpty)
+            XCTAssertTrue(configuration.isDefaultFeatureEnabled(feature))
+            configuration.setDefaultFeature(feature, isEnabled: false)
+            XCTAssertFalse(configuration.isDefaultFeatureEnabled(feature))
+            configuration.setDefaultFeature(feature, isEnabled: true)
+            XCTAssertTrue(configuration.isDefaultFeatureEnabled(feature))
+        }
+
+        XCTAssertEqual(
+            Set(NothungDefaultFeature.allCases.filter(\.requiresNetwork)),
+            [.bilibiliShortLinkExpansion, .youtubeShortLinkExpansion]
+        )
+
+        configuration.parameterRules.removeAll {
+            $0.id == NothungParameterRule.nothungYouTubeParameters.id
+        }
+        XCTAssertFalse(configuration.isDefaultFeatureEnabled(.youtubeParameters))
+        configuration.setDefaultFeature(.youtubeParameters, isEnabled: true)
+        XCTAssertTrue(configuration.isDefaultFeatureEnabled(.youtubeParameters))
+        XCTAssertEqual(
+            configuration.parameterRules.filter {
+                NothungParameterRule.nothungYouTubeRules.map(\.id).contains($0.id)
+            }.count,
+            2
+        )
     }
 
     func testVersionTwoConfigurationAddsBilibiliCleanupOnlyOnce() throws {
@@ -110,6 +285,12 @@ final class NothungCleaningServiceTests: XCTestCase {
         stored.regexRules[0].source = "Nothung · 内置规则"
         stored.redirectRules[0].title = "哔哩哔哩短链"
         stored.redirectRules[0].source = "Nothung · 内置规则"
+        stored.parameterRules[0].title = "YouTube 视频分享去参数"
+        stored.parameterRules[0].source = "Nothung · 内置规则"
+        stored.parameterRules[1].title = "YouTube 短链分享去参数"
+        stored.parameterRules[1].source = "Nothung · 内置规则"
+        stored.redirectRules[1].title = "YouTube 短链"
+        stored.redirectRules[1].source = "Nothung · 内置规则"
         defaults.set(
             try JSONEncoder().encode(stored),
             forKey: "ruleConfiguration.v1"
@@ -132,6 +313,22 @@ final class NothungCleaningServiceTests: XCTestCase {
         XCTAssertEqual(
             loaded.redirectRules[0].source,
             NothungRedirectRule.nothungBilibiliShortLink.source
+        )
+        XCTAssertEqual(
+            loaded.parameterRules[0].title,
+            NothungParameterRule.nothungYouTubeParameters.title
+        )
+        XCTAssertEqual(
+            loaded.parameterRules[0].source,
+            NothungParameterRule.nothungYouTubeParameters.source
+        )
+        XCTAssertEqual(
+            loaded.parameterRules[1].title,
+            NothungParameterRule.nothungYouTubeShortLinkParameters.title
+        )
+        XCTAssertEqual(
+            loaded.redirectRules[1].title,
+            NothungRedirectRule.nothungYouTubeShortLink.title
         )
     }
 

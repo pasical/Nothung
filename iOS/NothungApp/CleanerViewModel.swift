@@ -108,10 +108,10 @@ final class CleanerViewModel: ObservableObject {
         }
     }
 
-    /// Performs the only network-enabled operation in the app.
+    /// Expands a redirect after the main app presents its one-time disclosure.
     ///
-    /// The view presents a disclosure before calling this method. The Action
-    /// Extension and App Intent never invoke it and remain local-only.
+    /// Enabled short-link rules may also expand redirects in the Action
+    /// Extension and keyboard. App Intent intentionally remains local-only.
     func expandRedirects(copyWhenFinished: Bool = false) async {
         guard canExpandRedirects,
               let startingOutput = output,

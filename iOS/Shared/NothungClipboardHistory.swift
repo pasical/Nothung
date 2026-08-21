@@ -5,17 +5,46 @@ struct NothungClipboardEntry: Codable, Equatable, Identifiable, Sendable {
     let original: String
     let cleaned: String
     let capturedAt: Date
+    let isPinned: Bool
 
     init(
         id: UUID = UUID(),
         original: String,
         cleaned: String,
-        capturedAt: Date = Date()
+        capturedAt: Date = Date(),
+        isPinned: Bool = false
     ) {
         self.id = id
         self.original = original
         self.cleaned = cleaned
         self.capturedAt = capturedAt
+        self.isPinned = isPinned
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case original
+        case cleaned
+        case capturedAt
+        case isPinned
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        original = try container.decode(String.self, forKey: .original)
+        cleaned = try container.decode(String.self, forKey: .cleaned)
+        capturedAt = try container.decode(Date.self, forKey: .capturedAt)
+        isPinned = try container.decodeIfPresent(Bool.self, forKey: .isPinned) ?? false
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(original, forKey: .original)
+        try container.encode(cleaned, forKey: .cleaned)
+        try container.encode(capturedAt, forKey: .capturedAt)
+        try container.encode(isPinned, forKey: .isPinned)
     }
 }
 
@@ -25,6 +54,7 @@ enum NothungClipboardHistoryStorage {
     enum StorageError: LocalizedError {
         case directoryUnavailable
         case invalidEntry
+        case capacityReservedByPinnedEntries
 
         var errorDescription: String? {
             switch self {
@@ -32,6 +62,8 @@ enum NothungClipboardHistoryStorage {
                 return String(localized: "无法访问 Nothung 的本地剪贴板集合。")
             case .invalidEntry:
                 return String(localized: "这条内容为空或过长，不能加入剪贴板集合。")
+            case .capacityReservedByPinnedEntries:
+                return String(localized: "剪贴板集合已被 20 条固定内容占满，请先取消固定或删除一条。")
             }
         }
     }
@@ -71,7 +103,7 @@ enum NothungClipboardHistoryStorage {
             throw StorageError.invalidEntry
         }
 
-        let newEntry = NothungClipboardEntry(
+        var newEntry = NothungClipboardEntry(
             original: original,
             cleaned: cleaned,
             capturedAt: capturedAt
@@ -84,13 +116,96 @@ enum NothungClipboardHistoryStorage {
         try coordinateMutation(in: directory) { coordinatedDirectory in
             let fileURL = historyFileURL(in: coordinatedDirectory)
             var entries = read(from: fileURL)
+            let shouldRemainPinned = entries.contains {
+                ($0.original == original || $0.cleaned == cleaned) && $0.isPinned
+            }
+            if shouldRemainPinned {
+                newEntry = NothungClipboardEntry(
+                    original: original,
+                    cleaned: cleaned,
+                    capturedAt: capturedAt,
+                    isPinned: true
+                )
+            }
             entries.removeAll {
                 $0.original == original || $0.cleaned == cleaned
             }
+            if !newEntry.isPinned,
+               entries.count >= maximumEntryCount,
+               entries.allSatisfy(\.isPinned) {
+                throw StorageError.capacityReservedByPinnedEntries
+            }
             entries.insert(newEntry, at: 0)
-            try write(Array(entries.prefix(maximumEntryCount)), to: fileURL)
+            try write(orderedAndLimited(entries), to: fileURL)
         }
         return newEntry
+    }
+
+    @discardableResult
+    static func setPinned(
+        id: UUID,
+        isPinned: Bool,
+        directoryURL: URL? = nil
+    ) throws -> NothungClipboardEntry? {
+        guard let directory = historyDirectoryURL(directoryURL) else {
+            throw StorageError.directoryUnavailable
+        }
+
+        var updatedEntry: NothungClipboardEntry?
+        try prepareDirectory(directory)
+        try coordinateMutation(in: directory) { coordinatedDirectory in
+            let fileURL = historyFileURL(in: coordinatedDirectory)
+            var entries = read(from: fileURL)
+            guard let index = entries.firstIndex(where: { $0.id == id }) else {
+                return
+            }
+
+            let entry = entries[index]
+            let replacement = NothungClipboardEntry(
+                id: entry.id,
+                original: entry.original,
+                cleaned: entry.cleaned,
+                capturedAt: entry.capturedAt,
+                isPinned: isPinned
+            )
+            entries[index] = replacement
+            updatedEntry = replacement
+            try write(orderedAndLimited(entries), to: fileURL)
+        }
+        return updatedEntry
+    }
+
+    @discardableResult
+    static func togglePinned(
+        id: UUID,
+        directoryURL: URL? = nil
+    ) throws -> NothungClipboardEntry? {
+        guard let directory = historyDirectoryURL(directoryURL) else {
+            throw StorageError.directoryUnavailable
+        }
+
+        var updatedEntry: NothungClipboardEntry?
+        try prepareDirectory(directory)
+        try coordinateMutation(in: directory) { coordinatedDirectory in
+            let fileURL = historyFileURL(in: coordinatedDirectory)
+            var entries = read(from: fileURL)
+            guard let index = entries.firstIndex(where: { $0.id == id }) else {
+                return
+            }
+
+            let entry = entries[index]
+            let replacement = NothungClipboardEntry(
+                id: entry.id,
+                original: entry.original,
+                cleaned: entry.cleaned,
+                capturedAt: entry.capturedAt,
+                isPinned: !entry.isPinned
+            )
+            entries[index] = replacement
+            updatedEntry = replacement
+            try write(orderedAndLimited(entries), to: fileURL)
+        }
+        return updatedEntry
     }
 
     static func remove(id: UUID, directoryURL: URL? = nil) throws {
@@ -164,7 +279,23 @@ enum NothungClipboardHistoryStorage {
               ) else {
             return []
         }
-        return Array(entries.prefix(maximumEntryCount))
+        return orderedAndLimited(entries)
+    }
+
+    private static func orderedAndLimited(
+        _ entries: [NothungClipboardEntry]
+    ) -> [NothungClipboardEntry] {
+        let ordered = entries.enumerated().sorted { lhs, rhs in
+            if lhs.element.isPinned != rhs.element.isPinned {
+                return lhs.element.isPinned
+            }
+            if lhs.element.capturedAt != rhs.element.capturedAt {
+                return lhs.element.capturedAt > rhs.element.capturedAt
+            }
+            return lhs.offset < rhs.offset
+        }.map(\.element)
+
+        return Array(ordered.prefix(maximumEntryCount))
     }
 
     private static func write(
@@ -177,7 +308,7 @@ enum NothungClipboardHistoryStorage {
 
         #if os(iOS)
         try? FileManager.default.setAttributes(
-            [.protectionKey: FileProtectionType.completeUntilFirstUserAuthentication],
+            [.protectionKey: FileProtectionType.complete],
             ofItemAtPath: fileURL.path
         )
         #endif

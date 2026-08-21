@@ -9,7 +9,10 @@ struct KeyboardRootView: View {
     let onDelete: () -> Void
     let onMoveCursor: (Int) -> Void
     let onPasteCurrentClipboard: () -> Void
+    let onCleanSelectedText: () -> Void
     let onInterfaceAction: () -> Void
+    let showsInputModeSwitchKey: Bool
+    let onAdvanceToNextInputMode: () -> Void
     let onDismissKeyboard: () -> Void
 
     var body: some View {
@@ -108,6 +111,16 @@ struct KeyboardRootView: View {
                 }
             }
 
+            if showsInputModeSwitchKey {
+                headerButton(
+                    accessibilityLabel: "切换到下一个键盘",
+                    action: onAdvanceToNextInputMode
+                ) {
+                    Image(systemName: "globe")
+                        .font(.system(size: 15, weight: .semibold))
+                }
+            }
+
             headerButton(
                 accessibilityLabel: "收起键盘",
                 action: onDismissKeyboard
@@ -130,9 +143,12 @@ struct KeyboardRootView: View {
         if model.isEditorPresented {
             return String(localized: "输入后清理并加入")
         }
-        return model.hasFullAccess
+        guard model.hasFullAccess else {
+            return String(localized: "离线模式 · 可清理所选链接")
+        }
+        return model.automaticallyCapturesClipboard
             ? String(localized: "自动捕捉剪贴板")
-            : String(localized: "开启完全访问以自动捕捉")
+            : String(localized: "自动捕捉已关闭")
     }
 
     @ViewBuilder
@@ -173,23 +189,19 @@ struct KeyboardRootView: View {
 
     private var emptyState: some View {
         VStack(spacing: 8) {
-            Image(systemName: model.hasFullAccess ? "wave.3.right.circle.fill" : "lock.circle")
+            Image(systemName: emptyStateIcon)
                 .symbolRenderingMode(.hierarchical)
                 .font(.system(size: 28, weight: .medium))
                 .foregroundStyle(NothungPalette.accent)
 
             Text(
-                model.hasFullAccess
-                    ? String(localized: "等待新的剪贴板")
-                    : String(localized: "需要完全访问")
+                emptyStateTitle
             )
                 .font(.system(size: 13, weight: .semibold, design: .rounded))
                 .foregroundStyle(NothungPalette.ink)
 
             Text(
-                model.hasFullAccess
-                    ? String(localized: "复制文本后切回这里，会自动清理并加入。")
-                    : String(localized: "开启完全访问后，复制的文本会自动清理并加入。")
+                emptyStateDetail
             )
             .font(.system(size: 10.5, weight: .medium))
             .foregroundStyle(NothungPalette.muted)
@@ -209,6 +221,31 @@ struct KeyboardRootView: View {
         .padding(.horizontal, 20)
     }
 
+    private var emptyStateIcon: String {
+        guard model.hasFullAccess else { return "wand.and.sparkles" }
+        return model.automaticallyCapturesClipboard
+            ? "wave.3.right.circle.fill"
+            : "pause.circle.fill"
+    }
+
+    private var emptyStateTitle: String {
+        guard model.hasFullAccess else {
+            return String(localized: "选中文本后可本地清理")
+        }
+        return model.automaticallyCapturesClipboard
+            ? String(localized: "等待新的剪贴板")
+            : String(localized: "自动捕捉已关闭")
+    }
+
+    private var emptyStateDetail: String {
+        guard model.hasFullAccess else {
+            return String(localized: "在输入框中选中含链接的文本，再点左下角按钮；完全访问仅用于剪贴板与共享历史。")
+        }
+        return model.automaticallyCapturesClipboard
+            ? String(localized: "复制文本后切回这里，会自动清理并加入。")
+            : String(localized: "仍可点左下角的粘贴键，或手动添加内容。")
+    }
+
     private func historyCard(_ entry: NothungClipboardEntry) -> some View {
         Button {
             onInsert(entry)
@@ -218,6 +255,13 @@ struct KeyboardRootView: View {
                     Image(systemName: entry.cleaned.contains("://") ? "link" : "text.alignleft")
                         .font(.system(size: 10, weight: .bold))
                         .foregroundStyle(NothungPalette.accent)
+
+                    if entry.isPinned {
+                        Image(systemName: "pin.fill")
+                            .font(.system(size: 9, weight: .bold))
+                            .foregroundStyle(NothungPalette.accent)
+                            .accessibilityLabel("已固定")
+                    }
 
                     Spacer(minLength: 0)
 
@@ -260,6 +304,16 @@ struct KeyboardRootView: View {
                 model.revealedEntry = entry
             } label: {
                 Label("显示原文", systemImage: "doc.text.magnifyingglass")
+            }
+
+            Button {
+                onInterfaceAction()
+                model.togglePinned(entry)
+            } label: {
+                Label(
+                    entry.isPinned ? "取消固定" : "固定到顶部",
+                    systemImage: entry.isPinned ? "pin.slash" : "pin"
+                )
             }
 
             Button(role: .destructive) {
@@ -368,15 +422,27 @@ struct KeyboardRootView: View {
     private var documentActionRow: some View {
         KeyboardSurfaceGroup(spacing: 6) {
             HStack(spacing: 7) {
-                Button(action: onPasteCurrentClipboard) {
-                    Image(systemName: "doc.on.doc")
+                Button(
+                    action: model.hasFullAccess
+                        ? onPasteCurrentClipboard
+                        : onCleanSelectedText
+                ) {
+                    Image(
+                        systemName: model.hasFullAccess
+                            ? "doc.on.doc"
+                            : "wand.and.sparkles"
+                    )
                         .symbolRenderingMode(.monochrome)
                         .font(.system(size: 14, weight: .semibold))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 .frame(width: 46, height: 44)
                 .buttonStyle(KeyboardKeyStyle(role: .modifier))
-                .accessibilityLabel("清理并粘贴当前剪贴板")
+                .accessibilityLabel(
+                    model.hasFullAccess
+                        ? "清理并粘贴当前剪贴板"
+                        : "本地清理所选链接"
+                )
 
                 RepeatingKeyboardKey(
                     systemName: "chevron.left",

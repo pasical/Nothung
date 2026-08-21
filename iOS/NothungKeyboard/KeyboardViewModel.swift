@@ -7,6 +7,7 @@ final class KeyboardViewModel: ObservableObject {
     @Published private(set) var entries: [NothungClipboardEntry] = []
     @Published private(set) var isProcessing = false
     @Published private(set) var hasFullAccess = false
+    @Published private(set) var automaticallyCapturesClipboard = false
     @Published var revealedEntry: NothungClipboardEntry?
     @Published var isEditorPresented = false
     @Published var editorText = ""
@@ -17,6 +18,8 @@ final class KeyboardViewModel: ObservableObject {
 
     func reload(hasFullAccess: Bool) {
         self.hasFullAccess = hasFullAccess
+        automaticallyCapturesClipboard = NothungRuleStorage.load()
+            .automaticallyCaptureClipboard
         entries = NothungClipboardHistoryStorage.load()
         if let revealedEntry,
            !entries.contains(where: { $0.id == revealedEntry.id }) {
@@ -25,7 +28,10 @@ final class KeyboardViewModel: ObservableObject {
     }
 
     func captureSystemClipboard() async {
+        automaticallyCapturesClipboard = NothungRuleStorage.load()
+            .automaticallyCaptureClipboard
         guard hasFullAccess,
+              automaticallyCapturesClipboard,
               let raw = Self.systemClipboardText() else {
             return
         }
@@ -56,12 +62,37 @@ final class KeyboardViewModel: ObservableObject {
 
         let cleaned = await processAndRecord(
             raw,
-            message: String(localized: "正在清理并粘贴…")
+            message: String(localized: "正在清理并粘贴…"),
+            allowsUnrecordedResult: true
         )
         if cleaned != nil {
             lastCapturedClipboard = raw
         }
         return cleaned
+    }
+
+    func cleanSelectedTextForInsertion(_ selectedText: String?) -> String? {
+        guard let selectedText,
+              !selectedText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            failPaste(String(localized: "请先在输入框中选中一段包含链接的文本。"))
+            return nil
+        }
+
+        do {
+            let output = try NothungCleaningService.clean(selectedText)
+            if (try? NothungClipboardHistoryStorage.record(
+                original: selectedText,
+                cleaned: output.cleaned
+            )) != nil {
+                entries = NothungClipboardHistoryStorage.load()
+            }
+            statusMessage = String(localized: "已在本地清理所选链接。")
+            errorMessage = nil
+            return output.cleaned
+        } catch {
+            failPaste(error.localizedDescription)
+            return nil
+        }
     }
 
     func beginManualEntry() {
@@ -91,7 +122,14 @@ final class KeyboardViewModel: ObservableObject {
         errorMessage = nil
     }
 
-    func markInserted() {
+    func markInserted(preservingErrorMessage: Bool = false) {
+        if preservingErrorMessage, let errorMessage {
+            self.errorMessage = String(
+                localized: "已插入清理后的内容，但未保存到最近记录：\(errorMessage)"
+            )
+            statusMessage = nil
+            return
+        }
         statusMessage = String(localized: "已插入清理后的内容。")
         errorMessage = nil
     }
@@ -112,9 +150,28 @@ final class KeyboardViewModel: ObservableObject {
         }
     }
 
+    func togglePinned(_ entry: NothungClipboardEntry) {
+        do {
+            let updatedEntry = try NothungClipboardHistoryStorage.togglePinned(
+                id: entry.id
+            )
+            entries = NothungClipboardHistoryStorage.load()
+            if revealedEntry?.id == entry.id {
+                revealedEntry = updatedEntry
+            }
+            statusMessage = entry.isPinned
+                ? String(localized: "已取消固定。")
+                : String(localized: "已固定到顶部。")
+            errorMessage = nil
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
     private func processAndRecord(
         _ raw: String,
-        message: String
+        message: String,
+        allowsUnrecordedResult: Bool = false
     ) async -> String? {
         guard raw.count <= NothungCleaningService.maximumInputLength else {
             failPaste(String(localized: "内容超过 \(NothungCleaningService.maximumInputLength) 个字符，请缩短后再试。"))
@@ -151,10 +208,18 @@ final class KeyboardViewModel: ObservableObject {
             }
 
             try Task.checkCancellation()
-            try NothungClipboardHistoryStorage.record(
-                original: raw,
-                cleaned: output.cleaned
-            )
+            do {
+                try NothungClipboardHistoryStorage.record(
+                    original: raw,
+                    cleaned: output.cleaned
+                )
+            } catch {
+                guard allowsUnrecordedResult else { throw error }
+                isProcessing = false
+                statusMessage = nil
+                errorMessage = error.localizedDescription
+                return output.cleaned
+            }
             entries = NothungClipboardHistoryStorage.load()
             isProcessing = false
             statusMessage = String(localized: "已加入 Nothung 剪贴板。")

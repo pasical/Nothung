@@ -8,6 +8,7 @@ final class KeyboardViewController: UIInputViewController, UIInputViewAudioFeedb
     private var pasteTask: Task<Void, Never>?
     private var clipboardTimer: Timer?
     private var observedPasteboardChangeCount: Int?
+    private var displayedInputModeSwitchKey: Bool?
 
     private let keyFeedback = UIImpactFeedbackGenerator(style: .soft)
     private let deleteFeedback = UIImpactFeedbackGenerator(style: .rigid)
@@ -21,30 +22,10 @@ final class KeyboardViewController: UIInputViewController, UIInputViewAudioFeedb
         view.backgroundColor = .clear
         view.isOpaque = false
 
-        let rootView = KeyboardRootView(
-            model: model,
-            onInsert: { [weak self] entry in
-                self?.insert(entry)
-            },
-            onInsertText: { [weak self] text in
-                self?.insertText(text)
-            },
-            onDelete: { [weak self] in
-                self?.deleteBackward()
-            },
-            onMoveCursor: { [weak self] offset in
-                self?.moveCursor(by: offset)
-            },
-            onPasteCurrentClipboard: { [weak self] in
-                self?.pasteCurrentClipboard()
-            },
-            onInterfaceAction: { [weak self] in
-                self?.performInterfaceFeedback()
-            },
-            onDismissKeyboard: { [weak self] in
-                self?.dismissWithFeedback()
-            }
+        let rootView = makeRootView(
+            showsInputModeSwitchKey: needsInputModeSwitchKey
         )
+        displayedInputModeSwitchKey = needsInputModeSwitchKey
 
         let hostingController = UIHostingController(rootView: rootView)
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -66,8 +47,45 @@ final class KeyboardViewController: UIInputViewController, UIInputViewAudioFeedb
         heightConstraint.isActive = true
     }
 
+    private func makeRootView(
+        showsInputModeSwitchKey: Bool
+    ) -> KeyboardRootView {
+        KeyboardRootView(
+            model: model,
+            onInsert: { [weak self] entry in
+                self?.insert(entry)
+            },
+            onInsertText: { [weak self] text in
+                self?.insertText(text)
+            },
+            onDelete: { [weak self] in
+                self?.deleteBackward()
+            },
+            onMoveCursor: { [weak self] offset in
+                self?.moveCursor(by: offset)
+            },
+            onPasteCurrentClipboard: { [weak self] in
+                self?.pasteCurrentClipboard()
+            },
+            onCleanSelectedText: { [weak self] in
+                self?.cleanSelectedText()
+            },
+            onInterfaceAction: { [weak self] in
+                self?.performInterfaceFeedback()
+            },
+            showsInputModeSwitchKey: showsInputModeSwitchKey,
+            onAdvanceToNextInputMode: { [weak self] in
+                self?.advanceInputModeWithFeedback()
+            },
+            onDismissKeyboard: { [weak self] in
+                self?.dismissWithFeedback()
+            }
+        )
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateInputModeSwitchKeyIfNeeded()
         model.reload(hasFullAccess: hasFullAccess)
         prepareFeedback()
         startClipboardMonitoring()
@@ -75,7 +93,14 @@ final class KeyboardViewController: UIInputViewController, UIInputViewAudioFeedb
 
     override func viewDidDisappear(_ animated: Bool) {
         stopClipboardMonitoring()
+        pasteTask?.cancel()
+        pasteTask = nil
         super.viewDidDisappear(animated)
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateInputModeSwitchKeyIfNeeded()
     }
 
     private func insert(_ entry: NothungClipboardEntry) {
@@ -117,6 +142,20 @@ final class KeyboardViewController: UIInputViewController, UIInputViewAudioFeedb
         dismissKeyboard()
     }
 
+    private func advanceInputModeWithFeedback() {
+        performInterfaceFeedback()
+        advanceToNextInputMode()
+    }
+
+    private func updateInputModeSwitchKeyIfNeeded() {
+        let shouldShow = needsInputModeSwitchKey
+        guard displayedInputModeSwitchKey != shouldShow else { return }
+        displayedInputModeSwitchKey = shouldShow
+        hostingController?.rootView = makeRootView(
+            showsInputModeSwitchKey: shouldShow
+        )
+    }
+
     private func prepareFeedback() {
         keyFeedback.prepare()
         deleteFeedback.prepare()
@@ -125,7 +164,10 @@ final class KeyboardViewController: UIInputViewController, UIInputViewAudioFeedb
 
     private func startClipboardMonitoring() {
         stopClipboardMonitoring()
-        guard hasFullAccess else { return }
+        guard hasFullAccess,
+              NothungRuleStorage.load().automaticallyCaptureClipboard else {
+            return
+        }
 
         observedPasteboardChangeCount = nil
         captureClipboardIfChanged()
@@ -146,8 +188,6 @@ final class KeyboardViewController: UIInputViewController, UIInputViewAudioFeedb
         clipboardTimer = nil
         clipboardTask?.cancel()
         clipboardTask = nil
-        pasteTask?.cancel()
-        pasteTask = nil
         observedPasteboardChangeCount = nil
     }
 
@@ -159,6 +199,11 @@ final class KeyboardViewController: UIInputViewController, UIInputViewAudioFeedb
         guard hasFullAccess else {
             stopClipboardMonitoring()
             model.reload(hasFullAccess: false)
+            return
+        }
+        guard NothungRuleStorage.load().automaticallyCaptureClipboard else {
+            stopClipboardMonitoring()
+            model.reload(hasFullAccess: true)
             return
         }
 
@@ -184,7 +229,20 @@ final class KeyboardViewController: UIInputViewController, UIInputViewAudioFeedb
             UIDevice.current.playInputClick()
             self.keyFeedback.impactOccurred(intensity: 0.72)
             self.keyFeedback.prepare()
-            self.model.markInserted()
+            self.model.markInserted(preservingErrorMessage: true)
         }
+    }
+
+    private func cleanSelectedText() {
+        guard let cleaned = model.cleanSelectedTextForInsertion(
+            textDocumentProxy.selectedText
+        ) else {
+            return
+        }
+
+        textDocumentProxy.insertText(cleaned)
+        UIDevice.current.playInputClick()
+        keyFeedback.impactOccurred(intensity: 0.72)
+        keyFeedback.prepare()
     }
 }

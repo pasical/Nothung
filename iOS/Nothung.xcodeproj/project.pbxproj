@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A1000000000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B1000000000000000000001 /* Assets.xcassets */; };
+		0A1000000000000000000002 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0B1000000000000000000002 /* PrivacyInfo.xcprivacy */; };
+		0A1000000000000000000003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B1000000000000000000003 /* Assets.xcassets */; };
+		0A1000000000000000000004 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0B1000000000000000000004 /* PrivacyInfo.xcprivacy */; };
+		0A1000000000000000000005 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0B1000000000000000000005 /* PrivacyInfo.xcprivacy */; };
 		002BB14A18BB6CD7A1C8D7DC /* ActionExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7341613582A4A12C4315727F /* ActionExtensionViewModel.swift */; };
 		10A1F0CC691C067D9C868FF4 /* NothungClipboardHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21946C1EDB49A9FFAFD7ACA3 /* NothungClipboardHistoryTests.swift */; };
 		1C502CD77B28BB726D46CF20 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8967E0226A6848D0BD216BA6 /* AppShortcuts.xcstrings */; };
@@ -97,6 +102,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0B1000000000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0B1000000000000000000002 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		0B1000000000000000000003 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0B1000000000000000000004 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		0B1000000000000000000005 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		12FE5A2DB9CDDFD723A4BF16 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		138491B29BEB747438C887D2 /* NothungAction.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = NothungAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2070B408C7C6139E4F5E8BC0 /* NothungMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungMark.swift; sourceTree = "<group>"; };
@@ -169,10 +179,12 @@
 		298F8782862C3FD973EFD625 /* NothungAction */ = {
 			isa = PBXGroup;
 			children = (
+				0B1000000000000000000003 /* Assets.xcassets */,
 				7341613582A4A12C4315727F /* ActionExtensionViewModel.swift */,
 				3B3240515012495D8261488D /* ActionRootView.swift */,
 				D15CD8F1FAE19655D0B28430 /* ActionViewController.swift */,
 				12FE5A2DB9CDDFD723A4BF16 /* InfoPlist.xcstrings */,
+				0B1000000000000000000004 /* PrivacyInfo.xcprivacy */,
 			);
 			path = NothungAction;
 			sourceTree = "<group>";
@@ -231,10 +243,12 @@
 			isa = PBXGroup;
 			children = (
 				8967E0226A6848D0BD216BA6 /* AppShortcuts.xcstrings */,
+				0B1000000000000000000001 /* Assets.xcassets */,
 				9D3969AD37B06BF85EB1FF0A /* CleanerViewModel.swift */,
 				8E1A2C3E520733C2EAD920FB /* CleanURLIntent.swift */,
 				DE89667ADBE4DA9BAC3E90C8 /* ContentView.swift */,
 				25C361C7036A50BBA64156DA /* NothungApp.swift */,
+				0B1000000000000000000002 /* PrivacyInfo.xcprivacy */,
 				45026F121EAB7D7FBB269479 /* RedirectResolver.swift */,
 				646D332F51F78293C39BB53D /* RuleSettingsView.swift */,
 			);
@@ -255,6 +269,7 @@
 				41CFA134893F25EE53231914 /* KeyboardRootView.swift */,
 				CCA3D9619CA71C23CFA3D6F6 /* KeyboardViewController.swift */,
 				B006DD06A0A1870D7F53F518 /* KeyboardViewModel.swift */,
+				0B1000000000000000000005 /* PrivacyInfo.xcprivacy */,
 			);
 			path = NothungKeyboard;
 			sourceTree = "<group>";
@@ -387,8 +402,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A1000000000000000000003 /* Assets.xcassets in Resources */,
 				A53A92771931B6A997201144 /* InfoPlist.xcstrings in Resources */,
 				AE952295CBFCA320E958026F /* Localizable.xcstrings in Resources */,
+				0A1000000000000000000004 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E31B1A9B81291630BEB232C /* Localizable.xcstrings in Resources */,
+				0A1000000000000000000005 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,7 +423,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C502CD77B28BB726D46CF20 /* AppShortcuts.xcstrings in Resources */,
+				0A1000000000000000000001 /* Assets.xcassets in Resources */,
 				5AF5BE570B8796747B325394 /* Localizable.xcstrings in Resources */,
+				0A1000000000000000000002 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

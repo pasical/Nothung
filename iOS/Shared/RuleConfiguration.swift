@@ -2,10 +2,11 @@ import Foundation
 import NothungCore
 
 struct NothungRuleConfiguration: Codable, Equatable, Sendable {
-    static let currentSchemaVersion = 3
+    static let currentSchemaVersion = 4
 
     var schemaVersion = Self.currentSchemaVersion
     var useBuiltInTrackingRules = true
+    var automaticallyCaptureClipboard = false
     var cleanImmediatelyAfterPaste = false
     var copyAfterCleaning = false
     var restrictRedirectExpansionToRules = false
@@ -15,13 +16,78 @@ struct NothungRuleConfiguration: Codable, Equatable, Sendable {
 
     static let `default`: NothungRuleConfiguration = {
         var configuration = NothungRuleConfiguration()
+        configuration.parameterRules = [
+            .nothungYouTubeParameters,
+            .nothungYouTubeShortLinkParameters,
+        ]
         configuration.regexRules = [
             .nothungXTrackingCleanup,
             .nothungBilibiliVideoSharingCleanup,
         ]
-        configuration.redirectRules = [.nothungBilibiliShortLink]
+        configuration.redirectRules = [
+            .nothungBilibiliShortLink,
+            .nothungYouTubeShortLink,
+        ]
         return configuration
     }()
+
+    init() {}
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion
+        case useBuiltInTrackingRules
+        case automaticallyCaptureClipboard
+        case cleanImmediatelyAfterPaste
+        case copyAfterCleaning
+        case restrictRedirectExpansionToRules
+        case parameterRules
+        case regexRules
+        case redirectRules
+    }
+
+    /// Decode fields individually so configurations written by an earlier
+    /// schema remain readable when a preference is added. In particular,
+    /// automatic clipboard capture is deliberately opt-in for existing users.
+    init(from decoder: Decoder) throws {
+        self.init()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try container.decodeIfPresent(
+            Int.self,
+            forKey: .schemaVersion
+        ) ?? 1
+        useBuiltInTrackingRules = try container.decodeIfPresent(
+            Bool.self,
+            forKey: .useBuiltInTrackingRules
+        ) ?? true
+        automaticallyCaptureClipboard = try container.decodeIfPresent(
+            Bool.self,
+            forKey: .automaticallyCaptureClipboard
+        ) ?? false
+        cleanImmediatelyAfterPaste = try container.decodeIfPresent(
+            Bool.self,
+            forKey: .cleanImmediatelyAfterPaste
+        ) ?? false
+        copyAfterCleaning = try container.decodeIfPresent(
+            Bool.self,
+            forKey: .copyAfterCleaning
+        ) ?? false
+        restrictRedirectExpansionToRules = try container.decodeIfPresent(
+            Bool.self,
+            forKey: .restrictRedirectExpansionToRules
+        ) ?? false
+        parameterRules = try container.decodeIfPresent(
+            [NothungParameterRule].self,
+            forKey: .parameterRules
+        ) ?? []
+        regexRules = try container.decodeIfPresent(
+            [NothungRegexRule].self,
+            forKey: .regexRules
+        ) ?? []
+        redirectRules = try container.decodeIfPresent(
+            [NothungRedirectRule].self,
+            forKey: .redirectRules
+        ) ?? []
+    }
 
     func migratedToCurrentSchema() throws -> NothungRuleConfiguration {
         guard schemaVersion <= Self.currentSchemaVersion else {
@@ -46,6 +112,21 @@ struct NothungRuleConfiguration: Codable, Equatable, Sendable {
                 $0.id == NothungRegexRule.nothungBilibiliVideoSharingCleanup.id
             }) {
                 result.regexRules.append(.nothungBilibiliVideoSharingCleanup)
+            }
+            result.schemaVersion = 3
+        }
+        if result.schemaVersion == 3 {
+            // Schema 3 never shipped YouTube defaults. Add each stable rule
+            // once, without re-enabling or recreating any older built-in rule
+            // the user disabled or deleted under that schema.
+            for rule in NothungParameterRule.nothungYouTubeRules
+            where !result.parameterRules.contains(where: { $0.id == rule.id }) {
+                result.parameterRules.append(rule)
+            }
+            if !result.redirectRules.contains(where: {
+                $0.id == NothungRedirectRule.nothungYouTubeShortLink.id
+            }) {
+                result.redirectRules.append(.nothungYouTubeShortLink)
             }
             result.schemaVersion = Self.currentSchemaVersion
         }
@@ -129,6 +210,91 @@ struct NothungRuleConfiguration: Codable, Equatable, Sendable {
         }
     }
 
+    func isDefaultFeatureEnabled(_ feature: NothungDefaultFeature) -> Bool {
+        switch feature {
+        case .generalTrackingParameters:
+            return useBuiltInTrackingRules
+        case .xTwitterParameters:
+            return regexRules.contains {
+                $0.id == NothungRegexRule.nothungXTrackingCleanup.id && $0.isEnabled
+            }
+        case .bilibiliParameters:
+            return regexRules.contains {
+                $0.id == NothungRegexRule.nothungBilibiliVideoSharingCleanup.id
+                    && $0.isEnabled
+            }
+        case .bilibiliShortLinkExpansion:
+            return redirectRules.contains {
+                $0.id == NothungRedirectRule.nothungBilibiliShortLink.id && $0.isEnabled
+            }
+        case .youtubeParameters:
+            return NothungParameterRule.nothungYouTubeRules.allSatisfy { defaultRule in
+                parameterRules.contains {
+                    $0.id == defaultRule.id && $0.isEnabled
+                }
+            }
+        case .youtubeShortLinkExpansion:
+            return redirectRules.contains {
+                $0.id == NothungRedirectRule.nothungYouTubeShortLink.id && $0.isEnabled
+            }
+        }
+    }
+
+    mutating func setDefaultFeature(
+        _ feature: NothungDefaultFeature,
+        isEnabled: Bool
+    ) {
+        switch feature {
+        case .generalTrackingParameters:
+            useBuiltInTrackingRules = isEnabled
+        case .xTwitterParameters:
+            setRegexRule(.nothungXTrackingCleanup, isEnabled: isEnabled)
+        case .bilibiliParameters:
+            setRegexRule(.nothungBilibiliVideoSharingCleanup, isEnabled: isEnabled)
+        case .bilibiliShortLinkExpansion:
+            setRedirectRule(.nothungBilibiliShortLink, isEnabled: isEnabled)
+        case .youtubeParameters:
+            for rule in NothungParameterRule.nothungYouTubeRules {
+                setParameterRule(rule, isEnabled: isEnabled)
+            }
+        case .youtubeShortLinkExpansion:
+            setRedirectRule(.nothungYouTubeShortLink, isEnabled: isEnabled)
+        }
+    }
+
+    private mutating func setParameterRule(
+        _ defaultRule: NothungParameterRule,
+        isEnabled: Bool
+    ) {
+        if let index = parameterRules.firstIndex(where: { $0.id == defaultRule.id }) {
+            parameterRules[index].isEnabled = isEnabled
+        } else if isEnabled {
+            parameterRules.append(defaultRule)
+        }
+    }
+
+    private mutating func setRegexRule(
+        _ defaultRule: NothungRegexRule,
+        isEnabled: Bool
+    ) {
+        if let index = regexRules.firstIndex(where: { $0.id == defaultRule.id }) {
+            regexRules[index].isEnabled = isEnabled
+        } else if isEnabled {
+            regexRules.append(defaultRule)
+        }
+    }
+
+    private mutating func setRedirectRule(
+        _ defaultRule: NothungRedirectRule,
+        isEnabled: Bool
+    ) {
+        if let index = redirectRules.firstIndex(where: { $0.id == defaultRule.id }) {
+            redirectRules[index].isEnabled = isEnabled
+        } else if isEnabled {
+            redirectRules.append(defaultRule)
+        }
+    }
+
     private static func validatedHost(_ rawValue: String) throws -> String {
         let value = normalizedHost(rawValue)
         guard !value.isEmpty,
@@ -151,6 +317,63 @@ struct NothungRuleConfiguration: Codable, Equatable, Sendable {
         values
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
+    }
+}
+
+enum NothungDefaultFeature: String, CaseIterable, Identifiable, Sendable {
+    case generalTrackingParameters
+    case xTwitterParameters
+    case bilibiliParameters
+    case bilibiliShortLinkExpansion
+    case youtubeParameters
+    case youtubeShortLinkExpansion
+
+    var id: Self { self }
+
+    var title: String {
+        switch self {
+        case .generalTrackingParameters:
+            return String(localized: "通用追踪参数清理")
+        case .xTwitterParameters:
+            return String(localized: "X / Twitter 多余参数清理")
+        case .bilibiliParameters:
+            return String(localized: "哔哩哔哩多余参数清理")
+        case .bilibiliShortLinkExpansion:
+            return String(localized: "哔哩哔哩短链展开")
+        case .youtubeParameters:
+            return String(localized: "YouTube 多余参数清理")
+        case .youtubeShortLinkExpansion:
+            return String(localized: "YouTube 短链展开")
+        }
+    }
+
+    var explanation: String {
+        switch self {
+        case .generalTrackingParameters:
+            return String(localized: "移除 UTM 和常见广告归因参数。")
+        case .xTwitterParameters:
+            return String(localized: "规范 X / Twitter 域名并移除分享跟踪参数。")
+        case .bilibiliParameters:
+            return String(localized: "规范哔哩哔哩视频链接并移除分享参数。")
+        case .bilibiliShortLinkExpansion:
+            return String(localized: "联网跟随 b23.tv 重定向，再清理最终链接。")
+        case .youtubeParameters:
+            return String(localized: "移除 YouTube 分享跟踪参数，保留视频、时间点与播放列表信息。")
+        case .youtubeShortLinkExpansion:
+            return String(localized: "联网跟随 youtu.be 重定向，再清理最终链接。")
+        }
+    }
+
+    var requiresNetwork: Bool {
+        switch self {
+        case .bilibiliShortLinkExpansion, .youtubeShortLinkExpansion:
+            return true
+        case .generalTrackingParameters,
+             .xTwitterParameters,
+             .bilibiliParameters,
+             .youtubeParameters:
+            return false
+        }
     }
 }
 
@@ -182,6 +405,43 @@ struct NothungParameterRule: Identifiable, Codable, Equatable, Sendable {
     var parameterNames: [String] = []
     var isEnabled = true
     var source: String? = nil
+
+    /// YouTube uses both a full hostname and a path-based short hostname. Keep
+    /// two host-scoped rules so the same conservative parameter list applies
+    /// locally before any optional redirect expansion.
+    static let nothungYouTubeParameters = NothungParameterRule(
+        id: UUID(uuidString: "A24C7FC2-61D6-4EE9-A8BC-9AC7911BE004")!,
+        title: String(localized: "YouTube 视频分享去参数"),
+        host: "youtube.com",
+        includesSubdomains: true,
+        mode: .blockList,
+        parameterNames: nothungYouTubeTrackingParameterNames,
+        source: String(localized: "Nothung · 内置规则")
+    )
+
+    static let nothungYouTubeShortLinkParameters = NothungParameterRule(
+        id: UUID(uuidString: "A24C7FC2-61D6-4EE9-A8BC-9AC7911BE005")!,
+        title: String(localized: "YouTube 短链分享去参数"),
+        host: "youtu.be",
+        mode: .blockList,
+        parameterNames: nothungYouTubeTrackingParameterNames,
+        source: String(localized: "Nothung · 内置规则")
+    )
+
+    static let nothungYouTubeRules: [NothungParameterRule] = [
+        .nothungYouTubeParameters,
+        .nothungYouTubeShortLinkParameters,
+    ]
+
+    private static let nothungYouTubeTrackingParameterNames = [
+        "si",
+        "feature",
+        "pp",
+        "app",
+        "embeds_referring_euri",
+        "embeds_referring_origin",
+        "source_ve_path",
+    ]
 }
 
 struct NothungRegexRule: Identifiable, Codable, Equatable, Sendable {
@@ -234,6 +494,13 @@ struct NothungRedirectRule: Identifiable, Codable, Equatable, Sendable {
         id: UUID(uuidString: "A24C7FC2-61D6-4EE9-A8BC-9AC7911BE002")!,
         title: String(localized: "哔哩哔哩短链"),
         host: "b23.tv",
+        source: String(localized: "Nothung · 内置规则")
+    )
+
+    static let nothungYouTubeShortLink = NothungRedirectRule(
+        id: UUID(uuidString: "A24C7FC2-61D6-4EE9-A8BC-9AC7911BE006")!,
+        title: String(localized: "YouTube 短链"),
+        host: "youtu.be",
         source: String(localized: "Nothung · 内置规则")
     )
 }
@@ -322,6 +589,38 @@ enum NothungRuleStorage {
             ),
         ]
 
+        let parameterTitles: [UUID: (Set<String>, NothungParameterRule)] = [
+            NothungParameterRule.nothungYouTubeParameters.id: (
+                [
+                    "YouTube 视频分享去参数",
+                    "Remove parameters from YouTube video shares",
+                    "Remove Sharing Parameters from YouTube Video Links",
+                ],
+                .nothungYouTubeParameters
+            ),
+            NothungParameterRule.nothungYouTubeShortLinkParameters.id: (
+                [
+                    "YouTube 短链分享去参数",
+                    "Remove parameters from YouTube short links",
+                    "Remove Sharing Parameters from YouTube Short Links",
+                ],
+                .nothungYouTubeShortLinkParameters
+            ),
+        ]
+
+        for index in result.parameterRules.indices {
+            guard let (knownTitles, localizedRule) = parameterTitles[
+                result.parameterRules[index].id
+            ] else { continue }
+            if knownTitles.contains(result.parameterRules[index].title) {
+                result.parameterRules[index].title = localizedRule.title
+            }
+            if let source = result.parameterRules[index].source,
+               builtInSources.contains(source) {
+                result.parameterRules[index].source = localizedRule.source
+            }
+        }
+
         for index in result.regexRules.indices {
             guard let (knownTitles, localizedRule) = regexTitles[
                 result.regexRules[index].id
@@ -335,21 +634,34 @@ enum NothungRuleStorage {
             }
         }
 
-        for index in result.redirectRules.indices
-        where result.redirectRules[index].id
-            == NothungRedirectRule.nothungBilibiliShortLink.id {
-            let knownTitles: Set<String> = [
-                "哔哩哔哩短链",
-                "Bilibili short link",
-            ]
+        let redirectTitles: [UUID: (Set<String>, NothungRedirectRule)] = [
+            NothungRedirectRule.nothungBilibiliShortLink.id: (
+                [
+                    "哔哩哔哩短链",
+                    "Bilibili short link",
+                ],
+                .nothungBilibiliShortLink
+            ),
+            NothungRedirectRule.nothungYouTubeShortLink.id: (
+                [
+                    "YouTube 短链",
+                    "YouTube short link",
+                    "YouTube Short Links",
+                ],
+                .nothungYouTubeShortLink
+            ),
+        ]
+
+        for index in result.redirectRules.indices {
+            guard let (knownTitles, localizedRule) = redirectTitles[
+                result.redirectRules[index].id
+            ] else { continue }
             if knownTitles.contains(result.redirectRules[index].title) {
-                result.redirectRules[index].title =
-                    NothungRedirectRule.nothungBilibiliShortLink.title
+                result.redirectRules[index].title = localizedRule.title
             }
             if let source = result.redirectRules[index].source,
                builtInSources.contains(source) {
-                result.redirectRules[index].source =
-                    NothungRedirectRule.nothungBilibiliShortLink.source
+                result.redirectRules[index].source = localizedRule.source
             }
         }
 

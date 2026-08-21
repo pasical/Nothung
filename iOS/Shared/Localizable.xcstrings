@@ -1601,6 +1601,22 @@
         }
       }
     },
+    "已插入清理后的内容，但未保存到最近记录：%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inserted the cleaned content, but couldn't save it to Recents: %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已插入清理后的内容，但未保存到最近记录：%@"
+          }
+        }
+      }
+    },
     "已清理": {
       "localizations": {
         "en": {
@@ -2433,6 +2449,22 @@
         }
       }
     },
+    "正在完成剪贴板写入…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finishing the clipboard write…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在完成剪贴板写入…"
+          }
+        }
+      }
+    },
     "正在安全展开…": {
       "localizations": {
         "en": {
@@ -2769,22 +2801,6 @@
         }
       }
     },
-    "生效日期 2026-08-16": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Effective August 16, 2026"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "生效日期 2026-08-16"
-          }
-        }
-      }
-    },
     "用户导入的兼容规则": {
       "localizations": {
         "en": {
@@ -2945,18 +2961,18 @@
         }
       }
     },
-    "系统连续三次没有确认剪贴板写入；原剪贴板未被覆盖，请重试。": {
+    "系统连续三次没有确认剪贴板写入；剪贴板可能已更新，请检查后重试。": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The system failed to confirm the clipboard write after three attempts. The original clipboard was not overwritten; try again."
+            "value": "The system failed to confirm the clipboard write after three attempts. The clipboard may have changed; check it before trying again."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "系统连续三次没有确认剪贴板写入；原剪贴板未被覆盖，请重试。"
+            "value": "系统连续三次没有确认剪贴板写入；剪贴板可能已更新，请检查后重试。"
           }
         }
       }
@@ -3789,6 +3805,1590 @@
           "stringUnit": {
             "state": "translated",
             "value": "黑名单"
+          }
+        }
+      }
+    },
+    "GitHub 仓库中的 Nothung 版本没有开发者运营的数据接收服务器，也不包含账户、广告、分析、遥测或第三方 SDK。主 App 的粘贴、输入与手动添加，分享扩展收到的内容，以及键盘中的手动粘贴、手动添加与已开启的自动捕捉，都可能在设备上形成最近记录。联网展开短链时，目标网站会收到完整 URL 与网络元数据；这不同于向 Nothung 开发者上传数据。修改后的派生构建应根据实际行为提供自己的说明。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The version of Nothung in this GitHub repository has no developer-operated data collection server and includes no accounts, ads, analytics, telemetry, or third-party SDKs. Pasting, typing, and manually adding content in the main app, content received by the Share extension, and manual pastes, additions, and enabled automatic capture in the keyboard can all create recent entries on the device. When short links are expanded online, the destination site receives the full URL and network metadata; this is different from uploading data to the Nothung developer. Modified derivative builds should provide their own disclosure based on their actual behavior."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub 仓库中的 Nothung 版本没有开发者运营的数据接收服务器，也不包含账户、广告、分析、遥测或第三方 SDK。主 App 的粘贴、输入与手动添加，分享扩展收到的内容，以及键盘中的手动粘贴、手动添加与已开启的自动捕捉，都可能在设备上形成最近记录。联网展开短链时，目标网站会收到完整 URL 与网络元数据；这不同于向 Nothung 开发者上传数据。修改后的派生构建应根据实际行为提供自己的说明。"
+          }
+        }
+      }
+    },
+    "Nothung 在设备上执行参数与正则清理。主 App 会处理你粘贴、输入或手动加入最近记录的内容；分享扩展接收宿主 App 交给它的内容。Nothung 键盘可处理你手动输入的内容；给予完全访问后，还可在你点按粘贴时读取当前剪贴板，或在已开启自动捕捉且键盘可见时读取新的剪贴板。启用或手动使用短链展开时，完整 URL 会发送给链接目标网站。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothung performs parameter and regex cleaning on your device. The main app processes content you paste, type, or manually add to recent entries; the Share extension receives content provided by the host app. The Nothung keyboard can process text you enter manually and, with Full Access, read the current clipboard when you tap Paste or read new clipboard contents while automatic capture is enabled and the keyboard is visible. When short-link expansion is enabled or used manually, the full URL is sent to the destination site."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothung 在设备上执行参数与正则清理。主 App 会处理你粘贴、输入或手动加入最近记录的内容；分享扩展接收宿主 App 交给它的内容。Nothung 键盘可处理你手动输入的内容；给予完全访问后，还可在你点按粘贴时读取当前剪贴板，或在已开启自动捕捉且键盘可见时读取新的剪贴板。启用或手动使用短链展开时，完整 URL 会发送给链接目标网站。"
+          }
+        }
+      }
+    },
+    "X / Twitter 多余参数清理": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean Extra X / Twitter Parameters"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "X / Twitter 多余参数清理"
+          }
+        }
+      }
+    },
+    "YouTube 多余参数清理": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean Extra YouTube Parameters"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube 多余参数清理"
+          }
+        }
+      }
+    },
+    "YouTube 短链": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube Short Links"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube 短链"
+          }
+        }
+      }
+    },
+    "YouTube 短链分享去参数": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove Sharing Parameters from YouTube Short Links"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube 短链分享去参数"
+          }
+        }
+      }
+    },
+    "YouTube 短链展开": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expand YouTube Short Links"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube 短链展开"
+          }
+        }
+      }
+    },
+    "YouTube 视频分享去参数": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove Sharing Parameters from YouTube Video Links"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube 视频分享去参数"
+          }
+        }
+      }
+    },
+    "一个入口清理追踪参数、展开短链，并把常用文本留在自己的设备上。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One place to remove tracking parameters, expand short links, and keep useful text on your own device."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一个入口清理追踪参数、展开短链，并把常用文本留在自己的设备上。"
+          }
+        }
+      }
+    },
+    "三种使用方式": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Three Ways to Use Nothung"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "三种使用方式"
+          }
+        }
+      }
+    },
+    "上一步": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上一步"
+          }
+        }
+      }
+    },
+    "主 App 和分享扩展不需要输入法完全访问。Nothung 键盘的基础输入和离线清理所选链接也无需开启；只有读取系统剪贴板、访问共享记录或联网展开短链时才需要。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The main app and Share extension do not require Full Access for the keyboard. Basic typing and offline cleaning of selected links in the Nothung keyboard also work without it; Full Access is needed only to read the system clipboard, access shared history, or expand short links online."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主 App 和分享扩展不需要输入法完全访问。Nothung 键盘的基础输入和离线清理所选链接也无需开启；只有读取系统剪贴板、访问共享记录或联网展开短链时才需要。"
+          }
+        }
+      }
+    },
+    "仍可点左下角的粘贴键，或手动添加内容。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can still tap the Paste key in the lower-left corner or add content manually."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仍可点左下角的粘贴键，或手动添加内容。"
+          }
+        }
+      }
+    },
+    "从你需要的规则开始": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start with the Rules You Need"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从你需要的规则开始"
+          }
+        }
+      }
+    },
+    "从分享菜单": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From the Share Sheet"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从分享菜单"
+          }
+        }
+      }
+    },
+    "使用 Nothung 输入法": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the Nothung Keyboard"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用 Nothung 输入法"
+          }
+        }
+      }
+    },
+    "使用引导会再次说明主 App、分享扩展、输入法、完全访问和联网功能。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The guide will explain the main app, Share extension, keyboard, Full Access, and online features again."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用引导会再次说明主 App、分享扩展、输入法、完全访问和联网功能。"
+          }
+        }
+      }
+    },
+    "使用引导，第 %lld 步，共 3 步": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setup Guide, Step %lld of 3"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用引导，第 %lld 步，共 3 步"
+          }
+        }
+      }
+    },
+    "保存时会在本机应用当前参数与正则规则，不会展开短链或发起网络请求。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When saved, the current parameter and regex rules will be applied on-device. Short links will not be expanded and no network request will be made."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存时会在本机应用当前参数与正则规则，不会展开短链或发起网络请求。"
+          }
+        }
+      }
+    },
+    "切换到下一个键盘": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch to Next Keyboard"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "切换到下一个键盘"
+          }
+        }
+      }
+    },
+    "切换并开始使用": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch and Start Using"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "切换并开始使用"
+          }
+        }
+      }
+    },
+    "删除所有固定与未固定的本地记录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete all pinned and unpinned local entries"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除所有固定与未固定的本地记录"
+          }
+        }
+      }
+    },
+    "前往“设置”→“通用”→“键盘”→“键盘”→“添加新键盘”。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go to Settings → General → Keyboard → Keyboards → Add New Keyboard."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "前往“设置”→“通用”→“键盘”→“键盘”→“添加新键盘”。"
+          }
+        }
+      }
+    },
+    "剪贴板集合已被 20 条固定内容占满，请先取消固定或删除一条。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your clipboard collection is full with 20 pinned items. Unpin or delete one first."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "剪贴板集合已被 20 条固定内容占满，请先取消固定或删除一条。"
+          }
+        }
+      }
+    },
+    "原文：%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original: %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "原文：%@"
+          }
+        }
+      }
+    },
+    "去掉链接里的多余痕迹，把常用文本安全留在本机。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove clutter from links and keep useful text safely on this device."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "去掉链接里的多余痕迹，把常用文本安全留在本机。"
+          }
+        }
+      }
+    },
+    "参数与正则清理、最近记录都在本机完成。自动捕捉默认关闭；开启后，键盘只在可见期间读取新剪贴板。只有启用短链展开或手动展开时才会访问目标网站。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parameter and regex cleaning and recent history all stay on this device. Automatic capture is off by default; when enabled, the keyboard reads new clipboard contents only while visible. Destination sites are contacted only when short-link expansion is enabled or used manually."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "参数与正则清理、最近记录都在本机完成。自动捕捉默认关闭；开启后，键盘只在可见期间读取新剪贴板。只有启用短链展开或手动展开时才会访问目标网站。"
+          }
+        }
+      }
+    },
+    "参数和正则清理始终在本机完成。自动捕捉默认关闭；只有短链展开会访问目标网站。最近记录最多保存 20 条，可随时删除。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parameter and regex cleaning always happen on-device. Automatic capture is off by default; only short-link expansion contacts destination sites. Up to 20 recent entries are stored and can be deleted at any time."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "参数和正则清理始终在本机完成。自动捕捉默认关闭；只有短链展开会访问目标网站。最近记录最多保存 20 条，可随时删除。"
+          }
+        }
+      }
+    },
+    "参数过滤和正则替换完全在本地进行。命中你启用的短链展开规则时，主 App 的清理流程、分享扩展，以及键盘中的手动粘贴、手动添加与已开启的自动捕捉流程会通过 HTTPS 访问当前 URL 和最多五个重定向目标；主 App 手动添加最近记录与键盘魔棒清理所选链接始终离线。其他链接只会在主 App 经你逐次确认后展开。因此相关网站会收到你的 IP 地址、完整 URL 和常规网络元数据。解析使用临时会话，不附带 Cookie、Authorization 或登录凭据，收到响应头后立即停止读取响应体。Nothung 不会自动打开最终链接。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parameter filtering and regex replacement happen entirely on-device. When a link matches an enabled short-link expansion rule, cleaning in the main app or Share extension, plus manual paste, manual addition, or enabled automatic capture in the keyboard, accesses the current URL and up to five redirect destinations over HTTPS. Manually adding a recent entry in the main app and using the keyboard's magic-wand action to clean a selected link always remain offline. Other links are expanded only after individual confirmation in the main app. The relevant sites therefore receive your IP address, full URL, and standard network metadata. Resolution uses an ephemeral session, sends no cookies, Authorization header, or login credentials, and stops reading the response body as soon as headers arrive. Nothung never opens the final link automatically."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "参数过滤和正则替换完全在本地进行。命中你启用的短链展开规则时，主 App 的清理流程、分享扩展，以及键盘中的手动粘贴、手动添加与已开启的自动捕捉流程会通过 HTTPS 访问当前 URL 和最多五个重定向目标；主 App 手动添加最近记录与键盘魔棒清理所选链接始终离线。其他链接只会在主 App 经你逐次确认后展开。因此相关网站会收到你的 IP 地址、完整 URL 和常规网络元数据。解析使用临时会话，不附带 Cookie、Authorization 或登录凭据，收到响应头后立即停止读取响应体。Nothung 不会自动打开最终链接。"
+          }
+        }
+      }
+    },
+    "取消固定": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unpin"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取消固定"
+          }
+        }
+      }
+    },
+    "哔哩哔哩多余参数清理": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean Extra Bilibili Parameters"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "哔哩哔哩多余参数清理"
+          }
+        }
+      }
+    },
+    "哔哩哔哩短链展开": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expand Bilibili Short Links"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "哔哩哔哩短链展开"
+          }
+        }
+      }
+    },
+    "固定": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pin"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "固定"
+          }
+        }
+      }
+    },
+    "固定到顶部": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pin to Top"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "固定到顶部"
+          }
+        }
+      }
+    },
+    "在 GitHub 阅读 PRIVACY.md": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read PRIVACY.md on GitHub"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在 GitHub 阅读 PRIVACY.md"
+          }
+        }
+      }
+    },
+    "在主 App 中": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In the Main App"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在主 App 中"
+          }
+        }
+      }
+    },
+    "在任意输入框切换到 Nothung。即使不开放完全访问，也能基础输入，并把宿主 App 中选中的链接用魔棒按钮离线清理后替换；完全访问用于系统剪贴板与共享记录。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch to Nothung in any text field. Even without Full Access, you can type normally and use the magic-wand button to clean and replace a link selected in the host app, entirely offline. Full Access is used for the system clipboard and shared history."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在任意输入框切换到 Nothung。即使不开放完全访问，也能基础输入，并把宿主 App 中选中的链接用魔棒按钮离线清理后替换；完全访问用于系统剪贴板与共享记录。"
+          }
+        }
+      }
+    },
+    "在其他 App 分享链接或文本，选择“使用 Nothung 复制”，即可清理并复制结果。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share a link or text from another app and choose “Copy with Nothung” to clean and copy the result."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在其他 App 分享链接或文本，选择“使用 Nothung 复制”，即可清理并复制结果。"
+          }
+        }
+      }
+    },
+    "在输入框中选中含链接的文本，再点左下角按钮；完全访问仅用于剪贴板与共享历史。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select text containing a link in a text field, then tap the lower-left button. Full Access is used only for the clipboard and shared history."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在输入框中选中含链接的文本，再点左下角按钮；完全访问仅用于剪贴板与共享历史。"
+          }
+        }
+      }
+    },
+    "在输入框中通过系统键盘切换按钮选择 Nothung。Face ID iPhone 会由系统在键盘下方提供切换入口。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose Nothung using the system keyboard switcher in a text field. On iPhones with Face ID, iOS provides the switcher below the keyboard."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在输入框中通过系统键盘切换按钮选择 Nothung。Face ID iPhone 会由系统在键盘下方提供切换入口。"
+          }
+        }
+      }
+    },
+    "基础输入和离线清理宿主 App 中选中的链接不需要完全访问。只有读取系统剪贴板、访问主 App 的共享记录或展开短链时，才需要打开“允许完全访问”。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Basic typing and offline cleaning of links selected in the host app do not require Full Access. Enable “Allow Full Access” only to read the system clipboard, access recent entries shared by the main app, or expand short links."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "基础输入和离线清理宿主 App 中选中的链接不需要完全访问。只有读取系统剪贴板、访问主 App 的共享记录或展开短链时，才需要打开“允许完全访问”。"
+          }
+        }
+      }
+    },
+    "完全访问由你决定": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full Access Is Your Choice"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完全访问由你决定"
+          }
+        }
+      }
+    },
+    "已取消固定。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unpinned."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已取消固定。"
+          }
+        }
+      }
+    },
+    "已固定": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pinned"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已固定"
+          }
+        }
+      }
+    },
+    "已固定到顶部。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pinned to the top."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已固定到顶部。"
+          }
+        }
+      }
+    },
+    "已在本地清理所选链接。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected link cleaned on-device."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已在本地清理所选链接。"
+          }
+        }
+      }
+    },
+    "帮助": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Help"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "帮助"
+          }
+        }
+      }
+    },
+    "开启并给予完全访问后，只在 Nothung 键盘可见时读取新的剪贴板并保存到本机；收起键盘后立即停止。若内容命中已开启的短链展开规则，可能联网。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Once enabled and granted Full Access, Nothung reads new clipboard contents and saves them on-device only while its keyboard is visible; it stops immediately when the keyboard is dismissed. Content matching an enabled short-link expansion rule may access the network."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开启并给予完全访问后，只在 Nothung 键盘可见时读取新的剪贴板并保存到本机；收起键盘后立即停止。若内容命中已开启的短链展开规则，可能联网。"
+          }
+        }
+      }
+    },
+    "开始使用 Nothung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start Using Nothung"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始使用 Nothung"
+          }
+        }
+      }
+    },
+    "把这条记录载入上方的清理输入框": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Load this entry into the cleaner above"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把这条记录载入上方的清理输入框"
+          }
+        }
+      }
+    },
+    "按需要允许完全访问": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Full Access If Needed"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按需要允许完全访问"
+          }
+        }
+      }
+    },
+    "无法保存设置": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could Not Save Settings"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法保存设置"
+          }
+        }
+      }
+    },
+    "无法更新最近记录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could Not Update Recent Entries"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法更新最近记录"
+          }
+        }
+      }
+    },
+    "无法添加条目": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could Not Add Item"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法添加条目"
+          }
+        }
+      }
+    },
+    "最多保存 %lld 条，只保存在设备上。固定条目始终排在前面。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Up to %lld items, stored only on this device. Pinned items always appear first."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最多保存 %lld 条，只保存在设备上。固定条目始终排在前面。"
+          }
+        }
+      }
+    },
+    "最多保存 20 条原文和清理结果，只保存在设备上；相同内容会自动去重。可在主 App 或键盘中固定、取消固定与删除条目；固定内容会优先显示。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Up to 20 original texts and cleaned results are stored only on this device, with duplicate content removed automatically. Entries can be pinned, unpinned, or deleted in the main app or keyboard; pinned content appears first."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最多保存 20 条原文和清理结果，只保存在设备上；相同内容会自动去重。可在主 App 或键盘中固定、取消固定与删除条目；固定内容会优先显示。"
+          }
+        }
+      }
+    },
+    "最近剪贴板与清理记录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent Clipboard & Cleaned Links"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最近剪贴板与清理记录"
+          }
+        }
+      }
+    },
+    "本地清理所选链接": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean Selected Link On-Device"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本地清理所选链接"
+          }
+        }
+      }
+    },
+    "欢迎使用": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "欢迎使用"
+          }
+        }
+      }
+    },
+    "每项都可独立开启，稍后也能在设置中修改。标记“需要联网”的短链展开会把完整 URL 发送给目标网站。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each feature can be enabled independently and changed later in Settings. Short-link expansion marked “Network Required” sends the full URL to the destination site."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每项都可独立开启，稍后也能在设置中修改。标记“需要联网”的短链展开会把完整 URL 发送给目标网站。"
+          }
+        }
+      }
+    },
+    "添加 Nothung 输入法": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add the Nothung Keyboard"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加 Nothung 输入法"
+          }
+        }
+      }
+    },
+    "添加条目": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Item"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加条目"
+          }
+        }
+      }
+    },
+    "清理链接、手动添加内容，或在启用后使用 Nothung 输入法自动捕捉，记录就会出现在这里。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean a link, add content manually, or enable automatic capture in the Nothung keyboard to see entries here."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "清理链接、手动添加内容，或在启用后使用 Nothung 输入法自动捕捉，记录就会出现在这里。"
+          }
+        }
+      }
+    },
+    "清理链接，\n收好剪贴板。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean Links,\nKeep Your Clipboard Handy."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "清理链接，\n收好剪贴板。"
+          }
+        }
+      }
+    },
+    "清空所有最近记录？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear All Recent Entries?"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "清空所有最近记录？"
+          }
+        }
+      }
+    },
+    "清空所有记录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear All Entries"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "清空所有记录"
+          }
+        }
+      }
+    },
+    "生效日期 2026-08-21": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effective Date: August 21, 2026"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "生效日期 2026-08-21"
+          }
+        }
+      }
+    },
+    "短链展开会把完整 URL 发送给目标网站；其余默认功能在本机处理。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short-link expansion sends the full URL to the destination site; all other default features are processed on-device."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "短链展开会把完整 URL 发送给目标网站；其余默认功能在本机处理。"
+          }
+        }
+      }
+    },
+    "离线模式 · 可清理所选链接": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline · Selected Links Can Be Cleaned"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "离线模式 · 可清理所选链接"
+          }
+        }
+      }
+    },
+    "移除 UTM 和常见广告归因参数。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove UTM and common advertising attribution parameters."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除 UTM 和常见广告归因参数。"
+          }
+        }
+      }
+    },
+    "移除 YouTube 分享跟踪参数，保留视频、时间点与播放列表信息。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove YouTube sharing and tracking parameters while preserving video, timestamp, and playlist information."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除 YouTube 分享跟踪参数，保留视频、时间点与播放列表信息。"
+          }
+        }
+      }
+    },
+    "粘贴或输入链接，查看清理前后差异；也可手动添加、固定和复用最近记录。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste or type a link to compare before and after. You can also add, pin, and reuse recent entries manually."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "粘贴或输入链接，查看清理前后差异；也可手动添加、固定和复用最近记录。"
+          }
+        }
+      }
+    },
+    "继续": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "继续"
+          }
+        }
+      }
+    },
+    "联网跟随 b23.tv 重定向，再清理最终链接。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Follow b23.tv redirects online, then clean the final link."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "联网跟随 b23.tv 重定向，再清理最终链接。"
+          }
+        }
+      }
+    },
+    "联网跟随 youtu.be 重定向，再清理最终链接。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Follow youtu.be redirects online, then clean the final link."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "联网跟随 youtu.be 重定向，再清理最终链接。"
+          }
+        }
+      }
+    },
+    "自动捕捉已关闭": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic Capture Is Off"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动捕捉已关闭"
+          }
+        }
+      }
+    },
+    "自动捕捉开启后，Nothung 只在键盘可见期间检查新的剪贴板；收起或切换键盘后立即停止。查看和插入共享记录本身不需要联网，但需要完全访问共享容器。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When automatic capture is enabled, Nothung checks for new clipboard contents only while the keyboard is visible and stops immediately when it is dismissed or switched. Viewing and inserting shared entries does not itself require a network connection, but does require Full Access to the shared container."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动捕捉开启后，Nothung 只在键盘可见期间检查新的剪贴板；收起或切换键盘后立即停止。查看和插入共享记录本身不需要联网，但需要完全访问共享容器。"
+          }
+        }
+      }
+    },
+    "自动捕捉默认关闭，Nothung 不在后台监控剪贴板。你开启自动捕捉并为输入法打开“允许完全访问”后，键盘只在屏幕上可见期间检查剪贴板变化，自动读取、清理并保存新文本；键盘收起或切换后即停止。完全访问也允许键盘在你点按粘贴按钮时读取当前剪贴板，并访问与主 App 共享的最近记录；键盘手动添加会处理你输入的内容。主 App 通过可见的系统“粘贴”控件读取你选择的内容，也会保存你手动加入最近记录的内容；分享扩展只接收宿主 App 提供的内容。Nothung 在本机保存最多 20 条原文和清理结果，可逐条删除、固定或全部清空。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic capture is off by default, and Nothung does not monitor the clipboard in the background. After you enable automatic capture and turn on “Allow Full Access” for the keyboard, it checks for clipboard changes only while visible on-screen, then automatically reads, cleans, and saves new text; it stops when the keyboard is dismissed or switched. Full Access also lets the keyboard read the current clipboard when you tap Paste and access recent entries shared with the main app. Manual addition in the keyboard processes the text you enter. The main app reads content you choose through a visible system Paste control and also saves content you manually add to recent entries; the Share extension receives only content supplied by the host app. Nothung stores up to 20 original texts and cleaned results on-device; you can delete or pin individual entries, or clear them all."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动捕捉默认关闭，Nothung 不在后台监控剪贴板。你开启自动捕捉并为输入法打开“允许完全访问”后，键盘只在屏幕上可见期间检查剪贴板变化，自动读取、清理并保存新文本；键盘收起或切换后即停止。完全访问也允许键盘在你点按粘贴按钮时读取当前剪贴板，并访问与主 App 共享的最近记录；键盘手动添加会处理你输入的内容。主 App 通过可见的系统“粘贴”控件读取你选择的内容，也会保存你手动加入最近记录的内容；分享扩展只接收宿主 App 提供的内容。Nothung 在本机保存最多 20 条原文和清理结果，可逐条删除、固定或全部清空。"
+          }
+        }
+      }
+    },
+    "要加入最近记录的内容": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Content to Add to Recent Entries"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要加入最近记录的内容"
+          }
+        }
+      }
+    },
+    "规范 X / Twitter 域名并移除分享跟踪参数。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normalize X / Twitter domains and remove sharing and tracking parameters."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "规范 X / Twitter 域名并移除分享跟踪参数。"
+          }
+        }
+      }
+    },
+    "规范哔哩哔哩视频链接并移除分享参数。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normalize Bilibili video links and remove sharing parameters."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "规范哔哩哔哩视频链接并移除分享参数。"
+          }
+        }
+      }
+    },
+    "请先在输入框中选中一段包含链接的文本。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First select some text containing a link in the text field."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请先在输入框中选中一段包含链接的文本。"
+          }
+        }
+      }
+    },
+    "载入清理区": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Load in Cleaner"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "载入清理区"
+          }
+        }
+      }
+    },
+    "输入法与隐私": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard & Privacy"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "输入法与隐私"
+          }
+        }
+      }
+    },
+    "返回键盘列表，选择 Nothung。若你需要系统剪贴板、主 App 的共享记录或短链展开，再开启“允许完全访问”。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Return to the keyboard list and select Nothung. Turn on “Allow Full Access” only if you need the system clipboard, recent entries shared by the main app, or short-link expansion."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "返回键盘列表，选择 Nothung。若你需要系统剪贴板、主 App 的共享记录或短链展开，再开启“允许完全访问”。"
+          }
+        }
+      }
+    },
+    "还没有本地记录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Local Entries Yet"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还没有本地记录"
+          }
+        }
+      }
+    },
+    "这会删除所有固定与未固定的本地记录，且无法撤销。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This will permanently delete all pinned and unpinned local entries."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这会删除所有固定与未固定的本地记录，且无法撤销。"
+          }
+        }
+      }
+    },
+    "选中文本后可本地清理": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select Text to Clean On-Device"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选中文本后可本地清理"
+          }
+        }
+      }
+    },
+    "选择默认功能": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose Default Features"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择默认功能"
+          }
+        }
+      }
+    },
+    "通用追踪参数清理": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Common Tracking Parameter Cleanup"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通用追踪参数清理"
+          }
+        }
+      }
+    },
+    "通过 GitHub Issues 联系支持": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contact Support via GitHub Issues"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过 GitHub Issues 联系支持"
+          }
+        }
+      }
+    },
+    "重定向规则是联网许可列表。命中后，主 App、“使用 Nothung 复制”，以及键盘中的手动粘贴、手动添加与已开启的自动捕捉流程会跟随最多五次 HTTPS 跳转，再清理最终链接。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redirect rules are an allowlist for network access. When a link matches, the main app, “Copy with Nothung,” and manual paste, manual addition, or enabled automatic capture in the keyboard follow up to five HTTPS redirects before cleaning the final link."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重定向规则是联网许可列表。命中后，主 App、“使用 Nothung 复制”，以及键盘中的手动粘贴、手动添加与已开启的自动捕捉流程会跟随最多五次 HTTPS 跳转，再清理最终链接。"
+          }
+        }
+      }
+    },
+    "重新观看使用引导": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Replay Setup Guide"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重新观看使用引导"
+          }
+        }
+      }
+    },
+    "链接清理 +\n本地剪贴板": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Link Cleaning +\nLocal Clipboard"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "链接清理 +\n本地剪贴板"
+          }
+        }
+      }
+    },
+    "键盘自动捕捉剪贴板": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic Clipboard Capture in Keyboard"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "键盘自动捕捉剪贴板"
+          }
+        }
+      }
+    },
+    "需要联网": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network Required"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "需要联网"
+          }
+        }
+      }
+    },
+    "默认关闭": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off by Default"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "默认关闭"
+          }
+        }
+      }
+    },
+    "默认关闭。开启并给予完全访问后，只在 Nothung 键盘可见时读取新的剪贴板并保存到本机；若命中已开启的短链展开规则，可能联网。返回设置页后请点击“保存”。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off by default. Once enabled and granted Full Access, Nothung reads new clipboard contents and saves them on-device only while its keyboard is visible. Content matching an enabled short-link expansion rule may access the network. Tap “Save” after returning to Settings."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "默认关闭。开启并给予完全访问后，只在 Nothung 键盘可见时读取新的剪贴板并保存到本机；若命中已开启的短链展开规则，可能联网。返回设置页后请点击“保存”。"
+          }
+        }
+      }
+    },
+    "默认功能": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default Features"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "默认功能"
           }
         }
       }

@@ -4,6 +4,10 @@ import UniformTypeIdentifiers
 
 struct RuleSettingsView: View {
     @Environment(\.dismiss) private var dismiss
+    @AppStorage(
+        "hasCompletedOnboarding.v1",
+        store: UserDefaults(suiteName: NothungRuleStorage.appGroupIdentifier)
+    ) private var hasCompletedOnboarding = false
 
     @State private var configuration: NothungRuleConfiguration
     @State private var errorMessage: String?
@@ -19,10 +23,12 @@ struct RuleSettingsView: View {
 
     var body: some View {
         Form {
+            defaultFeaturesSection
             behaviorSection
             keyboardSection
             ruleCategoriesSection
             transferSection
+            onboardingSection
         }
         .navigationTitle("设置")
         .navigationBarTitleDisplayMode(.inline)
@@ -73,7 +79,9 @@ struct RuleSettingsView: View {
     private var keyboardSection: some View {
         Section("输入方式") {
             NavigationLink {
-                KeyboardSettingsView()
+                KeyboardSettingsView(
+                    automaticallyCaptureClipboard: $configuration.automaticallyCaptureClipboard
+                )
             } label: {
                 SettingsDestinationLabel(
                     icon: "keyboard",
@@ -86,7 +94,6 @@ struct RuleSettingsView: View {
 
     private var behaviorSection: some View {
         Section {
-            Toggle("启用通用追踪参数", isOn: $configuration.useBuiltInTrackingRules)
             Toggle("粘贴后立即清理", isOn: $configuration.cleanImmediatelyAfterPaste)
             Toggle("清理后自动复制", isOn: $configuration.copyAfterCleaning)
             Toggle(
@@ -97,6 +104,39 @@ struct RuleSettingsView: View {
             Text("处理方式")
         } footer: {
             Text("参数规则先执行，再依列表顺序执行正则规则。")
+        }
+    }
+
+    private var defaultFeaturesSection: some View {
+        Section {
+            ForEach(
+                Array(NothungDefaultFeature.allCases.enumerated()),
+                id: \.offset
+            ) { _, feature in
+                Toggle(
+                    isOn: Binding(
+                        get: { configuration.isDefaultFeatureEnabled(feature) },
+                        set: { configuration.setDefaultFeature(feature, isEnabled: $0) }
+                    )
+                ) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(feature.title)
+                        if feature.requiresNetwork {
+                            Label("需要联网", systemImage: "network")
+                                .font(.caption2.weight(.bold))
+                                .foregroundStyle(.orange)
+                        }
+                        Text(feature.explanation)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+            }
+        } header: {
+            Text("默认功能")
+        } footer: {
+            Text("短链展开会把完整 URL 发送给目标网站；其余默认功能在本机处理。")
         }
     }
 
@@ -181,6 +221,20 @@ struct RuleSettingsView: View {
         }
     }
 
+    private var onboardingSection: some View {
+        Section {
+            Button {
+                showOnboardingAgain()
+            } label: {
+                Label("重新观看使用引导", systemImage: "sparkles.rectangle.stack")
+            }
+        } header: {
+            Text("帮助")
+        } footer: {
+            Text("使用引导会再次说明主 App、分享扩展、输入法、完全访问和联网功能。")
+        }
+    }
+
     private func importDocument(_ document: String) throws {
         configuration = try NothungRuleStorage.importing(
             document,
@@ -200,17 +254,39 @@ struct RuleSettingsView: View {
             errorMessage = error.localizedDescription
         }
     }
+
+    private func showOnboardingAgain() {
+        do {
+            try NothungRuleStorage.save(configuration)
+            onSaved()
+            dismiss()
+            DispatchQueue.main.async {
+                hasCompletedOnboarding = false
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
 }
 
 private struct KeyboardSettingsView: View {
+    @Binding var automaticallyCaptureClipboard: Bool
     @State private var entries: [NothungClipboardEntry] = []
     @State private var errorMessage: String?
 
     var body: some View {
         Form {
             Section {
+                Toggle("键盘自动捕捉剪贴板", isOn: $automaticallyCaptureClipboard)
+            } header: {
+                Text("剪贴板")
+            } footer: {
+                Text("默认关闭。开启并给予完全访问后，只在 Nothung 键盘可见时读取新的剪贴板并保存到本机；若命中已开启的短链展开规则，可能联网。返回设置页后请点击“保存”。")
+            }
+
+            Section {
                 Text("前往“设置”→“通用”→“键盘”→“键盘”，选择“添加新键盘”并添加 Nothung。")
-                Text("打开 Nothung，开启“允许完全访问”，即可自动清理剪贴板并按规则展开短链。")
+                Text("基础输入和离线清理宿主 App 中选中的链接不需要完全访问。只有读取系统剪贴板、访问主 App 的共享记录或展开短链时，才需要打开“允许完全访问”。")
 
                 Button {
                     guard let url = URL(string: UIApplication.openSettingsURLString) else {
@@ -223,7 +299,7 @@ private struct KeyboardSettingsView: View {
             } header: {
                 Text("启用输入法")
             } footer: {
-                Text("完全访问后，Nothung 只在键盘可见期间检查并自动清理新的剪贴板；收起或切换键盘后立即停止。查看和插入已有记录不依赖网络。")
+                Text("自动捕捉开启后，Nothung 只在键盘可见期间检查新的剪贴板；收起或切换键盘后立即停止。查看和插入共享记录本身不需要联网，但需要完全访问共享容器。")
             }
 
             Section {
@@ -256,7 +332,7 @@ private struct KeyboardSettingsView: View {
             } header: {
                 Text("最近记录")
             } footer: {
-                Text("最多保存 20 条原文和清理结果，只保存在设备上；相同内容会自动去重。长按键盘中的条目可显示原文或删除单条。")
+                Text("最多保存 20 条原文和清理结果，只保存在设备上；相同内容会自动去重。可在主 App 或键盘中固定、取消固定与删除条目；固定内容会优先显示。")
             }
 
             Section("系统限制") {
@@ -452,7 +528,7 @@ private struct RedirectRulesView: View {
     var body: some View {
         List(selection: $selection) {
             Section {
-                Text("重定向规则是联网许可列表。命中后，主 App、“使用 Nothung 复制”和键盘可见期间的自动捕捉流程会跟随最多五次 HTTPS 跳转，再清理最终链接。")
+                Text("重定向规则是联网许可列表。命中后，主 App、“使用 Nothung 复制”，以及键盘中的手动粘贴、手动添加与已开启的自动捕捉流程会跟随最多五次 HTTPS 跳转，再清理最终链接。")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
