@@ -13,9 +13,11 @@ struct ContentView: View {
     @State private var showingRedirectDisclosure = false
     @State private var showingAddHistoryEntry = false
     @State private var showingClearHistoryConfirmation = false
+    @State private var showingOnboardingAgain = false
     @State private var historyEntries: [NothungClipboardEntry] = []
     @State private var historyErrorMessage: String?
     @State private var copiedHistoryEntryID: UUID?
+    @State private var historyCopyFeedbackCount = 0
     @FocusState private var inputIsFocused: Bool
 
     var body: some View {
@@ -53,9 +55,14 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     NavigationLink {
-                        RuleSettingsView {
-                            model.invalidateOutput()
-                        }
+                        RuleSettingsView(
+                            onSaved: {
+                                model.invalidateOutput()
+                            },
+                            onReplayOnboarding: {
+                                showingOnboardingAgain = true
+                            }
+                        )
                     } label: {
                         Label("设置", systemImage: "slider.horizontal.3")
                     }
@@ -68,7 +75,7 @@ struct ContentView: View {
                 }
             }
             .sensoryFeedback(.success, trigger: model.copied)
-            .sensoryFeedback(.success, trigger: copiedHistoryEntryID)
+            .sensoryFeedback(.success, trigger: historyCopyFeedbackCount)
             .onAppear(perform: reloadHistory)
             .onChange(of: scenePhase) { _, newPhase in
                 if newPhase == .active {
@@ -102,16 +109,18 @@ struct ContentView: View {
             }
             .fullScreenCover(
                 isPresented: Binding(
-                    get: { !hasCompletedOnboarding },
+                    get: { !hasCompletedOnboarding || showingOnboardingAgain },
                     set: { isPresented in
                         if !isPresented {
                             hasCompletedOnboarding = true
+                            showingOnboardingAgain = false
                         }
                     }
                 )
             ) {
                 NothungOnboardingView {
                     hasCompletedOnboarding = true
+                    showingOnboardingAgain = false
                     reloadHistory()
                 }
                 .interactiveDismissDisabled()
@@ -162,7 +171,7 @@ struct ContentView: View {
             NothungMark(size: 58)
 
             VStack(alignment: .leading, spacing: 5) {
-                Text("NOTHUNG")
+                Text(verbatim: "NOTHUNG")
                     .font(.system(.caption, design: .monospaced, weight: .bold))
                     .tracking(2.4)
                     .foregroundStyle(NothungPalette.accent)
@@ -517,22 +526,25 @@ struct ContentView: View {
                     Text("还没有本地记录")
                         .font(.headline)
                         .foregroundStyle(NothungPalette.ink)
-                    Text("清理链接、手动添加内容，或在启用后使用 Nothung 输入法自动捕捉，记录就会出现在这里。")
+                    Text("清理链接或添加内容后，会显示在这里。")
                         .font(.footnote)
                         .foregroundStyle(NothungPalette.muted)
                         .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
             } else {
-                ForEach(Array(historyEntries.enumerated()), id: \.element.id) { index, entry in
-                    if index > 0 {
-                        Rectangle()
-                            .fill(NothungPalette.seam)
-                            .frame(height: 0.75)
+                LazyVGrid(
+                    columns: [
+                        GridItem(.flexible(), spacing: 10, alignment: .top),
+                        GridItem(.flexible(), spacing: 10, alignment: .top),
+                    ],
+                    alignment: .leading,
+                    spacing: 10
+                ) {
+                    ForEach(historyEntries) { entry in
+                        historyEntryCard(entry)
                     }
-                    historyEntryRow(entry)
                 }
             }
 
@@ -544,48 +556,131 @@ struct ContentView: View {
         .nothungCard()
     }
 
-    private func historyEntryRow(_ entry: NothungClipboardEntry) -> some View {
-        VStack(alignment: .leading, spacing: 11) {
-            HStack(alignment: .firstTextBaseline, spacing: 8) {
+    private func historyEntryCard(_ entry: NothungClipboardEntry) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 5) {
+                Image(systemName: entry.cleaned.contains("://") ? "link" : "text.alignleft")
+                    .font(.caption2.weight(.bold))
+                    .foregroundStyle(NothungPalette.accent)
+                    .accessibilityHidden(true)
+
                 if entry.isPinned {
                     Image(systemName: "pin.fill")
-                        .font(.caption)
+                        .font(.caption2.weight(.bold))
                         .foregroundStyle(NothungPalette.accent)
                         .accessibilityLabel("已固定")
                 }
 
-                Text(entry.cleaned)
-                    .font(.system(.callout, design: .monospaced, weight: .medium))
-                    .foregroundStyle(NothungPalette.ink)
-                    .lineLimit(4)
-                    .textSelection(.enabled)
+                Spacer(minLength: 2)
 
-                Spacer(minLength: 0)
+                Menu {
+                    Button {
+                        loadHistoryEntry(entry)
+                    } label: {
+                        Label("载入清理区", systemImage: "arrow.up.doc")
+                    }
+
+                    Button {
+                        copyHistoryEntry(entry)
+                    } label: {
+                        Label("复制", systemImage: "doc.on.doc")
+                    }
+
+                    Button {
+                        setPinned(entry, isPinned: !entry.isPinned)
+                    } label: {
+                        Label(
+                            entry.isPinned
+                                ? String(localized: "取消固定")
+                                : String(localized: "固定"),
+                            systemImage: entry.isPinned ? "pin.slash" : "pin"
+                        )
+                    }
+
+                    Button(role: .destructive) {
+                        removeHistoryEntry(entry)
+                    } label: {
+                        Label("删除", systemImage: "trash")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(NothungPalette.muted)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                }
+                .accessibilityLabel("更多操作")
             }
+
+            Text(
+                entry.capturedAt,
+                format: .dateTime
+                    .month(.twoDigits)
+                    .day(.twoDigits)
+                    .hour()
+                    .minute()
+            )
+            .font(.system(.caption2, design: .monospaced))
+            .foregroundStyle(NothungPalette.muted)
+            .lineLimit(1)
+            .accessibilityLabel(
+                entry.capturedAt.formatted(date: .long, time: .shortened)
+            )
+
+            Text(entry.cleaned)
+                .font(.system(.caption, design: .monospaced, weight: .medium))
+                .foregroundStyle(NothungPalette.ink)
+                .lineLimit(4)
+                .truncationMode(.tail)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .textSelection(.enabled)
 
             if entry.original != entry.cleaned {
-                Text("原文：\(entry.original)")
-                    .font(.system(.caption, design: .monospaced))
-                    .foregroundStyle(NothungPalette.muted)
-                    .lineLimit(2)
-                    .textSelection(.enabled)
+                Label("已清理", systemImage: "wand.and.stars")
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(NothungPalette.accent)
             }
 
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: 8) {
-                    historyTimestamp(entry)
-                    Spacer(minLength: 4)
-                    historyActionButtons(entry)
-                }
+            Spacer(minLength: 2)
 
-                VStack(alignment: .leading, spacing: 5) {
-                    historyTimestamp(entry)
-                    historyActionButtons(entry)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
+            HStack(spacing: 8) {
+                Button {
+                    loadHistoryEntry(entry)
+                } label: {
+                    Label("载入清理区", systemImage: "arrow.up.doc")
+                        .labelStyle(.iconOnly)
+                        .frame(maxWidth: .infinity, minHeight: 44)
                 }
+                .buttonStyle(.bordered)
+                .accessibilityHint("把这条记录载入上方的清理输入框")
+
+                Button {
+                    copyHistoryEntry(entry)
+                } label: {
+                    Label(
+                        copiedHistoryEntryID == entry.id
+                            ? String(localized: "已复制")
+                            : String(localized: "复制"),
+                        systemImage: copiedHistoryEntryID == entry.id
+                            ? "checkmark"
+                            : "doc.on.doc"
+                    )
+                    .labelStyle(.iconOnly)
+                    .frame(maxWidth: .infinity, minHeight: 44)
+                }
+                .buttonStyle(.bordered)
             }
         }
-        .padding(.vertical, 2)
+        .padding(11)
+        .frame(maxWidth: .infinity, minHeight: 156, alignment: .topLeading)
+        .background(
+            NothungPalette.canvas,
+            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(NothungPalette.seam, lineWidth: 0.75)
+        }
     }
 
     private var historyHeaderActions: some View {
@@ -612,65 +707,20 @@ struct ContentView: View {
         }
     }
 
-    private func historyTimestamp(_ entry: NothungClipboardEntry) -> some View {
-        Text(entry.capturedAt, style: .relative)
-            .font(.caption2)
-            .foregroundStyle(NothungPalette.muted)
+    private func loadHistoryEntry(_ entry: NothungClipboardEntry) {
+        model.input = entry.cleaned
+        model.inputDidChange()
+        inputIsFocused = true
     }
 
-    private func historyActionButtons(_ entry: NothungClipboardEntry) -> some View {
-        HStack(spacing: 8) {
-            Button {
-                model.input = entry.cleaned
-                model.inputDidChange()
-                inputIsFocused = true
-            } label: {
-                Label("载入清理区", systemImage: "arrow.up.doc")
-                    .labelStyle(.iconOnly)
+    private func copyHistoryEntry(_ entry: NothungClipboardEntry) {
+        UIPasteboard.general.string = entry.cleaned
+        copiedHistoryEntryID = entry.id
+        historyCopyFeedbackCount += 1
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+            if copiedHistoryEntryID == entry.id {
+                copiedHistoryEntryID = nil
             }
-            .buttonStyle(.bordered)
-            .frame(minWidth: 44, minHeight: 44)
-            .accessibilityHint("把这条记录载入上方的清理输入框")
-
-            Button {
-                UIPasteboard.general.string = entry.cleaned
-                copiedHistoryEntryID = entry.id
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
-                    if copiedHistoryEntryID == entry.id {
-                        copiedHistoryEntryID = nil
-                    }
-                }
-            } label: {
-                Label(
-                    copiedHistoryEntryID == entry.id ? "已复制" : "复制",
-                    systemImage: copiedHistoryEntryID == entry.id ? "checkmark" : "doc.on.doc"
-                )
-                .labelStyle(.iconOnly)
-            }
-            .buttonStyle(.bordered)
-            .frame(minWidth: 44, minHeight: 44)
-
-            Button {
-                setPinned(entry, isPinned: !entry.isPinned)
-            } label: {
-                Label(
-                    entry.isPinned ? "取消固定" : "固定",
-                    systemImage: entry.isPinned ? "pin.slash" : "pin"
-                )
-                .labelStyle(.iconOnly)
-            }
-            .buttonStyle(.bordered)
-            .frame(minWidth: 44, minHeight: 44)
-            .tint(entry.isPinned ? NothungPalette.accent : nil)
-
-            Button(role: .destructive) {
-                removeHistoryEntry(entry)
-            } label: {
-                Label("删除", systemImage: "trash")
-                    .labelStyle(.iconOnly)
-            }
-            .buttonStyle(.bordered)
-            .frame(minWidth: 44, minHeight: 44)
         }
     }
 
@@ -913,29 +963,53 @@ private struct AddClipboardEntryView: View {
 }
 
 private struct NothungOnboardingView: View {
+    private static let sampleURL =
+        "https://example.com/article?utm_source=chat&utm_campaign=demo"
+
     @State private var page = 0
-    @State private var configuration: NothungRuleConfiguration
+    @State private var configuration = NothungRuleStorage.load()
+    @State private var cleanedExample = false
+    @State private var pastedShareResult = ""
+    @State private var keyboardTestText = ""
+    @State private var feedbackCount = 0
     @State private var errorMessage: String?
+    @State private var showingPrivacyStatement = false
+    @FocusState private var keyboardTestIsFocused: Bool
 
     let onComplete: () -> Void
 
-    init(onComplete: @escaping () -> Void) {
-        self.onComplete = onComplete
-        _configuration = State(initialValue: NothungRuleStorage.load())
+    private static let fallbackCleanedURL = "https://example.com/article"
+
+    private var cleanedURL: String {
+        guard let cleaner = try? NothungRuleConfiguration.default.makeCleaner() else {
+            return Self.fallbackCleanedURL
+        }
+        return (try? NothungCleaningService.clean(Self.sampleURL, cleaner: cleaner).cleaned)
+            ?? Self.fallbackCleanedURL
+    }
+
+    private var normalizedShareResult: String {
+        normalizedShareValue(pastedShareResult)
+    }
+
+    private var shareResultIsCorrect: Bool {
+        normalizedShareResult == cleanedURL
+    }
+
+    private func normalizedShareValue(_ value: String) -> String {
+        value.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                onboardingProgress
+                progress
 
                 TabView(selection: $page) {
-                    welcomePage
-                        .tag(0)
-                    featuresPage
-                        .tag(1)
-                    accessPage
-                        .tag(2)
+                    cleanPage.tag(0)
+                    sharePage.tag(1)
+                    keyboardPage.tag(2)
+                    privacyRulesPage.tag(3)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
 
@@ -943,234 +1017,236 @@ private struct NothungOnboardingView: View {
             }
             .background(NothungPalette.canvas.ignoresSafeArea())
             .navigationBarHidden(true)
-            .alert(
-                "无法保存设置",
-                isPresented: Binding(
-                    get: { errorMessage != nil },
-                    set: { if !$0 { errorMessage = nil } }
-                )
-            ) {
-                Button("好", role: .cancel) {}
-            } message: {
-                Text(errorMessage ?? "")
-            }
+        }
+        .alert(
+            "无法保存设置",
+            isPresented: Binding(
+                get: { errorMessage != nil },
+                set: { if !$0 { errorMessage = nil } }
+            )
+        ) {
+            Button("好", role: .cancel) {}
+        } message: {
+            Text(errorMessage ?? "")
+        }
+        .sheet(isPresented: $showingPrivacyStatement) {
+            PrivacyStatementView()
         }
         .tint(NothungPalette.accent)
+        .sensoryFeedback(.success, trigger: feedbackCount)
+        .onChange(of: page) { _, _ in
+            keyboardTestIsFocused = false
+        }
+        .onChange(of: pastedShareResult) { oldValue, newValue in
+            let becameCorrect =
+                normalizedShareValue(newValue) == cleanedURL
+                && normalizedShareValue(oldValue) != cleanedURL
+            if becameCorrect {
+                feedbackCount += 1
+            }
+        }
     }
 
-    private var onboardingProgress: some View {
+    private var progress: some View {
         HStack(spacing: 8) {
-            ForEach(0..<3, id: \.self) { index in
+            ForEach(0..<4, id: \.self) { index in
                 Capsule()
                     .fill(index <= page ? NothungPalette.accent : NothungPalette.seam)
                     .frame(height: 5)
-                    .animation(.easeInOut(duration: 0.2), value: page)
             }
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 22)
         .padding(.top, 14)
+        .animation(.easeInOut(duration: 0.2), value: page)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("使用引导，第 \(page + 1) 步，共 3 步")
+        .accessibilityLabel("使用引导，第 \(page + 1) 步，共 4 步")
     }
 
-    private var welcomePage: some View {
-        onboardingScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                HStack(alignment: .top, spacing: 16) {
-                    NothungMark(size: 64)
-
-                    VStack(alignment: .leading, spacing: 7) {
-                        NothungPhaseLabel(text: "欢迎使用")
-                        Text("链接清理 +\n本地剪贴板")
-                            .font(.system(.largeTitle, design: .serif, weight: .semibold))
-                            .foregroundStyle(NothungPalette.ink)
-                            .fixedSize(horizontal: false, vertical: true)
-                        Text("一个入口清理追踪参数、展开短链，并把常用文本留在自己的设备上。")
-                            .font(.body)
-                            .foregroundStyle(NothungPalette.muted)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("三种使用方式")
-                        .font(.title3.weight(.semibold))
-                        .foregroundStyle(NothungPalette.ink)
-
-                    onboardingWay(
-                        icon: "app",
-                        title: "在主 App 中",
-                        detail: "粘贴或输入链接，查看清理前后差异；也可手动添加、固定和复用最近记录。"
-                    )
-                    onboardingWay(
-                        icon: "square.and.arrow.up",
-                        title: "从分享菜单",
-                        detail: "在其他 App 分享链接或文本，选择“使用 Nothung 复制”，即可清理并复制结果。"
-                    )
-                    onboardingWay(
-                        icon: "keyboard",
-                        title: "使用 Nothung 输入法",
-                        detail: "在任意输入框切换到 Nothung。即使不开放完全访问，也能基础输入，并把宿主 App 中选中的链接用魔棒按钮离线清理后替换；完全访问用于系统剪贴板与共享记录。"
-                    )
-                }
-            }
-        }
-    }
-
-    private var featuresPage: some View {
-        onboardingScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                VStack(alignment: .leading, spacing: 7) {
-                    NothungPhaseLabel(text: "选择默认功能")
-                    Text("从你需要的规则开始")
-                        .font(.system(.title, design: .serif, weight: .semibold))
-                        .foregroundStyle(NothungPalette.ink)
-                    Text("每项都可独立开启，稍后也能在设置中修改。标记“需要联网”的短链展开会把完整 URL 发送给目标网站。")
-                        .font(.body)
-                        .foregroundStyle(NothungPalette.muted)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-
-                VStack(spacing: 0) {
-                    ForEach(
-                        Array(NothungDefaultFeature.allCases.enumerated()),
-                        id: \.offset
-                    ) { index, feature in
-                        if index > 0 {
-                            Divider()
-                                .padding(.leading, 2)
-                        }
-                        defaultFeatureRow(feature)
-                    }
-                }
-                .nothungCard()
-
-                VStack(alignment: .leading, spacing: 12) {
-                    Toggle(isOn: $configuration.automaticallyCaptureClipboard) {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("键盘自动捕捉剪贴板")
-                                .font(.body.weight(.semibold))
-                                .foregroundStyle(NothungPalette.ink)
-                            onboardingBadge("默认关闭", systemImage: "hand.raised.fill")
-                            Text("开启并给予完全访问后，只在 Nothung 键盘可见时读取新的剪贴板并保存到本机；收起键盘后立即停止。若内容命中已开启的短链展开规则，可能联网。")
-                                .font(.footnote)
-                                .foregroundStyle(NothungPalette.muted)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                    }
-                    .toggleStyle(.switch)
-                }
-                .nothungCard()
-            }
-        }
-    }
-
-    private var accessPage: some View {
-        onboardingScrollView {
-            VStack(alignment: .leading, spacing: 22) {
-                VStack(alignment: .leading, spacing: 7) {
-                    NothungPhaseLabel(text: "输入法与隐私")
-                    Text("完全访问由你决定")
-                        .font(.system(.title, design: .serif, weight: .semibold))
-                        .foregroundStyle(NothungPalette.ink)
-                    Text("主 App 和分享扩展不需要输入法完全访问。Nothung 键盘的基础输入和离线清理所选链接也无需开启；只有读取系统剪贴板、访问共享记录或联网展开短链时才需要。")
-                        .font(.body)
-                        .foregroundStyle(NothungPalette.muted)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-
-                VStack(alignment: .leading, spacing: 15) {
-                    setupStep(
-                        number: 1,
-                        title: "添加 Nothung 输入法",
-                        detail: "前往“设置”→“通用”→“键盘”→“键盘”→“添加新键盘”。"
-                    )
-                    setupStep(
-                        number: 2,
-                        title: "按需要允许完全访问",
-                        detail: "返回键盘列表，选择 Nothung。若你需要系统剪贴板、主 App 的共享记录或短链展开，再开启“允许完全访问”。"
-                    )
-                    setupStep(
-                        number: 3,
-                        title: "切换并开始使用",
-                        detail: "在输入框中通过系统键盘切换按钮选择 Nothung。Face ID iPhone 会由系统在键盘下方提供切换入口。"
-                    )
-
-                    Button {
-                        guard let url = URL(string: UIApplication.openSettingsURLString) else {
-                            return
-                        }
-                        UIApplication.shared.open(url)
-                    } label: {
-                        Label("打开系统设置", systemImage: "gear")
-                            .frame(maxWidth: .infinity, minHeight: 44)
-                    }
-                    .buttonStyle(.bordered)
-                    .buttonBorderShape(.roundedRectangle(radius: 12))
-                }
-                .nothungCard()
-
-                Label {
-                    Text("参数和正则清理始终在本机完成。自动捕捉默认关闭；只有短链展开会访问目标网站。最近记录最多保存 20 条，可随时删除。")
-                        .font(.footnote)
-                        .fixedSize(horizontal: false, vertical: true)
-                } icon: {
-                    Image(systemName: "lock.shield.fill")
-                        .foregroundStyle(NothungPalette.accent)
-                }
+    private var cleanPage: some View {
+        onboardingPage(step: 1, title: "清理链接") {
+            Text("点按“清理示例”。")
+                .font(.body)
                 .foregroundStyle(NothungPalette.muted)
-                .padding(16)
-                .background(
-                    NothungPalette.accentWash,
-                    in: RoundedRectangle(cornerRadius: 18, style: .continuous)
+
+            VStack(alignment: .leading, spacing: 12) {
+                Text(
+                    cleanedExample
+                        ? String(localized: "清理后")
+                        : String(localized: "原链接")
                 )
-            }
-        }
-    }
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(
+                        cleanedExample ? NothungPalette.accent : NothungPalette.muted
+                    )
 
-    private func onboardingScrollView<Content: View>(
-        @ViewBuilder content: () -> Content
-    ) -> some View {
-        ScrollView {
-            content()
-                .padding(.horizontal, 22)
-                .padding(.top, 22)
-                .padding(.bottom, 28)
-                .frame(maxWidth: 680, alignment: .leading)
-                .frame(maxWidth: .infinity)
-        }
-        .scrollIndicators(.hidden)
-    }
-
-    private func onboardingWay(
-        icon: String,
-        title: LocalizedStringKey,
-        detail: LocalizedStringKey
-    ) -> some View {
-        HStack(alignment: .top, spacing: 14) {
-            Image(systemName: icon)
-                .font(.body.weight(.semibold))
-                .foregroundStyle(NothungPalette.accent)
-                .frame(width: 42, height: 42)
-                .background(NothungPalette.accentWash, in: RoundedRectangle(cornerRadius: 12))
-                .accessibilityHidden(true)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(.headline)
+                Text(verbatim: cleanedExample ? cleanedURL : Self.sampleURL)
+                    .font(.system(.callout, design: .monospaced))
                     .foregroundStyle(NothungPalette.ink)
-                Text(detail)
-                    .font(.subheadline)
-                    .foregroundStyle(NothungPalette.muted)
+                    .textSelection(.enabled)
                     .fixedSize(horizontal: false, vertical: true)
+
+                Button {
+                    withAnimation(.easeInOut(duration: 0.22)) {
+                        cleanedExample = true
+                    }
+                    feedbackCount += 1
+                } label: {
+                    Label(
+                        cleanedExample
+                            ? String(localized: "已清理")
+                            : String(localized: "清理示例"),
+                        systemImage: cleanedExample ? "checkmark" : "wand.and.stars"
+                    )
+                    .font(.body.weight(.semibold))
+                    .frame(maxWidth: .infinity, minHeight: 30)
+                }
+                .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.roundedRectangle(radius: 12))
+            }
+            .nothungCard()
+        }
+    }
+
+    private var sharePage: some View {
+        onboardingPage(step: 2, title: "从分享菜单复制") {
+            VStack(alignment: .leading, spacing: 10) {
+                instructionStep(number: 1, text: "打开分享菜单。")
+                instructionStep(number: 2, text: "选择“使用 Nothung 复制”。")
+                instructionStep(number: 3, text: "把结果粘贴到输入框。")
+            }
+
+            ShareLink(item: Self.sampleURL) {
+                Label("打开分享菜单", systemImage: "square.and.arrow.up")
+                    .font(.body.weight(.semibold))
+                    .frame(maxWidth: .infinity, minHeight: 30)
+            }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.roundedRectangle(radius: 12))
+
+            HStack(alignment: .center, spacing: 10) {
+                TextField(
+                    "在这里粘贴结果",
+                    text: $pastedShareResult,
+                    axis: .vertical
+                )
+                .font(.system(.body, design: .monospaced))
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .lineLimit(2...4)
+                .accessibilityLabel("清理后的链接")
+
+                PasteButton(payloadType: String.self) { values in
+                    guard let value = values.first else { return }
+                    pastedShareResult = value
+                }
+                .labelStyle(.iconOnly)
+                .buttonBorderShape(.roundedRectangle(radius: 10))
+            }
+            .padding(14)
+            .background(
+                NothungPalette.surface,
+                in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .stroke(NothungPalette.seam, lineWidth: 0.75)
+            }
+
+            if !normalizedShareResult.isEmpty {
+                Label(
+                    shareResultIsCorrect
+                        ? String(localized: "链接已清理")
+                        : String(localized: "请重新从分享菜单复制"),
+                    systemImage: shareResultIsCorrect
+                        ? "checkmark.circle.fill"
+                        : "arrow.counterclockwise.circle"
+                )
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(
+                        shareResultIsCorrect ? NothungPalette.accent : NothungPalette.muted
+                    )
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(NothungPalette.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .stroke(NothungPalette.seam, lineWidth: 0.75)
+    }
+
+    private var keyboardPage: some View {
+        onboardingPage(step: 3, title: "启用输入法") {
+            VStack(alignment: .leading, spacing: 10) {
+                instructionStep(
+                    number: 1,
+                    text: "前往“通用”→“键盘”→“键盘”，添加 Nothung。"
+                )
+                instructionStep(
+                    number: 2,
+                    text: "需要访问剪贴板时，开启“允许完全访问”。"
+                )
+                instructionStep(number: 3, text: "返回后点输入框，切换到 Nothung。")
+            }
+
+            Button {
+                guard let url = URL(string: UIApplication.openSettingsURLString) else {
+                    return
+                }
+                UIApplication.shared.open(url)
+            } label: {
+                Label("打开 Nothung 设置", systemImage: "gear")
+                    .font(.body.weight(.semibold))
+                    .frame(maxWidth: .infinity, minHeight: 30)
+            }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.roundedRectangle(radius: 12))
+
+            TextField("点这里测试键盘", text: $keyboardTestText, axis: .vertical)
+                .focused($keyboardTestIsFocused)
+                .font(.body)
+                .lineLimit(3...6)
+                .padding(14)
+                .frame(minHeight: 86, alignment: .topLeading)
+                .background(
+                    NothungPalette.surface,
+                    in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+                )
+                .overlay {
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .stroke(NothungPalette.seam, lineWidth: 0.75)
+                }
+        }
+    }
+
+    private var privacyRulesPage: some View {
+        onboardingPage(step: 4, title: "选择默认功能") {
+            Label {
+                Text("短链展开会把完整 URL 发送给目标网站；其余默认功能在本机处理。")
+                    .font(.body)
+                    .fixedSize(horizontal: false, vertical: true)
+            } icon: {
+                Image(systemName: "lock.shield.fill")
+                    .foregroundStyle(NothungPalette.accent)
+            }
+            .foregroundStyle(NothungPalette.muted)
+
+            VStack(spacing: 0) {
+                ForEach(
+                    Array(NothungDefaultFeature.allCases.enumerated()),
+                    id: \.element.id
+                ) { index, feature in
+                    if index > 0 {
+                        Divider()
+                    }
+                    defaultFeatureRow(feature)
+                }
+            }
+            .nothungCard()
+
+            Button {
+                showingPrivacyStatement = true
+            } label: {
+                Label("查看完整隐私说明", systemImage: "doc.text")
+                    .frame(maxWidth: .infinity, minHeight: 44)
+            }
+            .buttonStyle(.bordered)
+            .buttonBorderShape(.roundedRectangle(radius: 12))
         }
     }
 
@@ -1186,7 +1262,9 @@ private struct NothungOnboardingView: View {
                     .font(.body.weight(.semibold))
                     .foregroundStyle(NothungPalette.ink)
                 if feature.requiresNetwork {
-                    onboardingBadge("需要联网", systemImage: "network")
+                    Label("需要联网", systemImage: "network")
+                        .font(.caption2.weight(.bold))
+                        .foregroundStyle(.orange)
                 }
                 Text(feature.explanation)
                     .font(.footnote)
@@ -1198,66 +1276,93 @@ private struct NothungOnboardingView: View {
         .padding(.vertical, 12)
     }
 
-    private func onboardingBadge(
-        _ title: LocalizedStringKey,
-        systemImage: String
+    private func onboardingPage<Content: View>(
+        step: Int,
+        title: LocalizedStringKey,
+        @ViewBuilder content: () -> Content
     ) -> some View {
-        Label(title, systemImage: systemImage)
-            .font(.caption2.weight(.bold))
-            .foregroundStyle(.orange)
-            .padding(.horizontal, 7)
-            .padding(.vertical, 4)
-            .background(Color.orange.opacity(0.12), in: Capsule())
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: 7) {
+                    Text(verbatim: "\(step) / 4")
+                        .font(.system(.caption2, design: .monospaced, weight: .bold))
+                        .tracking(1.4)
+                        .foregroundStyle(NothungPalette.accent)
+
+                    Text(title)
+                        .font(.system(.largeTitle, design: .serif, weight: .semibold))
+                        .foregroundStyle(NothungPalette.ink)
+                }
+
+                content()
+            }
+            .padding(.horizontal, 22)
+            .padding(.top, 24)
+            .padding(.bottom, 30)
+            .frame(maxWidth: 680, alignment: .leading)
+            .frame(maxWidth: .infinity)
+        }
+        .scrollDismissesKeyboard(.interactively)
+        .scrollIndicators(.hidden)
     }
 
-    private func setupStep(
+    private func instructionStep(
         number: Int,
-        title: LocalizedStringKey,
-        detail: LocalizedStringKey
+        text: LocalizedStringKey
     ) -> some View {
-        HStack(alignment: .top, spacing: 13) {
-            Text("\(number)")
+        HStack(spacing: 11) {
+            Text(verbatim: "\(number)")
                 .font(.caption.monospacedDigit().weight(.bold))
                 .foregroundStyle(.white)
-                .frame(width: 26, height: 26)
+                .frame(width: 24, height: 24)
                 .background(NothungPalette.accent, in: Circle())
                 .accessibilityHidden(true)
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(.headline)
-                    .foregroundStyle(NothungPalette.ink)
-                Text(detail)
-                    .font(.subheadline)
-                    .foregroundStyle(NothungPalette.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            Text(text)
+                .font(.body)
+                .foregroundStyle(NothungPalette.ink)
         }
         .accessibilityElement(children: .combine)
     }
 
     private var footer: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 10) {
             if page > 0 {
-                Button("上一步") {
+                Button {
+                    keyboardTestIsFocused = false
                     withAnimation { page -= 1 }
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .frame(width: 28, height: 28)
+                }
+                .buttonStyle(.bordered)
+                .accessibilityLabel("上一步")
+            }
+
+            if page == 2 {
+                Button("跳过") {
+                    keyboardTestIsFocused = false
+                    withAnimation { page = 3 }
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
             }
 
             Button {
-                if page < 2 {
+                keyboardTestIsFocused = false
+                if page < 3 {
                     withAnimation { page += 1 }
                 } else {
                     finish()
                 }
             } label: {
                 HStack {
-                    Text(page < 2 ? "继续" : "开始使用 Nothung")
+                    Text(page < 3
+                         ? String(localized: "继续")
+                         : String(localized: "完成"))
                         .fontWeight(.semibold)
                     Spacer(minLength: 8)
-                    Image(systemName: page < 2 ? "arrow.right" : "checkmark")
+                    Image(systemName: page < 3 ? "arrow.right" : "checkmark")
                 }
                 .frame(maxWidth: .infinity, minHeight: 28)
             }
@@ -1266,7 +1371,7 @@ private struct NothungOnboardingView: View {
         }
         .padding(.horizontal, 22)
         .padding(.vertical, 14)
-        .background(.regularMaterial)
+        .background(NothungPalette.surface)
         .overlay(alignment: .top) {
             Divider()
         }

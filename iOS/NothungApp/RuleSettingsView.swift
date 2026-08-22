@@ -4,26 +4,25 @@ import UniformTypeIdentifiers
 
 struct RuleSettingsView: View {
     @Environment(\.dismiss) private var dismiss
-    @AppStorage(
-        "hasCompletedOnboarding.v1",
-        store: UserDefaults(suiteName: NothungRuleStorage.appGroupIdentifier)
-    ) private var hasCompletedOnboarding = false
-
     @State private var configuration: NothungRuleConfiguration
     @State private var errorMessage: String?
     @State private var statusMessage: String?
     @State private var isImportingFile = false
 
     let onSaved: () -> Void
+    let onReplayOnboarding: () -> Void
 
-    init(onSaved: @escaping () -> Void) {
+    init(
+        onSaved: @escaping () -> Void,
+        onReplayOnboarding: @escaping () -> Void
+    ) {
         self.onSaved = onSaved
+        self.onReplayOnboarding = onReplayOnboarding
         _configuration = State(initialValue: NothungRuleStorage.load())
     }
 
     var body: some View {
         Form {
-            defaultFeaturesSection
             behaviorSection
             keyboardSection
             ruleCategoriesSection
@@ -104,39 +103,6 @@ struct RuleSettingsView: View {
             Text("处理方式")
         } footer: {
             Text("参数规则先执行，再依列表顺序执行正则规则。")
-        }
-    }
-
-    private var defaultFeaturesSection: some View {
-        Section {
-            ForEach(
-                Array(NothungDefaultFeature.allCases.enumerated()),
-                id: \.offset
-            ) { _, feature in
-                Toggle(
-                    isOn: Binding(
-                        get: { configuration.isDefaultFeatureEnabled(feature) },
-                        set: { configuration.setDefaultFeature(feature, isEnabled: $0) }
-                    )
-                ) {
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(feature.title)
-                        if feature.requiresNetwork {
-                            Label("需要联网", systemImage: "network")
-                                .font(.caption2.weight(.bold))
-                                .foregroundStyle(.orange)
-                        }
-                        Text(feature.explanation)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-            }
-        } header: {
-            Text("默认功能")
-        } footer: {
-            Text("短链展开会把完整 URL 发送给目标网站；其余默认功能在本机处理。")
         }
     }
 
@@ -260,8 +226,8 @@ struct RuleSettingsView: View {
             try NothungRuleStorage.save(configuration)
             onSaved()
             dismiss()
-            DispatchQueue.main.async {
-                hasCompletedOnboarding = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                onReplayOnboarding()
             }
         } catch {
             errorMessage = error.localizedDescription
