@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		002BB14A18BB6CD7A1C8D7DC /* ActionExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7341613582A4A12C4315727F /* ActionExtensionViewModel.swift */; };
 		0A1000000000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B1000000000000000000001 /* Assets.xcassets */; };
 		0A1000000000000000000002 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0B1000000000000000000002 /* PrivacyInfo.xcprivacy */; };
 		0A1000000000000000000003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B1000000000000000000003 /* Assets.xcassets */; };
 		0A1000000000000000000004 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0B1000000000000000000004 /* PrivacyInfo.xcprivacy */; };
 		0A1000000000000000000005 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0B1000000000000000000005 /* PrivacyInfo.xcprivacy */; };
-		002BB14A18BB6CD7A1C8D7DC /* ActionExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7341613582A4A12C4315727F /* ActionExtensionViewModel.swift */; };
 		10A1F0CC691C067D9C868FF4 /* NothungClipboardHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21946C1EDB49A9FFAFD7ACA3 /* NothungClipboardHistoryTests.swift */; };
 		1C502CD77B28BB726D46CF20 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8967E0226A6848D0BD216BA6 /* AppShortcuts.xcstrings */; };
 		1D1CF221DFA1E42B678934F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE89667ADBE4DA9BAC3E90C8 /* ContentView.swift */; };
@@ -108,15 +108,15 @@
 		0B1000000000000000000004 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0B1000000000000000000005 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		12FE5A2DB9CDDFD723A4BF16 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
-		138491B29BEB747438C887D2 /* NothungAction.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = NothungAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		138491B29BEB747438C887D2 /* NothungAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NothungAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2070B408C7C6139E4F5E8BC0 /* NothungMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungMark.swift; sourceTree = "<group>"; };
 		21946C1EDB49A9FFAFD7ACA3 /* NothungClipboardHistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungClipboardHistoryTests.swift; sourceTree = "<group>"; };
 		25C361C7036A50BBA64156DA /* NothungApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungApp.swift; sourceTree = "<group>"; };
-		31C7EA3EECF8899D6B4F49DF /* NothungTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NothungTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		31C7EA3EECF8899D6B4F49DF /* NothungTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NothungTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3240515012495D8261488D /* ActionRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRootView.swift; sourceTree = "<group>"; };
 		41CFA134893F25EE53231914 /* KeyboardRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardRootView.swift; sourceTree = "<group>"; };
 		45026F121EAB7D7FBB269479 /* RedirectResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectResolver.swift; sourceTree = "<group>"; };
-		496AED5ED7FAD7BA11DCAF8F /* NothungKeyboard.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = NothungKeyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		496AED5ED7FAD7BA11DCAF8F /* NothungKeyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NothungKeyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A65F77223490F581CE657D6 /* NothungCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NothungCore; path = ../Packages/NothungCore; sourceTree = SOURCE_ROOT; };
 		646D332F51F78293C39BB53D /* RuleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleSettingsView.swift; sourceTree = "<group>"; };
 		6D06538790E0C50099E1F1E4 /* NothungTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothungTheme.swift; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 		9D3969AD37B06BF85EB1FF0A /* CleanerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanerViewModel.swift; sourceTree = "<group>"; };
 		AD5F090FA9647BDF3BD0899B /* RedirectResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectResolverTests.swift; sourceTree = "<group>"; };
 		B006DD06A0A1870D7F53F518 /* KeyboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewModel.swift; sourceTree = "<group>"; };
-		B4625E1E053E5A3FD37BC201 /* Nothung.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Nothung.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4625E1E053E5A3FD37BC201 /* Nothung.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nothung.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE9FB7AB5F3FA4A467A21FAD /* RuleConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleConfiguration.swift; sourceTree = "<group>"; };
 		C5386A27F7E40CBE444CD644 /* ExtensionInputLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionInputLoader.swift; sourceTree = "<group>"; };
 		CCA3D9619CA71C23CFA3D6F6 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
@@ -368,8 +368,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 55AD693F5C05F17A084029F8 /* Build configuration list for PBXProject "Nothung" */;
 			developmentRegion = en;

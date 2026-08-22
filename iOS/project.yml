@@ -31,10 +31,12 @@ targets:
           - Info.plist
           - Nothung.entitlements
       - path: Shared
-    resources:
       - path: NothungApp/Assets.xcassets
+        buildPhase: resources
       - path: NothungApp/PrivacyInfo.xcprivacy
+        buildPhase: resources
       - path: NothungApp/AppShortcuts.xcstrings
+        buildPhase: resources
     info:
       path: NothungApp/Info.plist
       properties:
@@ -83,10 +85,12 @@ targets:
           - PrivacyInfo.xcprivacy
       - path: Shared
       - path: NothungApp/RedirectResolver.swift
-    resources:
       - path: NothungAction/Assets.xcassets
+        buildPhase: resources
       - path: NothungAction/PrivacyInfo.xcprivacy
+        buildPhase: resources
       - path: NothungAction/InfoPlist.xcstrings
+        buildPhase: resources
     info:
       path: NothungAction/Info.plist
       properties:
@@ -130,8 +134,8 @@ targets:
           - PrivacyInfo.xcprivacy
       - path: Shared
       - path: NothungApp/RedirectResolver.swift
-    resources:
       - path: NothungKeyboard/PrivacyInfo.xcprivacy
+        buildPhase: resources
     info:
       path: NothungKeyboard/Info.plist
       properties:
